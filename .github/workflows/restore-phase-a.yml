@@ -29,9 +29,9 @@ jobs:
               ".bootstrap/reference-conditioning-cases-v1.1.jsonl.gz":
                   ("manifests/reference-conditioning-cases-v1.1.jsonl", "72cd563ba34587e4cdecd29eb378466f6165f97fcad195cca39b1255dfefaac4"),
               ".bootstrap/frozen-manifest.schema.json.gz":
-                  ("schemas/frozen-manifest.schema.json", "a458c077720d8d32d80fd858b821e412a44a5382639f771336f678f5ea057277"),
+                  ("schemas/frozen-manifest.schema.json", "28bc38ecc6b7c7ae70364021127970f3e91f1f2045e3d97b5b5e853b7fe30051"),
               ".bootstrap/pre-asset-freeze.schema.json.gz":
-                  ("schemas/pre-asset-freeze.schema.json", "b928a067a5adb23af6080504e15da8fbd8131a74df930e1fbce0317ff0008b72"),
+                  ("schemas/pre-asset-freeze.schema.json", "f2623c4938b25465a24770ad900c2896ca750138769181ef8b82f8b63f989a8b"),
           }
           for src, (dst, expected) in files.items():
               raw = gzip.decompress(Path(src).read_bytes())
