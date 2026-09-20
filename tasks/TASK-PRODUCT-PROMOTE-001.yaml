@@ -1,0 +1,54 @@
+schema_version: 1
+task:
+  id: TASK-PRODUCT-PROMOTE-001
+  title: Promover product-flow-001 validado a backend canonico
+  status: PASS
+  risk: MEDIUM
+objective:
+  expected_outcome: CANONICAL_PRODUCT_PLANNING_READY
+approval:
+  explicit_user_approval: true
+  source: user_continue_at_explicit_promotion_gate
+scope:
+  allowed_paths:
+    - AGENTS.md
+    - PROJECT_STATE.yaml
+    - tasks/TASK-PRODUCT-PROMOTE-001.yaml
+    - .state/**
+    - apps/api/src/modules/planning/**
+    - apps/api/tests/test_planning.py
+    - tests/test_product_promotion_contract.py
+    - lab/experiments/product-flow-001/EXPERIMENT.yaml
+    - evidence/**
+  forbidden_paths:
+    - apps/web/**
+    - manifests/**
+    - schemas/**
+    - src/**
+    - projectctl/**
+    - .env
+    - .env.*
+constraints:
+  - Promover solo el comportamiento validado de product-flow-001.
+  - El codigo canonico no puede importar ni depender de lab/**.
+  - No agregar endpoint HTTP en esta tarea.
+  - No agregar persistencia ni migraciones en esta tarea.
+  - No ejecutar Provider Preflight.
+  - No hacer requests pagados.
+  - No agregar credenciales reales ni secretos.
+  - No modificar BENCH20, BENCH100 ni manifests congelados.
+  - Mantener provider_preflight_allowed=false y paid_provider_requests_allowed=false.
+acceptance:
+  - Existe un modulo canonico apps/api/src/modules/planning/.
+  - ProjectRequest produce Project Bible, Scene Graph, Shot Contracts y Preview Plan.
+  - La duracion total se conserva exactamente.
+  - Los IDs son unicos y las referencias son validas.
+  - El resultado es determinista para la misma entrada.
+  - El modulo canonico no contiene dependencias hacia lab/**.
+  - Las validaciones de entrada del flujo canonico pasan.
+  - El experimento de laboratorio queda marcado como PROMOTED sin borrarse.
+  - Repository Control CI pasa.
+  - Product CI pasa incluyendo las pruebas canonicas.
+  - Provider Preflight permanece sin iniciar y no hay requests pagados.
+blocking_rule:
+  - No declarar CANONICAL_PRODUCT_PLANNING_READY si falla cualquier gate de CI o si apps/** depende de lab/**.

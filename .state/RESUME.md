@@ -1,12 +1,12 @@
-# RESUME — TASK-PRODUCT-LAB-001
+# RESUME — TASK-PRODUCT-PROMOTE-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** PRODUCT_LAB_VALIDATED
-- **Checkpoint:** LAB-PRODUCT-FLOW-001-MAIN
-- **State version:** 24
-- **Branch:** main
-- **Checkpoint base HEAD:** 6abed8f4a531c016421515f05543ddf93ac7c24a
+- **Phase:** CANONICAL_PLANNING_READY
+- **Checkpoint:** PRODUCT-PROMOTE-001-VALIDATED
+- **State version:** 27
+- **Branch:** lab-promote-product-flow-001
+- **Checkpoint base HEAD:** a82e7151900ebcd310372922da680b600cdd6742
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -14,9 +14,9 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Baseline regression suite:** true
 - **Phase B acceptance:** true
 - **Phase C acceptance:** true
-- **Latest evidence:** LAB-PRODUCT-FLOW-001
+- **Latest evidence:** PRODUCT-PROMOTE-001
 - **Blocked:** none
-- **Next action:** Await explicit user approval to promote product-flow-001 from lab/** into canonical apps/** under a new promotion Task Contract. The validated lab is safely merged on main; Provider Preflight and paid requests remain disabled.
+- **Next action:** Canonical planning is ready. Next gate is CANONICAL_PLANNING_API_INTEGRATION under a new Task Contract; Provider Preflight and paid requests remain disabled.
 
 ## Completed steps
 
@@ -92,7 +92,19 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - product-flow-001 validated and remains non-canonical awaiting explicit user promotion approval
 - Lab PR #4 merged to main at 6abed8f4a531c016421515f05543ddf93ac7c24a
 - Main Lab CI run 35525611678 passed after merge
+- User authorized product-flow-001 promotion at the explicit promotion gate
+- TASK-PRODUCT-PROMOTE-001 activated
+- Validated lab planning core copied into apps/api/src/modules/planning without lab runtime dependency
+- Promotion snapshot probe observed content fingerprint d4bd7e42c1ce1d83fa9bf5435f2d3a675c397f6617208e15171e3200f2e55c0f
+- Promotion test scope corrected to inspect canonical runtime instead of test source
+- Canonical planning split collapsed to a single module after cross-file import failure
+- Lab CI observed canonical promotion content fingerprint 3725c90b409ddf571e11e29ff49f9852fd2b2609bb7fd21dc07975269d298dd6
+- TASK-PRODUCT-PROMOTE-001 closed PASS
+- Product CI run 35530037442 passed after promotion metadata closure
+- Repository Control run 35530037441 passed scope + 65/65 regression; fresh-session mismatch isolated to stale Task Contract hash
+- Canonical planning promotion state synchronized with final PASS Task Contract hash
+- PRODUCT-PROMOTE-001 evidence materialized
 
 The active Task Contract SHA-256 is:
 
-`4356ad08924a6104f548ee1e586e87fe4c38d560e706ee2e1d6e52946e4e2307`
+`0923934c695c9428d6f0c2401735d053b0f2e157c92ac99c6fea2942303eaea3`

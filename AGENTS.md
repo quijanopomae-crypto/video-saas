@@ -23,16 +23,15 @@ Read these before any repository work:
 
 ## Current Gate
 
-Repository Control A-D and the minimum development infrastructure are complete.
-The explicitly authorized current phase is PRODUCT_LAB.
+Repository Control A-D and minimum development infrastructure are complete.
+The validated `product-flow-001` planning core has been promoted to canonical backend code under `apps/api/src/modules/planning/`.
+The promotion task is complete subject to normal merge/post-merge verification.
 Provider Preflight remains forbidden and no paid provider requests are authorized.
 
-## Product Lab boundary
+## Canonical planning boundary
 
-- Experimental product code belongs under `lab/**` only.
-- `apps/**` is canonical product code and is outside the scope of the active lab task.
-- Canonical code MUST NOT import from `lab/**`.
-- Lab experiments must work without real provider credentials or paid external calls unless a later Task Contract explicitly authorizes them.
-- A lab experiment is not production merely because it passes tests.
-- Promotion to canonical code requires observed lab validation, Repository Control CI, Product CI, explicit user approval, and a separate promotion Task Contract.
-- Failed or superseded experiments stay non-canonical until an authorized cleanup task removes them.
+- `apps/api/src/modules/planning/` is canonical product code.
+- Canonical `apps/**` MUST NOT import or depend on `lab/**`.
+- `lab/**` remains provenance/experimentation, not a runtime dependency.
+- The next product gate is CANONICAL_PLANNING_API_INTEGRATION.
+- Do not add HTTP endpoints, persistence, UI, provider SDKs or paid provider calls without a new Task Contract that explicitly authorizes that scope.
