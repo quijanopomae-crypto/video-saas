@@ -1,0 +1,40 @@
+name: Apply Phase B repository control
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.bootstrap/phase-b/ready.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  apply-phase-b:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebuild and verify Phase B payload
+        run: |
+          cat .bootstrap/phase-b/part-01.b64               .bootstrap/phase-b/part-02.b64               .bootstrap/phase-b/part-03.b64               .bootstrap/phase-b/part-04.b64 > /tmp/phase-b.b64
+          base64 --decode /tmp/phase-b.b64 > /tmp/phase-b-upload.tar.gz
+          echo "31b7ccd8e21f1ec999b5403fb37962d5ddcc19ad283549e272342b47b73edcaf  /tmp/phase-b-upload.tar.gz" | sha256sum -c -
+          tar -xzf /tmp/phase-b-upload.tar.gz -C .
+
+      - name: Run full regression suite
+        run: |
+          python -m pip install --quiet pytest pyyaml jsonschema
+          python -m pytest -q tests
+
+      - name: Commit Phase B and clean bootstrap
+        run: |
+          rm -rf .bootstrap
+          rm -f .github/workflows/apply-phase-b.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && exit 0
+          git commit -m "feat: complete repository control Phase B"
+          git push
