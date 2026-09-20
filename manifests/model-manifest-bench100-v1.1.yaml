@@ -1,0 +1,95 @@
+manifest_id: MODEL-MANIFEST-BENCH100-v1.1
+schema_version: 1.1-executable-baseline-1
+baseline:
+  id: CANONICAL-EXECUTABLE-BASELINE-v1.1
+  origin: BUILT_FROM_APPROVED_SPECIFICATION
+  historical_byte_identity_claimed: false
+  created_at: '2026-09-17T22:35:02.111009Z'
+  source_protocol: BENCH100-v1.1
+  source_document_hashes:
+    bench100_v1_0:
+      file: Markdown(6).md pegado
+      sha256: a294478d80cbb3ff32048ba459e6d9f26b9f0d384d21036567a576a32720a450
+    bench100_v1_1:
+      file: Markdown(7).md pegado
+      sha256: 9c0c7d8fc4de75f165b23e50812e2e548991cae963d24116df9442cb86f8a45a
+    model_manifest_final:
+      file: Markdown(9).md pegado
+      sha256: afe4db3a3456ea13e80bc2789ba15c74716a388503b472f3554ec00e5c014860
+    preflight_amendment_1:
+      file: Markdown(10).md pegado
+      sha256: fdc31235ef7aab80e1750c905183cc75f94a23e285d9826c11bb9b7d0eb92cf5
+    preflight_fix_01:
+      file: Markdown(20260917-175914).md pegado
+      sha256: c248081839fb9058d3764388643b4d2c0b31944223c71b6b16306c6ca7b947fa
+    preflight_fix_02:
+      file: Markdown(20260917-221105).md pegado
+      sha256: 4011e7b5834ad5e46aed7abad205d803ad94b9f81fef545f94b0a88773f555cd
+  amendments:
+  - PREFLIGHT-INTERNAL-FIX-01
+  - PREFLIGHT-INTERNAL-FIX-02
+  - PREFLIGHT-INTERNAL-FIX-03
+current_state: READY_FOR_PROVIDER_PREFLIGHT
+scenario_budgets:
+  economy:
+    usd_per_final_accepted_minute: '0.68'
+    status: TARGET_NOT_OBSERVED
+  standard:
+    usd_per_final_accepted_minute: '1.15'
+    status: TARGET_NOT_OBSERVED
+commercial_pricing_modified: false
+experimental_defaults:
+  aspect_ratio: '16:9'
+  target_fps: 24
+  outputs_per_request: 1
+  repetitions_per_case: 3
+  watermark: false
+  prompt_enhancement: DISABLED_IF_SUPPORTED
+  safety: PROVIDER_COMMERCIAL_DEFAULT
+  model_aliases_allowed: false
+  silent_model_substitution_allowed: false
+  hidden_provider_defaults_allowed: false
+seeds:
+  values:
+  - 19001
+  - 19002
+  - 19003
+  semantics: INTRA_PROVIDER_REPRODUCIBILITY_ONLY
+  cross_provider_equivalence: false
+  cross_provider_blocking_factor: false
+  statistical_pairing_key: case_id
+asset_manifest_file: asset-manifest-v1.0.json
+reference_conditioning_file: reference-conditioning-cases-v1.1.jsonl
+bench100_cases_file: bench100-cases-v1.1.jsonl
+bench20_cells_file: bench20-cells-v1.1.yaml
+pricing_snapshot_file: pricing-snapshot-v1.1.json
+terms_snapshot_file: terms-snapshot-v1.1.json
+preflight:
+  provider_probes_executed: false
+  provider_preflight_pass: false
+  official_pricing_complete: false
+  model_ids_resolved: false
+  endpoints_resolved: false
+  capabilities_confirmed: false
+  off_peak_pairs_valid: false
+  reference_conditioning_valid: false
+  duration_constraints_valid: false
+  required_fields_pending: true
+  unresolved_billing_discrepancies: false
+integrity:
+  gate_id: MANIFEST_INTERNAL_INTEGRITY_v1.1_FINAL
+  status: PASS
+  tests_passed: 30
+  tests_total: 30
+  cases_validated: 30
+  conditionings_validated: 90
+  duplicate_conditionings: 0
+  unexpected_conditionings: 0
+  missing_conditionings: 0
+  legacy_fields_found: 0
+  invalid_asset_kinds: 0
+  noncanonical_decimals: 0
+  NFC_collisions: 0
+  manifest_hash_stable: true
+  asset_freeze_validation: DEFERRED
+  evidence_file: integrity-result-v1.1.json
