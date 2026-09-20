@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '.bootstrap/phase-c/part-02.b64'
+      - '.bootstrap/phase-c/ready.txt'
 
 permissions:
   contents: write
