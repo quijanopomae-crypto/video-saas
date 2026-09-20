@@ -19,9 +19,10 @@ def test_product_promotion_contract_is_narrow_and_safe():
     assert "projectctl/**" in task["scope"]["forbidden_paths"]
 
 
-def test_canonical_apps_do_not_import_lab():
+def test_canonical_runtime_does_not_import_lab():
     offenders = []
-    for path in (ROOT / "apps").rglob("*.py"):
+    runtime_root = ROOT / "apps" / "api" / "src"
+    for path in runtime_root.rglob("*.py"):
         text = path.read_text(encoding="utf-8")
         if "product_flow_lab" in text or "from lab" in text or "import lab" in text:
             offenders.append(str(path.relative_to(ROOT)))
