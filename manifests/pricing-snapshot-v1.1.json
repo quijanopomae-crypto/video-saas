@@ -1,0 +1,10 @@
+{
+  "snapshot_id": "PRICING-SNAPSHOT-BENCH100-v1.1",
+  "status": "PENDING_OFFICIAL_CAPTURE",
+  "permitted_sources": [
+    "official_documentation",
+    "official_pricing",
+    "authenticated_usage_response"
+  ],
+  "records": []
+}
