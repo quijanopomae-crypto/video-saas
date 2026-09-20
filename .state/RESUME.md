@@ -2,11 +2,11 @@
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** PHASE_D_BLOCKED_BRANCH_PROTECTION
-- **Checkpoint:** CP-20260920T131950Z-finald001
-- **State version:** 14
+- **Phase:** PHASE_D_PASS
+- **Checkpoint:** PHASE-D-PASS-001
+- **State version:** 15
 - **Branch:** main
-- **Checkpoint base HEAD:** 70692070a228771a5e163754be4271644e5081e1
+- **Checkpoint base HEAD:** ab6ef2d197e57cb6c1fc5503ea8d42f2b62e612e
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -14,9 +14,9 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Baseline regression suite:** true
 - **Phase B acceptance:** true
 - **Phase C acceptance:** true
-- **Latest evidence:** PHASE-D-CI
-- **Blocked:** {'code': 'PHASE_D_BRANCH_PROTECTION_BLOCKED', 'detail': 'GitHub rulesets returned 403 for this private repository without an eligible plan, and branch-protection visibility is not accessible through the connected integration; effective enforcement on main is not observed.'}
-- **Next action:** Enable effective main branch protection/ruleset requiring Repository Control CI; PHASE_D_PASS remains blocked until observed.
+- **Latest evidence:** PHASE-D-BRANCH-PROTECTION
+- **Blocked:** none
+- **Next action:** Await explicit Provider Preflight authorization; provider calls and paid requests remain disabled.
 
 ## Completed steps
 
@@ -65,6 +65,9 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - Committed non-state mutation after checkpoint is blocked
 - Full regression suite passed 58/58
 - Repository Control CI remote run 35512907861 passed: scope + 58/58 tests + fresh-session probe
+- GitHub ruleset Protect main observed active on the default branch
+- Ruleset requires pull requests and repository-control status checks with no bypass actors
+- Phase D closure PR #1 Repository Control CI run 35517147247 passed: SCOPE_OK + 58/58 tests + fresh-session probe
 
 The active Task Contract SHA-256 is:
 
