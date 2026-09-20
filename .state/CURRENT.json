@@ -1,13 +1,14 @@
 {
-  "schema_version": 1,
-  "state_version": 20,
+  "blocked": null,
   "checkpoint_id": "DEV-INFRA-MAIN-FINAL-001",
-  "updated_at": "2026-09-20T15:23:00Z",
-  "task": {
-    "task_id": "TASK-DEV-INFRA-001",
-    "task_contract_sha256": "a91ee7adb356adb4c8d8e199e63a40d620a39f2963906f7459fb6fd7629fbafe",
-    "phase": "DEV_INFRA_PASS"
+  "external_operations": {
+    "paid_requests_allowed": false,
+    "pending_paid_requests": [],
+    "provider_preflight_started": false,
+    "unknown_billing_requests": []
   },
+  "last_journal_event_sha256": "715d226e70e55b6945d664c231a382e8536b297627c3fcf8c0f12151bcc0f743",
+  "last_journal_sequence": 20,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -75,49 +76,48 @@
     "next_action": "Repository control and development infrastructure are complete on main. Before Provider Preflight or adding credentials, make the repository private and explicitly authorize Provider Preflight; paid provider requests remain disabled.",
     "next_command": null
   },
-  "verification": {
-    "phase_a_acceptance_passed": true,
-    "baseline_regression_suite_passed": true,
-    "latest_evidence_id": "DEV-INFRA-001",
-    "phase_b_acceptance_passed": true,
-    "phase_b_tests_passed": "8/8",
-    "full_regression_suite_passed": "63/63",
-    "phase_c_acceptance_passed": true,
-    "phase_c_tests_passed": "8/8",
-    "phase_d_tests_passed": "12/12",
-    "phase_d_fresh_session_process_passed": true,
-    "phase_d_ci_passed": true,
-    "phase_d_branch_protection_passed": true,
-    "phase_d_persisted_checkpoint_fresh_clone_passed": true,
-    "phase_d_acceptance_passed": true,
-    "dev_infra_acceptance_passed": true,
-    "dev_infra_repository_control_ci_passed": true,
-    "dev_infra_product_ci_passed": true,
-    "dev_infra_backend_passed": true,
-    "dev_infra_frontend_passed": true,
-    "dev_infra_integration_smoke_passed": true,
-    "dev_infra_postgres_migration_passed": true,
-    "dev_infra_ffmpeg_smoke_passed": true,
-    "dev_infra_secret_hygiene_passed": true,
-    "main_final_repository_control_ci_passed": true,
-    "main_final_product_ci_passed": true,
-    "main_final_head": "e9a29173ab52300da26c92cb6c488330203dea1f",
-    "development_infrastructure_ready": true
-  },
-  "external_operations": {
-    "provider_preflight_started": false,
-    "paid_requests_allowed": false,
-    "unknown_billing_requests": [],
-    "pending_paid_requests": []
-  },
-  "blocked": null,
-  "last_journal_sequence": 20,
-  "last_journal_event_sha256": "715d226e70e55b6945d664c231a382e8536b297627c3fcf8c0f12151bcc0f743",
   "repository": {
     "branch": "main",
     "head_commit": "e9a29173ab52300da26c92cb6c488330203dea1f",
     "working_tree_dirty": false,
     "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "content_fingerprint": "f6fd946107dfac808a53bda37a1428166e2a6ef4e5fc8205b900b2bef9ba0fb1"
+  },
+  "schema_version": 1,
+  "state_version": 20,
+  "task": {
+    "phase": "DEV_INFRA_PASS",
+    "task_contract_sha256": "a91ee7adb356adb4c8d8e199e63a40d620a39f2963906f7459fb6fd7629fbafe",
+    "task_id": "TASK-DEV-INFRA-001"
+  },
+  "updated_at": "2026-09-20T15:23:00Z",
+  "verification": {
+    "baseline_regression_suite_passed": true,
+    "dev_infra_acceptance_passed": true,
+    "dev_infra_backend_passed": true,
+    "dev_infra_ffmpeg_smoke_passed": true,
+    "dev_infra_frontend_passed": true,
+    "dev_infra_integration_smoke_passed": true,
+    "dev_infra_postgres_migration_passed": true,
+    "dev_infra_product_ci_passed": true,
+    "dev_infra_repository_control_ci_passed": true,
+    "dev_infra_secret_hygiene_passed": true,
+    "full_regression_suite_passed": "63/63",
+    "latest_evidence_id": "DEV-INFRA-001",
+    "phase_a_acceptance_passed": true,
+    "phase_b_acceptance_passed": true,
+    "phase_b_tests_passed": "8/8",
+    "phase_c_acceptance_passed": true,
+    "phase_c_tests_passed": "8/8",
+    "phase_d_acceptance_passed": true,
+    "phase_d_branch_protection_passed": true,
+    "phase_d_ci_passed": true,
+    "phase_d_fresh_session_process_passed": true,
+    "phase_d_persisted_checkpoint_fresh_clone_passed": true,
+    "phase_d_tests_passed": "12/12",
+    "main_final_repository_control_ci_passed": true,
+    "main_final_product_ci_passed": true,
+    "main_final_head": "e9a29173ab52300da26c92cb6c488330203dea1f",
+    "development_infrastructure_ready": true
   }
 }
