@@ -1,0 +1,62 @@
+name: Lab CI
+
+on:
+  pull_request:
+    paths:
+      - 'lab/**'
+      - 'AGENTS.md'
+      - 'PROJECT_STATE.yaml'
+      - 'tasks/TASK-PRODUCT-LAB-001.yaml'
+      - '.state/**'
+      - '.github/workflows/lab-ci.yml'
+  push:
+    branches: [main, 'lab-*']
+    paths:
+      - 'lab/**'
+      - 'AGENTS.md'
+      - 'PROJECT_STATE.yaml'
+      - 'tasks/TASK-PRODUCT-LAB-001.yaml'
+      - '.state/**'
+      - '.github/workflows/lab-ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  lab-product-flow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install repository-control dependency
+        run: python -m pip install --quiet pyyaml
+
+      - name: Print repository snapshot
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from projectctl.core import git_snapshot
+          print("LAB_REPOSITORY_SNAPSHOT=" + json.dumps(git_snapshot(Path.cwd()), sort_keys=True))
+          PY
+
+      - name: Run lab unit tests
+        working-directory: lab/experiments/product-flow-001
+        run: python -m unittest discover -s tests -v
+
+      - name: Run deterministic lab demo
+        working-directory: lab/experiments/product-flow-001
+        run: |
+          python run_demo.py fixtures/project_request.json > /tmp/product-flow.json
+          python - <<'PY'
+          import json
+          data = json.load(open("/tmp/product-flow.json", encoding="utf-8"))
+          assert data["preview_plan"]["total_duration_sec"] == data["request"]["duration_sec"]
+          assert len(data["scene_graph"]) >= 1
+          assert len(data["shot_contracts"]) >= len(data["scene_graph"])
+          print("LAB_PRODUCT_FLOW_001_OK")
+          PY

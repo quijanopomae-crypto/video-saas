@@ -1,0 +1,53 @@
+schema_version: 1
+task:
+  id: TASK-PRODUCT-LAB-001
+  title: Probar el primer flujo vertical del producto en lab sin contaminar el canon
+  status: PASS
+  risk: MEDIUM
+objective:
+  expected_outcome: LAB_PRODUCT_FLOW_001_VALIDATED
+scope:
+  allowed_paths:
+    - AGENTS.md
+    - PROJECT_STATE.yaml
+    - tasks/TASK-PRODUCT-LAB-001.yaml
+    - .state/**
+    - lab/**
+    - .github/workflows/lab-ci.yml
+    - evidence/**
+  forbidden_paths:
+    - apps/**
+    - manifests/**
+    - schemas/**
+    - src/**
+    - projectctl/**
+    - .env
+    - .env.*
+constraints:
+  - lab/** es experimental y no canonico.
+  - Ningun archivo bajo apps/** puede importar codigo desde lab/**.
+  - No ejecutar Provider Preflight.
+  - No hacer requests pagados.
+  - No agregar credenciales reales ni secretos.
+  - No modificar BENCH20, BENCH100 ni manifests congelados.
+  - No reabrir arquitectura base sin evidencia material.
+  - La promocion a canon requiere una Task Contract separada y aprobacion explicita del usuario.
+acceptance:
+  - Existe lab/ con reglas claras de aislamiento y promocion.
+  - El experimento product-flow-001 transforma una solicitud en Project Bible, Scene Graph, Shot Contracts y Preview Plan.
+  - La duracion total se conserva exactamente de entrada a escenas, shots y preview.
+  - Los IDs son unicos y todas las referencias entre escenas y shots son validas.
+  - El resultado es determinista para la misma entrada.
+  - El laboratorio no contiene claves ni nombres de credenciales de proveedores.
+  - Lab CI pasa.
+  - Repository Control CI pasa con el nuevo Task Contract.
+  - Product CI existente continua pasando.
+  - Provider Preflight permanece sin iniciar y paid requests permanecen deshabilitados.
+promotion_gate:
+  canonical: false
+  requires:
+    - LAB_CI_PASS
+    - REPOSITORY_CONTROL_CI_PASS
+    - PRODUCT_CI_PASS
+    - EXPLICIT_USER_APPROVAL
+    - NEW_PROMOTION_TASK_CONTRACT

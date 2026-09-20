@@ -1,0 +1,33 @@
+schema_version: 1
+experiment:
+  id: product-flow-001
+  title: Deterministic product planning vertical slice
+  status: VALIDATED
+  canonical: false
+hypothesis:
+  statement: A provider-independent request can be transformed into stable production planning contracts before any generative API is connected.
+inputs:
+  - title
+  - idea
+  - duration_sec
+  - aspect_ratio
+  - audience
+  - tone
+  - language
+outputs:
+  - project_bible
+  - scene_graph
+  - shot_contracts
+  - preview_plan
+constraints:
+  - deterministic
+  - no_network
+  - no_provider_credentials
+  - no_paid_requests
+  - exact_duration_conservation
+promotion:
+  state: AWAITING_USER_APPROVAL
+  evidence_id: LAB-PRODUCT-FLOW-001
+  target_if_approved:
+    - apps/api/src/modules/projects/
+    - apps/api/src/modules/planning/

@@ -1,0 +1,9 @@
+{
+  "title": "Como funciona una fabrica multimodelo de video",
+  "idea": "Explicar de forma visual como una solicitud se convierte en escenas, shots y un video final coordinando diferentes capacidades.",
+  "duration_sec": 60,
+  "aspect_ratio": "16:9",
+  "audience": "creadores y equipos de producto",
+  "tone": "claro y tecnologico",
+  "language": "es"
+}

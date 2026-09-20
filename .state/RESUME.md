@@ -1,12 +1,12 @@
-# RESUME — TASK-DEV-INFRA-001
+# RESUME — TASK-PRODUCT-LAB-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** DEV_INFRA_PASS
-- **Checkpoint:** DEV-INFRA-MAIN-FINAL-001
-- **State version:** 20
-- **Branch:** main
-- **Checkpoint base HEAD:** e9a29173ab52300da26c92cb6c488330203dea1f
+- **Phase:** PRODUCT_LAB_VALIDATED
+- **Checkpoint:** LAB-PRODUCT-FLOW-001-VALIDATED
+- **State version:** 23
+- **Branch:** lab-product-flow-001
+- **Checkpoint base HEAD:** 709c13070936dcf50dd1ab7f8d0b1b1523e71eed
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -14,9 +14,9 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Baseline regression suite:** true
 - **Phase B acceptance:** true
 - **Phase C acceptance:** true
-- **Latest evidence:** DEV-INFRA-001
+- **Latest evidence:** LAB-PRODUCT-FLOW-001
 - **Blocked:** none
-- **Next action:** Repository control and development infrastructure are complete on main. Before Provider Preflight or adding credentials, make the repository private and explicitly authorize Provider Preflight; paid provider requests remain disabled.
+- **Next action:** Await explicit user approval to promote product-flow-001 from lab/** into canonical apps/** under a new promotion Task Contract. Provider Preflight and paid requests remain disabled.
 
 ## Completed steps
 
@@ -81,7 +81,16 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - Main Repository Control CI run 35519069836 passed after PR #2 merge
 - Main Product CI run 35519069950 passed after PR #2 merge: backend + frontend + integration-smoke + product-ci
 - Durable repository cursor normalized to main after development infrastructure merge
+- TASK-PRODUCT-LAB-001 activated with lab isolated from canonical apps
+- Lab CI run 35524914368 passed: 5/5 tests + deterministic demo
+- product-flow-001 remains non-canonical pending full CI and explicit promotion approval
+- LAB-PRODUCT-FLOW-001 evidence materialized
+- product-flow-001 marked VALIDATED_AWAITING_APPROVAL while final CI revalidation is pending
+- Lab CI run 35525347154 passed on synchronized validated state
+- Repository Control CI run 35525347147 passed: scope + 63/63 tests + fresh-session
+- Product CI run 35525347142 passed: backend + frontend + integration-smoke + product-ci
+- product-flow-001 validated and remains non-canonical awaiting explicit user promotion approval
 
 The active Task Contract SHA-256 is:
 
-`a91ee7adb356adb4c8d8e199e63a40d620a39f2963906f7459fb6fd7629fbafe`
+`4356ad08924a6104f548ee1e586e87fe4c38d560e706ee2e1d6e52946e4e2307`
