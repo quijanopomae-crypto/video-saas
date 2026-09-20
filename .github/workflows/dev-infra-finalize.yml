@@ -1,0 +1,45 @@
+name: Finalize Dev Infra Checkpoint
+
+on:
+  push:
+    branches: [dev-infra-001]
+    paths:
+      - '.bootstrap/dev-infra-final.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  checkpoint:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install projectctl dependency
+        run: python -m pip install --quiet pyyaml
+
+      - name: Remove bootstrap files from final repository state
+        run: |
+          rm -rf .bootstrap
+          rm -f .github/workflows/dev-infra-finalize.yml
+          git add -A .bootstrap .github/workflows/dev-infra-finalize.yml
+
+      - name: Seal accepted development infrastructure state
+        run: |
+          python -B -m projectctl checkpoint             --reason "Seal DEVELOPMENT_INFRASTRUCTURE_READY after Repository Control CI and Product CI passed"             --next-action "Before Provider Preflight or adding credentials, review repository privacy and explicitly authorize Provider Preflight; paid provider requests remain disabled."
+
+      - name: Commit final durable checkpoint
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .state
+          git commit -m "chore: seal development infrastructure ready state"
+          git push
