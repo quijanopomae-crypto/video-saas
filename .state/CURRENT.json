@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "state_version": 15,
-  "checkpoint_id": "PHASE-D-PASS-001",
-  "updated_at": "2026-09-20T14:39:34Z",
+  "state_version": 19,
+  "checkpoint_id": "DEV-INFRA-FINAL-001",
+  "updated_at": "2026-09-20T15:14:00Z",
   "task": {
-    "task_id": "TASK-REPO-CONTROL-004",
-    "task_contract_sha256": "9030f076ab09869e5980d8749dc33ffd28fb52800405abcdac318536b716b576",
-    "phase": "PHASE_D_PASS"
+    "task_id": "TASK-DEV-INFRA-001",
+    "task_contract_sha256": "a91ee7adb356adb4c8d8e199e63a40d620a39f2963906f7459fb6fd7629fbafe",
+    "phase": "DEV_INFRA_PASS"
   },
   "progress": {
     "completed_steps": [
@@ -57,18 +57,28 @@
       "Repository Control CI remote run 35512907861 passed: scope + 58/58 tests + fresh-session probe",
       "GitHub ruleset Protect main observed active on the default branch",
       "Ruleset requires pull requests and repository-control status checks with no bypass actors",
-      "Phase D closure PR #1 Repository Control CI run 35517147247 passed: SCOPE_OK + 58/58 tests + fresh-session probe"
+      "Phase D closure PR #1 Repository Control CI run 35517147247 passed: SCOPE_OK + 58/58 tests + fresh-session probe",
+      "TASK-DEV-INFRA-001 activated with provider spending disabled",
+      "FastAPI health and PostgreSQL readiness passed",
+      "Alembic clean-database migration 0001_infra_meta passed",
+      "Local storage, queue and workflow adapters passed tests",
+      "FFmpeg deterministic smoke passed",
+      "Next.js structural tests, typecheck and production build passed",
+      "Web -> Next route handler -> FastAPI integration smoke passed",
+      "Secret hygiene scan passed",
+      "Repository Control CI run 35518644353 passed: SCOPE_OK + 63/63 tests + fresh-session",
+      "Product CI run 35518644355 passed: backend + frontend + integration-smoke + product-ci"
     ],
-    "next_action": "Await explicit Provider Preflight authorization; provider calls and paid requests remain disabled.",
+    "next_action": "Before Provider Preflight or adding credentials, review repository privacy and explicitly authorize Provider Preflight; paid provider requests remain disabled.",
     "next_command": null
   },
   "verification": {
     "phase_a_acceptance_passed": true,
     "baseline_regression_suite_passed": true,
-    "latest_evidence_id": "PHASE-D-BRANCH-PROTECTION",
+    "latest_evidence_id": "DEV-INFRA-001",
     "phase_b_acceptance_passed": true,
     "phase_b_tests_passed": "8/8",
-    "full_regression_suite_passed": "58/58",
+    "full_regression_suite_passed": "63/63",
     "phase_c_acceptance_passed": true,
     "phase_c_tests_passed": "8/8",
     "phase_d_tests_passed": "12/12",
@@ -76,7 +86,16 @@
     "phase_d_ci_passed": true,
     "phase_d_branch_protection_passed": true,
     "phase_d_persisted_checkpoint_fresh_clone_passed": true,
-    "phase_d_acceptance_passed": true
+    "phase_d_acceptance_passed": true,
+    "dev_infra_acceptance_passed": true,
+    "dev_infra_repository_control_ci_passed": true,
+    "dev_infra_product_ci_passed": true,
+    "dev_infra_backend_passed": true,
+    "dev_infra_frontend_passed": true,
+    "dev_infra_integration_smoke_passed": true,
+    "dev_infra_postgres_migration_passed": true,
+    "dev_infra_ffmpeg_smoke_passed": true,
+    "dev_infra_secret_hygiene_passed": true
   },
   "external_operations": {
     "provider_preflight_started": false,
@@ -85,13 +104,13 @@
     "pending_paid_requests": []
   },
   "blocked": null,
-  "last_journal_sequence": 16,
-  "last_journal_event_sha256": "9a2b985d5c59371b39b59c0aee5fbc036a5299c48d8bfcd9a08f68ab40256574",
+  "last_journal_sequence": 19,
+  "last_journal_event_sha256": "536cba7f631e0e92f609ffd00e9da268ee1488d68d0de3dd977ac9f881e0e9f8",
   "repository": {
-    "branch": "main",
-    "head_commit": "ab6ef2d197e57cb6c1fc5503ea8d42f2b62e612e",
+    "branch": "dev-infra-001",
+    "head_commit": "27696bd278c4aac599d16875bfcbd88deb4cef93",
     "working_tree_dirty": false,
     "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "content_fingerprint": "c29d62ae8d0b17a13e7754432c477272e0fbb2a629b09223f2eedb678cc42caf"
+    "content_fingerprint": "f6fd946107dfac808a53bda37a1428166e2a6ef4e5fc8205b900b2bef9ba0fb1"
   }
 }

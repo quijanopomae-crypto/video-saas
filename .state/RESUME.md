@@ -1,12 +1,12 @@
-# RESUME — TASK-REPO-CONTROL-004
+# RESUME — TASK-DEV-INFRA-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** PHASE_D_PASS
-- **Checkpoint:** PHASE-D-PASS-001
-- **State version:** 15
-- **Branch:** main
-- **Checkpoint base HEAD:** ab6ef2d197e57cb6c1fc5503ea8d42f2b62e612e
+- **Phase:** DEV_INFRA_PASS
+- **Checkpoint:** DEV-INFRA-FINAL-001
+- **State version:** 19
+- **Branch:** dev-infra-001
+- **Checkpoint base HEAD:** 27696bd278c4aac599d16875bfcbd88deb4cef93
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -14,9 +14,9 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Baseline regression suite:** true
 - **Phase B acceptance:** true
 - **Phase C acceptance:** true
-- **Latest evidence:** PHASE-D-BRANCH-PROTECTION
+- **Latest evidence:** DEV-INFRA-001
 - **Blocked:** none
-- **Next action:** Await explicit Provider Preflight authorization; provider calls and paid requests remain disabled.
+- **Next action:** Before Provider Preflight or adding credentials, review repository privacy and explicitly authorize Provider Preflight; paid provider requests remain disabled.
 
 ## Completed steps
 
@@ -68,7 +68,17 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - GitHub ruleset Protect main observed active on the default branch
 - Ruleset requires pull requests and repository-control status checks with no bypass actors
 - Phase D closure PR #1 Repository Control CI run 35517147247 passed: SCOPE_OK + 58/58 tests + fresh-session probe
+- TASK-DEV-INFRA-001 activated with provider spending disabled
+- FastAPI health and PostgreSQL readiness passed
+- Alembic clean-database migration 0001_infra_meta passed
+- Local storage, queue and workflow adapters passed tests
+- FFmpeg deterministic smoke passed
+- Next.js structural tests, typecheck and production build passed
+- Web -> Next route handler -> FastAPI integration smoke passed
+- Secret hygiene scan passed
+- Repository Control CI run 35518644353 passed: SCOPE_OK + 63/63 tests + fresh-session
+- Product CI run 35518644355 passed: backend + frontend + integration-smoke + product-ci
 
 The active Task Contract SHA-256 is:
 
-`9030f076ab09869e5980d8749dc33ffd28fb52800405abcdac318536b716b576`
+`a91ee7adb356adb4c8d8e199e63a40d620a39f2963906f7459fb6fd7629fbafe`
