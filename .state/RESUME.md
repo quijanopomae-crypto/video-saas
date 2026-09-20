@@ -2,12 +2,12 @@
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** PHASE_C_PASS
-- **Checkpoint:** CP-1789909297355-d0d2daea
-- **State version:** 12
-- **Branch:** UNRECORDED
-- **Checkpoint base HEAD:** UNRECORDED
-- **Checkpoint working tree dirty:** UNRECORDED
+- **Phase:** PHASE_D_BLOCKED_BRANCH_PROTECTION
+- **Checkpoint:** CP-1789910285676-9598ce01
+- **State version:** 13
+- **Branch:** main
+- **Checkpoint base HEAD:** 3cca3c249b980b67b224a78f39e7f4e1d34bd47e
+- **Checkpoint working tree dirty:** True
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
 - **Phase A acceptance:** true
@@ -60,7 +60,12 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - Persistent Repository Control CI workflow materialized
 - Main branch protection/ruleset check blocked by GitHub plan/integration; PHASE_D_PASS withheld
 - Repository Control CI remote run 35512196617 passed: scope + 56/56 tests + fresh-session probe
+- Commit-safe Git reconciliation implemented with content fingerprint and ancestor validation
+- Persisted checkpoint -> fresh clone -> recover regression passed
+- Committed non-state mutation after checkpoint is blocked
+- Full regression suite passed 58/58
+- Repository Control CI remote run 35512907861 passed: scope + 58/58 tests + fresh-session probe
 
 The active Task Contract SHA-256 is:
 
-`ff398bb4d915496fe1588a033c197e2dfdad34a1444732165aebfda9beaa699a`
+`2f571d5febf5a7bbc83a9b4f7d1fe2bd49e144cfa7fe555716845874a628f5d1`

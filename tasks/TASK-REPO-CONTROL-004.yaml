@@ -2,49 +2,54 @@ schema_version: 1
 task:
   id: TASK-REPO-CONTROL-004
   title: Implementar y demostrar la Fase D del Repository Control Plane
-  status: READY
+  status: BLOCKED
   risk: MEDIUM
 objective:
   expected_outcome: REPOSITORY_CONTROL_PHASE_D_PASS
 scope:
   allowed_paths:
-    - AGENTS.md
-    - PROJECT_STATE.yaml
-    - .gitignore
-    - tasks/TASK-REPO-CONTROL-004.yaml
-    - .state/**
-    - projectctl/**
-    - tests/test_projectctl_phase_d.py
-    - scripts/fresh_session_probe.py
-    - .github/workflows/repository-control-ci.yml
-    - evidence/**
+  - AGENTS.md
+  - PROJECT_STATE.yaml
+  - .gitignore
+  - tasks/TASK-REPO-CONTROL-004.yaml
+  - .state/**
+  - projectctl/**
+  - tests/test_projectctl_phase_d.py
+  - scripts/fresh_session_probe.py
+  - .github/workflows/repository-control-ci.yml
+  - evidence/**
   forbidden_paths:
-    - apps/**
-    - manifests/**
-    - schemas/**
-    - docs/ARCHITECTURE.md
-    - docs/adr/**
+  - apps/**
+  - manifests/**
+  - schemas/**
+  - docs/ARCHITECTURE.md
+  - docs/adr/**
 constraints:
-  - No ejecutar Provider Preflight.
-  - No hacer requests pagados.
-  - No modificar BENCH20 ni BENCH100.
-  - No modificar scenario budgets.
-  - No cambiar pricing comercial.
-  - No añadir dependencias de runtime del producto.
-  - No crear código del producto.
-  - No declarar pruebas no ejecutadas.
-  - No modificar manifests congelados.
+- No ejecutar Provider Preflight.
+- No hacer requests pagados.
+- No modificar BENCH20 ni BENCH100.
+- No modificar scenario budgets.
+- No cambiar pricing comercial.
+- No añadir dependencias de runtime del producto.
+- No crear código del producto.
+- No declarar pruebas no ejecutadas.
+- No modificar manifests congelados.
 acceptance:
-  - Los tests de corte demuestran recuperación cuando el journal queda adelantado o RESUME queda obsoleto.
-  - Los tests de corrupción bloquean alteraciones intermedias, hash-chain inválido, secuencias inválidas o eventos duplicados.
-  - La concurrencia impide dos escritores efectivos sobre el mismo estado.
-  - check-scope detecta cambios no autorizados también cuando ya están comprometidos respecto a un base_ref.
-  - Dos intentos equivalentes no pueden registrarse como dos intentos válidos.
-  - Un proceso nuevo sin memoria previa puede reconstruir el handoff leyendo únicamente los archivos durables del repositorio.
-  - El workflow CI persistente ejecuta scope, suite completa y fresh-session probe.
-  - La suite previa de 46 tests continúa pasando.
-  - Los tests nuevos de Fase D pasan.
-  - La rama main tiene protección/ruleset efectivo que exige CI antes de integrar cambios.
-  - Provider Preflight permanece sin iniciar.
+- Los tests de corte demuestran recuperación cuando el journal queda adelantado o
+  RESUME queda obsoleto.
+- Los tests de corrupción bloquean alteraciones intermedias, hash-chain inválido,
+  secuencias inválidas o eventos duplicados.
+- La concurrencia impide dos escritores efectivos sobre el mismo estado.
+- check-scope detecta cambios no autorizados también cuando ya están comprometidos
+  respecto a un base_ref.
+- Dos intentos equivalentes no pueden registrarse como dos intentos válidos.
+- Un proceso nuevo sin memoria previa puede reconstruir el handoff leyendo únicamente
+  los archivos durables del repositorio.
+- El workflow CI persistente ejecuta scope, suite completa y fresh-session probe.
+- La suite previa de 46 tests continúa pasando.
+- Los tests nuevos de Fase D pasan.
+- La rama main tiene protección/ruleset efectivo que exige CI antes de integrar cambios.
+- Provider Preflight permanece sin iniciar.
 blocking_rule:
-  - Si GitHub impide protección de rama por plan o permisos, no declarar PHASE_D_PASS; registrar evidencia y dejar PHASE_D bloqueada en ese gate.
+- Si GitHub impide protección de rama por plan o permisos, no declarar PHASE_D_PASS;
+  registrar evidencia y dejar PHASE_D bloqueada en ese gate.

@@ -20,12 +20,13 @@ baseline:
   asset_freeze_validation: DEFERRED
   provider_probes_executed: false
 phase_d:
-  software_demonstration_status: PASS_LOCAL
-  regression_tests: 56/56
-  phase_d_tests: 10/10
+  software_demonstration_status: PASS_REMOTE_EXCEPT_BRANCH_PROTECTION
+  regression_tests: 58/58
+  phase_d_tests: 12/12
   fresh_session_process_probe: PASS
   ci_status: PASS_REMOTE
   branch_protection_status: BLOCKED_GITHUB_PLAN_OR_INTEGRATION
-  ci_run_id: 35512196617
-  ci_head_sha: 43fe7deb8e6d66942584111a38644d47e1678542
+  ci_run_id: 35512907861
+  ci_head_sha: 5aeca47430ab10775b2df10c5c8ffa59f6097845
+  persisted_checkpoint_fresh_clone: PASS
 next_gate: BRANCH_PROTECTION_REQUIRED_FOR_PHASE_D_PASS

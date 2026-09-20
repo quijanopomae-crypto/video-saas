@@ -5,16 +5,17 @@
   "source": "github_actions",
   "repository": "quijanopomae-crypto/video-saas",
   "workflow": "Repository Control CI",
-  "run_id": 35512196617,
-  "head_sha": "43fe7deb8e6d66942584111a38644d47e1678542",
+  "run_id": 35512907861,
+  "head_sha": "5aeca47430ab10775b2df10c5c8ffa59f6097845",
   "conclusion": "success",
   "observed_checks": {
     "scope": "SCOPE_OK",
-    "regression_tests": "56/56 PASS",
-    "fresh_session": "FRESH_SESSION_HANDOFF_OK"
+    "regression_tests": "58/58 PASS",
+    "fresh_session": "FRESH_SESSION_HANDOFF_OK",
+    "persisted_checkpoint_fresh_clone": "PASS"
   },
   "provider_preflight_started": false,
   "paid_requests_executed": false,
   "durable_state_commit": "99a5af2fec78c3e0fc4e06c42cb521b93c596db3",
-  "final_confirmation_requested": true
+  "final_confirmation_requested": false
 }
