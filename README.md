@@ -19,3 +19,17 @@ python -m pytest -q tests
 ```
 
 No provider probes or spend are authorized until integrity passes.
+
+## Development infrastructure
+
+The repository control plane is complete. The active development task builds the minimal product skeleton under `apps/api` and `apps/web` while Provider Preflight and paid provider requests remain disabled.
+
+Windows-first commands:
+
+```powershell
+Copy-Item .env.example .env
+.\scripts\dev.ps1
+.\scripts\test.ps1
+```
+
+See `docs/DEVELOPMENT.md` for the local workflow.
