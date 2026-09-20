@@ -1,13 +1,13 @@
-# RESUME — TASK-REPO-CONTROL-004
+# RESUME — TASK-DEV-INFRA-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** PHASE_D_PASS
+- **Phase:** DEV_INFRA_BUILD
 - **Checkpoint:** PHASE-D-PASS-001
-- **State version:** 15
-- **Branch:** main
-- **Checkpoint base HEAD:** ab6ef2d197e57cb6c1fc5503ea8d42f2b62e612e
-- **Checkpoint working tree dirty:** False
+- **State version:** 16
+- **Branch:** UNRECORDED
+- **Checkpoint base HEAD:** UNRECORDED
+- **Checkpoint working tree dirty:** 'UNRECORDED'
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
 - **Phase A acceptance:** true
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** PHASE-D-BRANCH-PROTECTION
 - **Blocked:** none
-- **Next action:** Await explicit Provider Preflight authorization; provider calls and paid requests remain disabled.
+- **Next action:** Build and validate the minimal development infrastructure: API, web, PostgreSQL, local adapters, FFmpeg worker and Product CI.
 
 ## Completed steps
 
@@ -68,7 +68,8 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - GitHub ruleset Protect main observed active on the default branch
 - Ruleset requires pull requests and repository-control status checks with no bypass actors
 - Phase D closure PR #1 Repository Control CI run 35517147247 passed: SCOPE_OK + 58/58 tests + fresh-session probe
+- TASK-DEV-INFRA-001 activated with provider spending disabled
 
 The active Task Contract SHA-256 is:
 
-`9030f076ab09869e5980d8749dc33ffd28fb52800405abcdac318536b716b576`
+`8072d92008d300109ea2652c438d34e3125b1adc5fc4e7c71a535e3441660b05`
