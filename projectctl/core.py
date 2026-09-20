@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import fnmatch
 import hashlib
 import json
+import re
 import os
 import socket
 import subprocess
@@ -11,8 +13,10 @@ import uuid
 from contextlib import contextmanager
 from copy import deepcopy
 from datetime import datetime, timezone
-from pathlib import Path
-from typing import Any
+from pathlib import Path, PurePosixPath
+from typing import Any, Iterable
+
+import yaml
 
 
 class ProjectCtlError(RuntimeError):
@@ -282,6 +286,8 @@ def render_resume(current: dict[str, Any]) -> str:
         f"- **Phase A acceptance:** {str(verification.get('phase_a_acceptance_passed', False)).lower()}",
         f"- **Baseline regression suite:** {str(verification.get('baseline_regression_suite_passed', False)).lower()}",
         f"- **Phase B acceptance:** {str(verification.get('phase_b_acceptance_passed', False)).lower()}",
+        f"- **Phase C acceptance:** {str(verification.get('phase_c_acceptance_passed', False)).lower()}",
+        f"- **Latest evidence:** {verification.get('latest_evidence_id') or 'none'}",
         f"- **Blocked:** {current.get('blocked') or 'none'}",
         f"- **Next action:** {progress.get('next_action')}",
         "",
@@ -459,3 +465,408 @@ def resume(root: Path) -> tuple[dict[str, Any], str]:
     result = recover(root)
     text = (root / ".state" / "RESUME.md").read_text(encoding="utf-8")
     return result, text
+
+
+class ScopeViolation(ProjectCtlError):
+    def __init__(self, violations: list[dict[str, str]]):
+        self.violations = violations
+        super().__init__(f"SCOPE_VIOLATION: {json.dumps(violations, ensure_ascii=False)}")
+
+
+class EquivalentAttemptBlocked(ProjectCtlError):
+    def __init__(self, fingerprint: str):
+        self.fingerprint = fingerprint
+        super().__init__(f"EQUIVALENT_ATTEMPT_BLOCKED: {fingerprint}")
+
+
+class TransitionBlocked(ProjectCtlError):
+    def __init__(self, code: str, detail: str):
+        self.code = code
+        self.detail = detail
+        super().__init__(f"{code}: {detail}")
+
+
+REPOSITORY_PHASE_TRANSITIONS = {
+    "PHASE_A_PASS": {"PHASE_B_PASS"},
+    "PHASE_B_PASS": {"PHASE_C_PASS"},
+    "PHASE_C_PASS": {"PHASE_D_PASS"},
+}
+
+
+def load_yaml(path: Path) -> dict[str, Any]:
+    try:
+        value = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise ProjectCtlError(f"missing required file: {path}") from exc
+    if not isinstance(value, dict):
+        raise ProjectCtlError(f"expected YAML object in {path}")
+    return value
+
+
+def active_task_contract_path(root: Path) -> Path:
+    project = load_yaml(root / "PROJECT_STATE.yaml")
+    task_id = project.get("active_task_id")
+    if not isinstance(task_id, str) or not task_id:
+        raise ProjectCtlError("PROJECT_STATE.yaml has no active_task_id")
+    path = root / "tasks" / f"{task_id}.yaml"
+    if not path.exists():
+        raise ProjectCtlError(f"active Task Contract not found: {path}")
+    return path
+
+
+def _norm_repo_path(value: str | Path) -> str:
+    text = str(value).replace("\\", "/")
+    while text.startswith("./"):
+        text = text[2:]
+    return str(PurePosixPath(text))
+
+
+def _scope_match(path: str, pattern: str) -> bool:
+    path = _norm_repo_path(path)
+    pattern = _norm_repo_path(pattern)
+    if pattern.endswith("/**"):
+        prefix = pattern[:-3].rstrip("/")
+        return path == prefix or path.startswith(prefix + "/")
+    return fnmatch.fnmatchcase(path, pattern)
+
+
+def git_changed_paths(root: Path, base_ref: str | None = None) -> list[str]:
+    changed: set[str] = set()
+    if base_ref:
+        committed = _git(root, "diff", "--name-only", "-z", f"{base_ref}...HEAD")
+        changed.update(x.decode("utf-8", "surrogateescape") for x in committed.split(b"\0") if x)
+    tracked = _git(root, "diff", "--name-only", "-z", "HEAD")
+    changed.update(x.decode("utf-8", "surrogateescape") for x in tracked.split(b"\0") if x)
+    untracked = _git(root, "ls-files", "--others", "--exclude-standard", "-z")
+    changed.update(x.decode("utf-8", "surrogateescape") for x in untracked.split(b"\0") if x)
+    return sorted(_norm_repo_path(x) for x in changed)
+
+
+def assert_frozen_manifests_immutable(root: Path, changed_paths: Iterable[str]) -> None:
+    manifest_path = root / "manifests" / "model-manifest-bench100-v1.1.yaml"
+    if not manifest_path.exists():
+        return
+    manifest = load_yaml(manifest_path)
+    if manifest.get("current_state") != "MODEL_MANIFEST_FROZEN":
+        return
+    touched = sorted(p for p in {_norm_repo_path(x) for x in changed_paths} if _scope_match(p, "manifests/**"))
+    if touched:
+        raise TransitionBlocked("FROZEN_MANIFEST_MODIFICATION_BLOCKED", ", ".join(touched))
+
+
+def check_scope(
+    root: Path,
+    *,
+    task_contract_path: Path | None = None,
+    paths: Iterable[str] | None = None,
+    base_ref: str | None = None,
+) -> dict[str, Any]:
+    root = root.resolve()
+    contract_path = task_contract_path or active_task_contract_path(root)
+    contract = load_yaml(contract_path)
+    scope = contract.get("scope") or {}
+    allowed = list(scope.get("allowed_paths") or [])
+    forbidden = list(scope.get("forbidden_paths") or [])
+    if not allowed:
+        raise ProjectCtlError(f"Task Contract has no allowed_paths: {contract_path}")
+    changed = sorted({_norm_repo_path(x) for x in (paths if paths is not None else git_changed_paths(root, base_ref))})
+    violations: list[dict[str, str]] = []
+    for path in changed:
+        if any(_scope_match(path, pattern) for pattern in forbidden):
+            violations.append({"path": path, "reason": "FORBIDDEN_PATH"})
+        elif not any(_scope_match(path, pattern) for pattern in allowed):
+            violations.append({"path": path, "reason": "OUTSIDE_ALLOWED_PATHS"})
+    assert_frozen_manifests_immutable(root, changed)
+    if violations:
+        raise ScopeViolation(violations)
+    return {
+        "status": "SCOPE_OK",
+        "task_id": (contract.get("task") or {}).get("id"),
+        "task_contract": str(contract_path.relative_to(root)),
+        "paths_checked": changed,
+    }
+
+
+def attempt_fingerprint(
+    *,
+    task_id: str,
+    operation: str,
+    inputs: Any,
+    causal_change: str | None = None,
+) -> str:
+    if not task_id or not operation:
+        raise ProjectCtlError("task_id and operation are required for attempt fingerprint")
+    material = {
+        "schema_version": 1,
+        "task_id": task_id,
+        "operation": operation,
+        "inputs": inputs,
+        "causal_change": causal_change or "NONE",
+    }
+    return hashlib.sha256(canonical_json_bytes(material)).hexdigest()
+
+
+def _journal_attempt_fingerprints(events: list[dict[str, Any]]) -> set[str]:
+    out: set[str] = set()
+    for event in events:
+        if event.get("event_type") != "ATTEMPT_REGISTERED":
+            continue
+        fp = (event.get("payload") or {}).get("attempt_fingerprint")
+        if isinstance(fp, str):
+            out.add(fp)
+    return out
+
+
+def _ensure_state_journal_aligned(current: dict[str, Any], events: list[dict[str, Any]]) -> None:
+    if not events:
+        raise RecoveryBlocked("RECOVERY_CORRUPT_JOURNAL", "journal contains no complete events")
+    current_seq = int(current.get("last_journal_sequence", len(events)))
+    if current_seq != len(events):
+        raise RecoveryBlocked(
+            "RECOVERY_STATE_MISMATCH",
+            f"CURRENT sequence {current_seq} does not match journal {len(events)}; run recover",
+        )
+    if "last_journal_sequence" in current and current.get("checkpoint_id") != events[-1].get("event_id"):
+        raise RecoveryBlocked("RECOVERY_STATE_MISMATCH", "CURRENT checkpoint does not match journal tail")
+
+
+def _append_control_event_locked(
+    root: Path,
+    current: dict[str, Any],
+    events: list[dict[str, Any]],
+    *,
+    event_type: str,
+    payload: dict[str, Any],
+    state_after: dict[str, Any] | None = None,
+    attempt_id: str | None = None,
+) -> dict[str, Any]:
+    journal_path = root / ".state" / "journal.ndjson"
+    current_path = root / ".state" / "CURRENT.json"
+    resume_path = root / ".state" / "RESUME.md"
+    new_state = deepcopy(state_after or current)
+    new_state["state_version"] = int(current.get("state_version", 0)) + 1
+    sequence = len(events) + 1
+    event = {
+        "event_id": _new_event_id(),
+        "sequence": sequence,
+        "timestamp": utc_now(),
+        "task_id": new_state.get("task", {}).get("task_id"),
+        "attempt_id": attempt_id,
+        "actor_id": f"projectctl@{socket.gethostname()}",
+        "event_type": event_type,
+        "previous_event_sha256": events[-1]["event_sha256"] if events else None,
+        "payload": {**payload, "current_after": new_state},
+    }
+    event["event_sha256"] = event_sha256(event)
+    append_durable(journal_path, canonical_json_bytes(event) + b"\n")
+    materialized = _materialize_after_event(new_state, event, repository=new_state.get("repository"))
+    write_atomic(current_path, json.dumps(materialized, ensure_ascii=False, indent=2).encode("utf-8") + b"\n")
+    write_atomic(resume_path, render_resume(materialized).encode("utf-8"))
+    return materialized
+
+
+def register_attempt(
+    root: Path,
+    *,
+    operation: str,
+    inputs: Any,
+    causal_change: str | None = None,
+    paid_request: bool = False,
+) -> dict[str, Any]:
+    root = root.resolve()
+    with task_lock(root):
+        current = load_json(root / ".state" / "CURRENT.json")
+        events, incomplete = read_journal(root)
+        if incomplete:
+            raise RecoveryBlocked("RECOVERY_INCOMPLETE_FINAL_LINE", "run projectctl recover before registering attempt")
+        _ensure_state_journal_aligned(current, events)
+        ext = current.get("external_operations", {})
+        if paid_request and ext.get("unknown_billing_requests"):
+            raise RecoveryBlocked("PAID_REQUEST_BLOCKED_UNKNOWN_BILLING", "unknown billing request exists")
+        task_id = current.get("task", {}).get("task_id")
+        fp = attempt_fingerprint(task_id=task_id, operation=operation, inputs=inputs, causal_change=causal_change)
+        if fp in _journal_attempt_fingerprints(events):
+            raise EquivalentAttemptBlocked(fp)
+        attempt_id = f"ATTEMPT-{fp[:16]}"
+        new_state = deepcopy(current)
+        new_state["last_attempt"] = {
+            "attempt_id": attempt_id,
+            "attempt_fingerprint": fp,
+            "operation": operation,
+            "causal_change": causal_change or "NONE",
+            "paid_request": bool(paid_request),
+        }
+        materialized = _append_control_event_locked(
+            root,
+            current,
+            events,
+            event_type="ATTEMPT_REGISTERED",
+            attempt_id=attempt_id,
+            payload={
+                "attempt_fingerprint": fp,
+                "operation": operation,
+                "causal_change": causal_change or "NONE",
+                "paid_request": bool(paid_request),
+            },
+            state_after=new_state,
+        )
+        return {"status": "ATTEMPT_REGISTERED", "attempt_id": attempt_id, "attempt_fingerprint": fp, "checkpoint_id": materialized["checkpoint_id"]}
+
+
+_SECRET_PATTERNS = [
+    re.compile(r"(?i)(authorization\s*[:=]\s*bearer\s+)[^\s]+"),
+    re.compile(r"(?i)((?:api[_-]?key|token|secret|password)\s*[:=]\s*)[^\s,;]+"),
+    re.compile(r"\bsk-[A-Za-z0-9_-]{8,}\b"),
+]
+
+
+def redact_secrets(text: str) -> str:
+    value = text
+    for pattern in _SECRET_PATTERNS:
+        if pattern.groups:
+            value = pattern.sub(lambda m: m.group(1) + "[REDACTED]", value)
+        else:
+            value = pattern.sub("[REDACTED]", value)
+    return value
+
+
+def _bounded_text(data: bytes, limit: int = 65536) -> tuple[str, bool]:
+    decoded = data.decode("utf-8", "replace")
+    redacted = redact_secrets(decoded)
+    if len(redacted) <= limit:
+        return redacted, False
+    return redacted[:limit] + "\n...[TRUNCATED]...", True
+
+
+def run_evidence(
+    root: Path,
+    *,
+    evidence_id: str,
+    command: list[str],
+    expected_exit: int = 0,
+    paid_request: bool = False,
+) -> dict[str, Any]:
+    root = root.resolve()
+    if not re.fullmatch(r"[A-Za-z0-9._-]+", evidence_id):
+        raise ProjectCtlError("invalid evidence_id; use only letters, digits, dot, underscore or hyphen")
+    if not command:
+        raise ProjectCtlError("evidence command is required")
+    current = load_json(root / ".state" / "CURRENT.json")
+    ext = current.get("external_operations", {})
+    if paid_request and ext.get("unknown_billing_requests"):
+        raise RecoveryBlocked("PAID_REQUEST_BLOCKED_UNKNOWN_BILLING", "unknown billing request exists")
+    evidence_path = root / "evidence" / f"{evidence_id}.json"
+    if evidence_path.exists():
+        raise ProjectCtlError(f"evidence is immutable and already exists: {evidence_path}")
+    started = utc_now()
+    started_ns = time.monotonic_ns()
+    before = git_snapshot(root)
+    proc = subprocess.run(command, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+    duration_ms = (time.monotonic_ns() - started_ns) // 1_000_000
+    finished = utc_now()
+    stdout_text, stdout_truncated = _bounded_text(proc.stdout)
+    stderr_text, stderr_truncated = _bounded_text(proc.stderr)
+    evidence = {
+        "schema_version": 1,
+        "evidence_id": evidence_id,
+        "task_id": current.get("task", {}).get("task_id"),
+        "status": "PASS" if proc.returncode == expected_exit else "FAIL",
+        "command": [redact_secrets(str(x)) for x in command],
+        "expected_exit": expected_exit,
+        "exit_code": proc.returncode,
+        "started_at": started,
+        "finished_at": finished,
+        "duration_ms": duration_ms,
+        "paid_request": bool(paid_request),
+        "repository_before": before,
+        "stdout_sha256": hashlib.sha256(proc.stdout).hexdigest(),
+        "stderr_sha256": hashlib.sha256(proc.stderr).hexdigest(),
+        "stdout": stdout_text,
+        "stderr": stderr_text,
+        "stdout_truncated": stdout_truncated,
+        "stderr_truncated": stderr_truncated,
+    }
+    write_atomic(evidence_path, json.dumps(evidence, ensure_ascii=False, indent=2).encode("utf-8") + b"\n")
+    evidence_sha = hashlib.sha256(evidence_path.read_bytes()).hexdigest()
+    with task_lock(root):
+        current2 = load_json(root / ".state" / "CURRENT.json")
+        events, incomplete = read_journal(root)
+        if incomplete:
+            raise RecoveryBlocked("RECOVERY_INCOMPLETE_FINAL_LINE", "run projectctl recover before recording evidence")
+        _ensure_state_journal_aligned(current2, events)
+        new_state = deepcopy(current2)
+        new_state.setdefault("verification", {})["latest_evidence_id"] = evidence_id
+        _append_control_event_locked(
+            root,
+            current2,
+            events,
+            event_type="EVIDENCE_RECORDED",
+            payload={"evidence_id": evidence_id, "status": evidence["status"], "file_sha256": evidence_sha},
+            state_after=new_state,
+        )
+    return {"status": evidence["status"], "evidence_id": evidence_id, "path": str(evidence_path.relative_to(root)), "exit_code": proc.returncode, "sha256": evidence_sha}
+
+
+def _load_evidence(root: Path, evidence_id: str) -> dict[str, Any]:
+    path = root / "evidence" / f"{evidence_id}.json"
+    if not path.exists():
+        raise TransitionBlocked("TRANSITION_EVIDENCE_MISSING", evidence_id)
+    try:
+        evidence = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise TransitionBlocked("TRANSITION_EVIDENCE_INVALID", f"{evidence_id}: {exc}") from exc
+    if evidence.get("status") != "PASS":
+        raise TransitionBlocked("TRANSITION_EVIDENCE_NOT_PASS", evidence_id)
+    return evidence
+
+
+def transition_repository_state(root: Path, *, to_phase: str, evidence_ids: list[str]) -> dict[str, Any]:
+    root = root.resolve()
+    with task_lock(root):
+        current = load_json(root / ".state" / "CURRENT.json")
+        events, incomplete = read_journal(root)
+        if incomplete:
+            raise RecoveryBlocked("RECOVERY_INCOMPLETE_FINAL_LINE", "run projectctl recover before transition")
+        _ensure_state_journal_aligned(current, events)
+        from_phase = current.get("task", {}).get("phase")
+        if to_phase not in REPOSITORY_PHASE_TRANSITIONS.get(from_phase, set()):
+            raise TransitionBlocked("INVALID_REPOSITORY_STATE_TRANSITION", f"{from_phase} -> {to_phase}")
+        ext = current.get("external_operations", {})
+        if ext.get("unknown_billing_requests"):
+            raise TransitionBlocked("TRANSITION_BLOCKED_UNKNOWN_BILLING", "unknown billing request exists")
+        if not evidence_ids:
+            raise TransitionBlocked("TRANSITION_EVIDENCE_REQUIRED", to_phase)
+        for evidence_id in evidence_ids:
+            _load_evidence(root, evidence_id)
+        scope_result = check_scope(root)
+        assert_frozen_manifests_immutable(root, scope_result["paths_checked"])
+
+        new_state = deepcopy(current)
+        new_state.setdefault("task", {})["phase"] = to_phase
+        letter = to_phase.removeprefix("PHASE_").removesuffix("_PASS").lower()
+        new_state.setdefault("verification", {})[f"phase_{letter}_acceptance_passed"] = True
+        new_state["verification"]["latest_evidence_id"] = evidence_ids[-1]
+        new_state.setdefault("progress", {})["next_action"] = (
+            "Await Phase D: crash/corruption/concurrency/scope/anti-loop/fresh-session/CI demonstration"
+            if to_phase == "PHASE_C_PASS" else new_state.get("progress", {}).get("next_action")
+        )
+        materialized = _append_control_event_locked(
+            root,
+            current,
+            events,
+            event_type="STATE_TRANSITION",
+            payload={"from_phase": from_phase, "to_phase": to_phase, "evidence_ids": evidence_ids},
+            state_after=new_state,
+        )
+
+        project_path = root / "PROJECT_STATE.yaml"
+        project = load_yaml(project_path)
+        project.setdefault("repository_control_plane", {})["implementation_status"] = to_phase
+        project["current_authorized_phase"] = to_phase.replace("_PASS", "")
+        project["next_gate"] = "PHASE_D_AUTHORIZATION" if to_phase == "PHASE_C_PASS" else project.get("next_gate")
+        # Preserve the safety gates explicitly.
+        project["provider_preflight_allowed"] = False
+        project["paid_provider_requests_allowed"] = False
+        rendered = yaml.safe_dump(project, sort_keys=False, allow_unicode=True)
+        write_atomic(project_path, rendered.encode("utf-8"))
+        return {"status": "STATE_TRANSITION_OK", "from_phase": from_phase, "to_phase": to_phase, "evidence_ids": evidence_ids, "checkpoint_id": materialized["checkpoint_id"]}

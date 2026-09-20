@@ -23,15 +23,22 @@ Read these before any repository work:
 
 ## Current Gate
 
-Repository Control Phase B is complete.
-Provider Preflight is forbidden until a later authorized phase explicitly enables it.
+Repository Control Phase C is complete.
+Provider Preflight remains forbidden until a later authorized phase explicitly enables it.
 No paid provider requests are authorized.
+No product code is authorized.
 
-## Current implementation boundary
+## Implemented repository controls
 
-Phase B added only the repository recovery control plane:
+Phase B:
 - `projectctl checkpoint`
 - `projectctl resume`
 - `projectctl recover`
 
-Phase C controls and product code are not started by Phase B.
+Phase C:
+- `projectctl check-scope`
+- `projectctl attempt-fingerprint`
+- `projectctl evidence`
+- `projectctl transition`
+
+Next gate: Phase D demonstration and CI hardening.

@@ -1,10 +1,10 @@
-# RESUME — TASK-REPO-CONTROL-002
+# RESUME — TASK-REPO-CONTROL-003
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** PHASE_B_PASS
-- **Checkpoint:** PHASE-B-PASS-001
-- **State version:** 3
+- **Phase:** PHASE_C_PASS
+- **Checkpoint:** CP-1789908317076-b14eff11
+- **State version:** 7
 - **Branch:** UNRECORDED
 - **HEAD:** UNRECORDED
 - **Working tree dirty:** UNRECORDED
@@ -13,8 +13,10 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase A acceptance:** true
 - **Baseline regression suite:** true
 - **Phase B acceptance:** true
+- **Phase C acceptance:** true
+- **Latest evidence:** PHASE-C-TESTS
 - **Blocked:** none
-- **Next action:** Await Phase C: check-scope, attempt fingerprint, evidence runner, state transition gate
+- **Next action:** Await Phase D: crash/corruption/concurrency/scope/anti-loop/fresh-session/CI demonstration
 
 ## Completed steps
 
@@ -39,7 +41,15 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - task lock single-writer enforcement implemented
 - Phase B tests passed 8/8
 - Full regression suite passed 38/38
+- Phase C check-scope implemented
+- Phase C attempt fingerprint and equivalent-attempt blocking implemented
+- Phase C evidence runner implemented
+- Phase C state-transition gates implemented
+- Frozen manifest modification gate implemented
+- UNKNOWN_BILLING paid-request gate implemented
+- Phase C tests passed 8/8
+- Full regression suite passed 46/46
 
 The active Task Contract SHA-256 is:
 
-`ab609b06c3a8c79f8b287791f93b073a00c944b628fb93b357ed2390ae73a202`
+`2f83bc34c36e3c54bf75b440c7e8d80755c80ddee484599edbec0dee163ba798`

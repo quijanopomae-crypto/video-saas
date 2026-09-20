@@ -1,0 +1,46 @@
+schema_version: 1
+task:
+  id: TASK-REPO-CONTROL-003
+  title: Implementar la Fase C del Repository Control Plane
+  status: READY
+  risk: MEDIUM
+objective:
+  expected_outcome: REPOSITORY_CONTROL_PHASE_C_PASS
+scope:
+  allowed_paths:
+    - AGENTS.md
+    - PROJECT_STATE.yaml
+    - tasks/TASK-REPO-CONTROL-003.yaml
+    - .state/**
+    - projectctl/**
+    - tests/test_projectctl_phase_c.py
+    - evidence/**
+  forbidden_paths:
+    - apps/**
+    - manifests/**
+    - schemas/**
+    - docs/ARCHITECTURE.md
+    - docs/adr/**
+constraints:
+  - No ejecutar Provider Preflight.
+  - No hacer requests pagados.
+  - No modificar BENCH20 ni BENCH100.
+  - No modificar scenario budgets.
+  - No cambiar pricing comercial.
+  - No añadir dependencias.
+  - No crear código del producto.
+  - No declarar pruebas no ejecutadas.
+  - No modificar manifests congelados.
+acceptance:
+  - check-scope permite solo rutas autorizadas por el Task Contract y bloquea rutas prohibidas o fuera de alcance.
+  - El fingerprint de intentos es determinista para intentos equivalentes.
+  - Un intento equivalente ya registrado queda bloqueado salvo cambio causal que produzca un fingerprint distinto.
+  - Un request marcado como pagado queda bloqueado cuando existe UNKNOWN_BILLING.
+  - El evidence runner ejecuta realmente el comando y persiste exit code, timestamps, hashes de stdout/stderr y salida saneada.
+  - La evidencia es inmutable por evidence_id y no almacena secretos evidentes en texto claro.
+  - Una transición inválida queda bloqueada.
+  - Una transición a PHASE_C_PASS requiere evidencia PASS existente.
+  - Si MODEL_MANIFEST_FROZEN está vigente, cambios bajo manifests/** quedan bloqueados.
+  - La suite previa de 38 tests continúa pasando.
+  - Los tests nuevos de Fase C pasan.
+  - Provider Preflight permanece sin iniciar.

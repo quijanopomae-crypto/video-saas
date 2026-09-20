@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "state_version": 3,
-  "checkpoint_id": "PHASE-B-PASS-001",
-  "updated_at": "2026-09-20T12:30:11Z",
+  "state_version": 7,
+  "checkpoint_id": "CP-1789908317076-b14eff11",
+  "updated_at": "2026-09-20T12:45:17Z",
   "task": {
-    "task_id": "TASK-REPO-CONTROL-002",
-    "task_contract_sha256": "ab609b06c3a8c79f8b287791f93b073a00c944b628fb93b357ed2390ae73a202",
-    "phase": "PHASE_B_PASS"
+    "task_id": "TASK-REPO-CONTROL-003",
+    "task_contract_sha256": "2f83bc34c36e3c54bf75b440c7e8d80755c80ddee484599edbec0dee163ba798",
+    "phase": "PHASE_C_PASS"
   },
   "progress": {
     "completed_steps": [
@@ -30,18 +30,28 @@
       "Git branch/HEAD/working-tree reconciliation implemented",
       "task lock single-writer enforcement implemented",
       "Phase B tests passed 8/8",
-      "Full regression suite passed 38/38"
+      "Full regression suite passed 38/38",
+      "Phase C check-scope implemented",
+      "Phase C attempt fingerprint and equivalent-attempt blocking implemented",
+      "Phase C evidence runner implemented",
+      "Phase C state-transition gates implemented",
+      "Frozen manifest modification gate implemented",
+      "UNKNOWN_BILLING paid-request gate implemented",
+      "Phase C tests passed 8/8",
+      "Full regression suite passed 46/46"
     ],
-    "next_action": "Await Phase C: check-scope, attempt fingerprint, evidence runner, state transition gate",
+    "next_action": "Await Phase D: crash/corruption/concurrency/scope/anti-loop/fresh-session/CI demonstration",
     "next_command": null
   },
   "verification": {
     "phase_a_acceptance_passed": true,
     "baseline_regression_suite_passed": true,
-    "latest_evidence_id": null,
+    "latest_evidence_id": "PHASE-C-TESTS",
     "phase_b_acceptance_passed": true,
     "phase_b_tests_passed": "8/8",
-    "full_regression_suite_passed": "38/38"
+    "full_regression_suite_passed": "46/46",
+    "phase_c_acceptance_passed": true,
+    "phase_c_tests_passed": "8/8"
   },
   "external_operations": {
     "provider_preflight_started": false,
@@ -50,6 +60,6 @@
     "pending_paid_requests": []
   },
   "blocked": null,
-  "last_journal_sequence": 4,
-  "last_journal_event_sha256": "aaedd45b778be3eb52c5f4b31b9bd1133f6543add4e51f300d3ef4bd9bc7c5fd"
+  "last_journal_sequence": 8,
+  "last_journal_event_sha256": "8cc6429df9a5743646f0cb72bcb2c2ffa51ff59d5055e9fd4966e327044bd102"
 }
