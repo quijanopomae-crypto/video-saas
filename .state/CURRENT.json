@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "state_version": 15,
+  "state_version": 16,
   "checkpoint_id": "PHASE-D-PASS-001",
   "updated_at": "2026-09-20T14:39:34Z",
   "task": {
-    "task_id": "TASK-REPO-CONTROL-004",
-    "task_contract_sha256": "9030f076ab09869e5980d8749dc33ffd28fb52800405abcdac318536b716b576",
-    "phase": "PHASE_D_PASS"
+    "task_id": "TASK-DEV-INFRA-001",
+    "task_contract_sha256": "8072d92008d300109ea2652c438d34e3125b1adc5fc4e7c71a535e3441660b05",
+    "phase": "DEV_INFRA_BUILD"
   },
   "progress": {
     "completed_steps": [
@@ -57,9 +57,10 @@
       "Repository Control CI remote run 35512907861 passed: scope + 58/58 tests + fresh-session probe",
       "GitHub ruleset Protect main observed active on the default branch",
       "Ruleset requires pull requests and repository-control status checks with no bypass actors",
-      "Phase D closure PR #1 Repository Control CI run 35517147247 passed: SCOPE_OK + 58/58 tests + fresh-session probe"
+      "Phase D closure PR #1 Repository Control CI run 35517147247 passed: SCOPE_OK + 58/58 tests + fresh-session probe",
+      "TASK-DEV-INFRA-001 activated with provider spending disabled"
     ],
-    "next_action": "Await explicit Provider Preflight authorization; provider calls and paid requests remain disabled.",
+    "next_action": "Build and validate the minimal development infrastructure: API, web, PostgreSQL, local adapters, FFmpeg worker and Product CI.",
     "next_command": null
   },
   "verification": {
@@ -76,7 +77,8 @@
     "phase_d_ci_passed": true,
     "phase_d_branch_protection_passed": true,
     "phase_d_persisted_checkpoint_fresh_clone_passed": true,
-    "phase_d_acceptance_passed": true
+    "phase_d_acceptance_passed": true,
+    "dev_infra_acceptance_passed": false
   },
   "external_operations": {
     "provider_preflight_started": false,
@@ -87,11 +89,5 @@
   "blocked": null,
   "last_journal_sequence": 16,
   "last_journal_event_sha256": "9a2b985d5c59371b39b59c0aee5fbc036a5299c48d8bfcd9a08f68ab40256574",
-  "repository": {
-    "branch": "main",
-    "head_commit": "ab6ef2d197e57cb6c1fc5503ea8d42f2b62e612e",
-    "working_tree_dirty": false,
-    "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "content_fingerprint": "c29d62ae8d0b17a13e7754432c477272e0fbb2a629b09223f2eedb678cc42caf"
-  }
+  "repository": {}
 }
