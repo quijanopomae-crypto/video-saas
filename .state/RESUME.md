@@ -3,10 +3,10 @@
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
 - **Phase:** CANONICAL_PLANNING_READY
-- **Checkpoint:** PRODUCT-PROMOTE-001-VALIDATED
-- **State version:** 27
-- **Branch:** lab-promote-product-flow-001
-- **Checkpoint base HEAD:** a82e7151900ebcd310372922da680b600cdd6742
+- **Checkpoint:** PRODUCT-PROMOTE-001-MAIN
+- **State version:** 28
+- **Branch:** main
+- **Checkpoint base HEAD:** 1226767d8441f0a59ead47527a77b685946d6604
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** PRODUCT-PROMOTE-001
 - **Blocked:** none
-- **Next action:** Canonical planning is ready. Next gate is CANONICAL_PLANNING_API_INTEGRATION under a new Task Contract; Provider Preflight and paid requests remain disabled.
+- **Next action:** Canonical planning is ready on main. Next gate is CANONICAL_PLANNING_API_INTEGRATION under a new Task Contract; Provider Preflight and paid requests remain disabled.
 
 ## Completed steps
 
@@ -104,6 +104,8 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - Repository Control run 35530037441 passed scope + 65/65 regression; fresh-session mismatch isolated to stale Task Contract hash
 - Canonical planning promotion state synchronized with final PASS Task Contract hash
 - PRODUCT-PROMOTE-001 evidence materialized
+- Promotion PR #6 merged to main at 1226767d8441f0a59ead47527a77b685946d6604
+- Durable canonical planning cursor normalized to main
 
 The active Task Contract SHA-256 is:
 
