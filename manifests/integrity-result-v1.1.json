@@ -1,0 +1,19 @@
+{
+  "MANIFEST_INTERNAL_INTEGRITY": "PASS",
+  "state": "READY_FOR_PROVIDER_PREFLIGHT",
+  "tests": "30/30 passed",
+  "cases_validated": 30,
+  "conditionings_validated": 90,
+  "duplicate_conditionings": 0,
+  "unexpected_conditionings": 0,
+  "missing_conditionings": 0,
+  "legacy_fields_found": 0,
+  "invalid_asset_kinds": 0,
+  "noncanonical_decimals": 0,
+  "NFC_collisions": 0,
+  "manifest_hash_stable": true,
+  "asset_freeze_validation": "DEFERRED",
+  "baseline_origin": "BUILT_FROM_APPROVED_SPECIFICATION",
+  "manifest_sha256": "27e0e4e69015c4c3f48d8f9294aa59a2e58e5ffcb7e099e5d832940a812d9eca",
+  "provider_probes_executed": false
+}
