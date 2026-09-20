@@ -24,15 +24,15 @@ Read these before any repository work:
 ## Current Gate
 
 Repository Control A-D and the minimum development infrastructure are complete.
-The explicitly authorized current phase is PRODUCT_LAB.
+`product-flow-001` passed the isolated Product Lab and the user authorized promotion.
+The explicitly authorized current phase is PRODUCT_PROMOTION.
 Provider Preflight remains forbidden and no paid provider requests are authorized.
 
-## Product Lab boundary
+## Product promotion boundary
 
-- Experimental product code belongs under `lab/**` only.
-- `apps/**` is canonical product code and is outside the scope of the active lab task.
-- Canonical code MUST NOT import from `lab/**`.
-- Lab experiments must work without real provider credentials or paid external calls unless a later Task Contract explicitly authorizes them.
-- A lab experiment is not production merely because it passes tests.
-- Promotion to canonical code requires observed lab validation, Repository Control CI, Product CI, explicit user approval, and a separate promotion Task Contract.
-- Failed or superseded experiments stay non-canonical until an authorized cleanup task removes them.
+- Promote only behavior already validated by `product-flow-001`.
+- Canonical code belongs under `apps/api/src/modules/planning/**`.
+- Canonical `apps/**` MUST NOT import or depend on `lab/**`.
+- Do not add HTTP endpoints, persistence, provider SDKs or UI during this promotion task.
+- The validated lab artifact remains as provenance and must not be treated as a runtime dependency.
+- Do not declare promotion complete until Repository Control CI and Product CI pass on the exact promotion head.
