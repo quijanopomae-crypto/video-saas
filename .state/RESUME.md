@@ -3,11 +3,11 @@
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
 - **Phase:** DEV_INFRA_PASS
-- **Checkpoint:** CP-1789917196261-029c7402
-- **State version:** 18
+- **Checkpoint:** DEV-INFRA-FINAL-001
+- **State version:** 19
 - **Branch:** dev-infra-001
-- **Checkpoint base HEAD:** 42905063963aec32937ece117282490ab0cd8464
-- **Checkpoint working tree dirty:** True
+- **Checkpoint base HEAD:** 27696bd278c4aac599d16875bfcbd88deb4cef93
+- **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
 - **Phase A acceptance:** true
