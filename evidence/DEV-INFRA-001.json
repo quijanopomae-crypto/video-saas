@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "evidence_id": "DEV-INFRA-001",
+  "status": "PASS",
+  "task_id": "TASK-DEV-INFRA-001",
+  "repository": "quijanopomae-crypto/video-saas",
+  "pull_request": 2,
+  "repository_control": {
+    "run_id": 35518644353,
+    "conclusion": "success",
+    "scope": "SCOPE_OK",
+    "tests": "63/63 PASS",
+    "fresh_session": "FRESH_SESSION_HANDOFF_OK"
+  },
+  "product_ci": {
+    "run_id": 35518644355,
+    "conclusion": "success",
+    "backend": "PASS",
+    "frontend": "PASS",
+    "integration_smoke": "PASS",
+    "aggregate_status_check": "product-ci",
+    "aggregate": "PASS"
+  },
+  "observed": {
+    "alembic": "upgrade -> 0001_infra_meta PASS",
+    "api_health": {
+      "status": "ok",
+      "service": "video-saas-api",
+      "environment": "test",
+      "adapters": {
+        "storage": "memory",
+        "queue": "memory",
+        "workflow": "memory"
+      }
+    },
+    "api_ready": {
+      "status": "ready",
+      "database": "ok"
+    },
+    "ffmpeg": "FFMPEG_SMOKE_OK",
+    "frontend_build": "PASS",
+    "web_to_api": "WEB_TO_API_SMOKE_OK",
+    "secret_hygiene": "SECRET_HYGIENE_OK",
+    "aggregate": "PRODUCT_CI_OK"
+  },
+  "provider_preflight_started": false,
+  "paid_provider_requests_executed": false,
+  "provider_credentials_added": false,
+  "frozen_manifests_modified": false,
+  "legacy_root_src_modified": false
+}
