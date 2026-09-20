@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-D-RECOVERY-FIX",
+  "status": "PASS",
+  "source": "github_actions",
+  "repository": "quijanopomae-crypto/video-saas",
+  "ci_run_id": 35512907861,
+  "ci_head_sha": "5aeca47430ab10775b2df10c5c8ffa59f6097845",
+  "observed_checks": {
+    "scope": "SCOPE_OK",
+    "regression_tests": "58/58 PASS",
+    "fresh_session": "FRESH_SESSION_HANDOFF_OK",
+    "persisted_checkpoint_fresh_clone": "PASS",
+    "committed_non_state_mutation_blocked": "PASS"
+  },
+  "provider_preflight_started": false,
+  "paid_requests_executed": false,
+  "phase_d_pass_allowed": false,
+  "remaining_blocker": "Effective main branch protection/ruleset requiring Repository Control CI"
+}
