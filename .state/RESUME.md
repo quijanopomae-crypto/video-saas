@@ -1,17 +1,45 @@
-# RESUME — TASK-REPO-CONTROL-001
+# RESUME — TASK-REPO-CONTROL-002
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Task:** TASK-REPO-CONTROL-001 — Implementar la Fase A del Repository Control Plane
-- **Phase:** PHASE_A_PASS
-- **Checkpoint:** PHASE-A-PASS-001
+- **Phase:** PHASE_B_PASS
+- **Checkpoint:** PHASE-B-PASS-001
+- **State version:** 3
+- **Branch:** UNRECORDED
+- **HEAD:** UNRECORDED
+- **Working tree dirty:** UNRECORDED
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
 - **Phase A acceptance:** true
-- **Baseline regression suite:** 30/30 passed
+- **Baseline regression suite:** true
+- **Phase B acceptance:** true
 - **Blocked:** none
-- **Next action:** Await authorization for Phase B: implement projectctl checkpoint/resume/recover
+- **Next action:** Await Phase C: check-scope, attempt fingerprint, evidence runner, state transition gate
+
+## Completed steps
+
+- AGENTS.md materialized
+- PROJECT_STATE.yaml materialized
+- Task Contract materialized
+- CURRENT.json materialized
+- journal.ndjson initialized and hash-chain validated
+- RESUME.md generated from CURRENT.json
+- Phase A structural validation passed
+- Existing baseline files verified unchanged
+- Baseline regression suite passed 30/30
+- Phase B Task Contract materialized
+- projectctl checkpoint implemented
+- projectctl recover implemented
+- projectctl resume implemented
+- atomic CURRENT/RESUME writes with fsync implemented
+- journal append + fsync implemented
+- incomplete final journal line recovery implemented
+- intermediate journal corruption blocking implemented
+- Git branch/HEAD/working-tree reconciliation implemented
+- task lock single-writer enforcement implemented
+- Phase B tests passed 8/8
+- Full regression suite passed 38/38
 
 The active Task Contract SHA-256 is:
 
-`5bee9cab9ee2825464eb61d598ff5e11524071cd831d78fe1a9da4b711bf1c02`
+`ab609b06c3a8c79f8b287791f93b073a00c944b628fb93b357ed2390ae73a202`

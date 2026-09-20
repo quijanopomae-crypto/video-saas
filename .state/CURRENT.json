@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "state_version": 2,
-  "checkpoint_id": "PHASE-A-PASS-001",
-  "updated_at": "2026-09-19T19:37:24Z",
+  "state_version": 3,
+  "checkpoint_id": "PHASE-B-PASS-001",
+  "updated_at": "2026-09-20T12:30:11Z",
   "task": {
-    "task_id": "TASK-REPO-CONTROL-001",
-    "task_contract_sha256": "5bee9cab9ee2825464eb61d598ff5e11524071cd831d78fe1a9da4b711bf1c02",
-    "phase": "PHASE_A_PASS"
+    "task_id": "TASK-REPO-CONTROL-002",
+    "task_contract_sha256": "ab609b06c3a8c79f8b287791f93b073a00c944b628fb93b357ed2390ae73a202",
+    "phase": "PHASE_B_PASS"
   },
   "progress": {
     "completed_steps": [
@@ -18,15 +18,30 @@
       "RESUME.md generated from CURRENT.json",
       "Phase A structural validation passed",
       "Existing baseline files verified unchanged",
-      "Baseline regression suite passed 30/30"
+      "Baseline regression suite passed 30/30",
+      "Phase B Task Contract materialized",
+      "projectctl checkpoint implemented",
+      "projectctl recover implemented",
+      "projectctl resume implemented",
+      "atomic CURRENT/RESUME writes with fsync implemented",
+      "journal append + fsync implemented",
+      "incomplete final journal line recovery implemented",
+      "intermediate journal corruption blocking implemented",
+      "Git branch/HEAD/working-tree reconciliation implemented",
+      "task lock single-writer enforcement implemented",
+      "Phase B tests passed 8/8",
+      "Full regression suite passed 38/38"
     ],
-    "next_action": "Await authorization for Phase B: implement projectctl checkpoint/resume/recover",
+    "next_action": "Await Phase C: check-scope, attempt fingerprint, evidence runner, state transition gate",
     "next_command": null
   },
   "verification": {
     "phase_a_acceptance_passed": true,
     "baseline_regression_suite_passed": true,
-    "latest_evidence_id": null
+    "latest_evidence_id": null,
+    "phase_b_acceptance_passed": true,
+    "phase_b_tests_passed": "8/8",
+    "full_regression_suite_passed": "38/38"
   },
   "external_operations": {
     "provider_preflight_started": false,
@@ -34,5 +49,7 @@
     "unknown_billing_requests": [],
     "pending_paid_requests": []
   },
-  "blocked": null
+  "blocked": null,
+  "last_journal_sequence": 4,
+  "last_journal_event_sha256": "aaedd45b778be3eb52c5f4b31b9bd1133f6543add4e51f300d3ef4bd9bc7c5fd"
 }

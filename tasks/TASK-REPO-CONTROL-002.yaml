@@ -1,0 +1,43 @@
+schema_version: 1
+task:
+  id: TASK-REPO-CONTROL-002
+  title: Implementar la Fase B del Repository Control Plane
+  status: READY
+  risk: MEDIUM
+objective:
+  expected_outcome: REPOSITORY_CONTROL_PHASE_B_PASS
+scope:
+  allowed_paths:
+    - AGENTS.md
+    - PROJECT_STATE.yaml
+    - tasks/TASK-REPO-CONTROL-002.yaml
+    - .state/**
+    - projectctl/**
+    - tests/test_projectctl_phase_b.py
+  forbidden_paths:
+    - apps/**
+    - manifests/**
+    - schemas/**
+    - evidence/**
+    - docs/ARCHITECTURE.md
+    - docs/adr/**
+constraints:
+  - No ejecutar Provider Preflight.
+  - No hacer requests pagados.
+  - No modificar BENCH20 ni BENCH100.
+  - No modificar scenario budgets.
+  - No cambiar pricing comercial.
+  - No añadir dependencias.
+  - No crear código del producto.
+  - No declarar pruebas no ejecutadas.
+acceptance:
+  - python -m projectctl checkpoint crea un checkpoint durable y verificable.
+  - python -m projectctl recover reconstruye CURRENT cuando journal está adelantado.
+  - python -m projectctl recover descarta una última línea incompleta del journal.
+  - Corrupción intermedia del journal bloquea recuperación.
+  - RESUME.md se genera únicamente desde CURRENT.json.
+  - Branch, HEAD y working tree se reconcilian contra el checkpoint.
+  - Escrituras de CURRENT y RESUME son atómicas con fsync del archivo y del directorio donde sea soportado.
+  - El lock impide dos escritores simultáneos.
+  - La suite previa de 30 tests continúa pasando.
+  - Provider Preflight permanece sin iniciar.

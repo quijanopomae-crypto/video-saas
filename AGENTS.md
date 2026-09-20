@@ -23,16 +23,15 @@ Read these before any repository work:
 
 ## Current Gate
 
-Repository Control Phase A only.
+Repository Control Phase B is complete.
 Provider Preflight is forbidden until a later authorized phase explicitly enables it.
 No paid provider requests are authorized.
 
-## Phase A Scope
+## Current implementation boundary
 
-Allowed paths for `TASK-REPO-CONTROL-001`:
-- `AGENTS.md`
-- `PROJECT_STATE.yaml`
-- `tasks/TASK-REPO-CONTROL-001.yaml`
-- `.state/**`
+Phase B added only the repository recovery control plane:
+- `projectctl checkpoint`
+- `projectctl resume`
+- `projectctl recover`
 
-Everything else is read-only for this task.
+Phase C controls and product code are not started by Phase B.
