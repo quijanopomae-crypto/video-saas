@@ -1,0 +1,45 @@
+cell_manifest_id: BENCH20-CELLS-v1.1
+source_manifest: MODEL-MANIFEST-BENCH100-v1.1 FINAL
+t2v:
+  cell_id: BENCH20-T2V-v1.1
+  conditioning_type: TEXT_ONLY
+  cases:
+  - B028
+  - B031
+  - B032
+  - B034
+  - B035
+  - B039
+  - B040
+  - B041
+  treatments:
+  - VIDU_DIRECT_Q3_TURBO_T2V
+  - RUNWAY_GEN4_5_T2V
+  - VEO_3_1_FAST_T2V
+  repetitions_per_treatment_case: 3
+  duration_mapping:
+    '5': 6
+    '6': 6
+    '8': 8
+i2v:
+  cell_id: BENCH20-I2V-v1.1
+  conditioning_type: ONE_CANONICAL_FIRST_FRAME
+  cases:
+  - B007
+  - B013
+  - B019
+  - B021
+  - B033
+  - B043
+  - B091
+  - B095
+  treatments:
+  - VIDU_DIRECT_Q3_TURBO_I2V
+  - RUNWAY_GEN4_TURBO_I2V
+  - RUNWAY_GEN4_5_I2V
+  - VEO_3_1_FAST_I2V
+  repetitions_per_treatment_case: 3
+  duration_mapping:
+    '5': 6
+    '6': 6
+    '8': 8
