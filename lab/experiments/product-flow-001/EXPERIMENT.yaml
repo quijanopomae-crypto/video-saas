@@ -27,6 +27,7 @@ constraints:
   - exact_duration_conservation
 promotion:
   state: AWAITING_USER_APPROVAL
+  evidence_id: LAB-PRODUCT-FLOW-001
   target_if_approved:
     - apps/api/src/modules/projects/
     - apps/api/src/modules/planning/
