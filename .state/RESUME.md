@@ -3,10 +3,10 @@
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
 - **Phase:** PRODUCT_PROMOTION
-- **Checkpoint:** TASK-PRODUCT-PROMOTE-001-ACTIVATED
-- **State version:** 25
+- **Checkpoint:** PRODUCT-PROMOTE-001-CAUSAL-FIX
+- **State version:** 26
 - **Branch:** lab-promote-product-flow-001
-- **Checkpoint base HEAD:** ffb337a95405e756b678bfff789b2279b06cdcc3
+- **Checkpoint base HEAD:** 7933c532c883fd7e3b50ff1ba87827b924a1ca88
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** LAB-PRODUCT-FLOW-001
 - **Blocked:** none
-- **Next action:** Open promotion PR and require Repository Control CI and Product CI. If both pass on the exact promotion head, mark product-flow-001 PROMOTED and canonical planning READY.
+- **Next action:** Revalidate Repository Control CI and Product CI on the simplified canonical planning module. Do not merge until both pass on the exact head.
 
 ## Completed steps
 
@@ -96,6 +96,9 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - TASK-PRODUCT-PROMOTE-001 activated
 - Validated lab planning core copied into apps/api/src/modules/planning without lab runtime dependency
 - Promotion snapshot probe observed content fingerprint d4bd7e42c1ce1d83fa9bf5435f2d3a675c397f6617208e15171e3200f2e55c0f
+- Promotion test scope corrected to inspect canonical runtime instead of test source
+- Canonical planning split collapsed to a single module after cross-file import failure
+- Lab CI observed canonical promotion content fingerprint 3725c90b409ddf571e11e29ff49f9852fd2b2609bb7fd21dc07975269d298dd6
 
 The active Task Contract SHA-256 is:
 
