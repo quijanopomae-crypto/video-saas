@@ -23,22 +23,12 @@ Read these before any repository work:
 
 ## Current Gate
 
-Repository Control Phase C is complete.
-Provider Preflight remains forbidden until a later authorized phase explicitly enables it.
+Repository Control Phase D is authorized for demonstration only.
+Provider Preflight is forbidden until a later authorized phase explicitly enables it.
 No paid provider requests are authorized.
-No product code is authorized.
 
-## Implemented repository controls
+## Phase D boundary
 
-Phase B:
-- `projectctl checkpoint`
-- `projectctl resume`
-- `projectctl recover`
+Phase D may add only the crash/corruption/concurrency/scope/anti-loop/fresh-session tests, the durable handoff probe, repository-control CI, evidence, and the Phase D Task Contract/state updates.
 
-Phase C:
-- `projectctl check-scope`
-- `projectctl attempt-fingerprint`
-- `projectctl evidence`
-- `projectctl transition`
-
-Next gate: Phase D demonstration and CI hardening.
+Do not declare `PHASE_D_PASS` unless all acceptance gates are observed, including effective protection/ruleset enforcement on `main`. If GitHub plan or installation permissions prevent that enforcement, record the blocker and keep Phase D blocked rather than treating CI alone as equivalent branch protection.

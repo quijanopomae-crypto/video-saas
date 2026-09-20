@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-D-FRESH-SESSION",
+  "task_id": "TASK-REPO-CONTROL-004",
+  "status": "PASS",
+  "command": [
+    "python",
+    "-B",
+    "scripts/fresh_session_probe.py",
+    "--root",
+    "."
+  ],
+  "expected_exit": 0,
+  "exit_code": 0,
+  "started_at": "2026-09-20T12:55:04Z",
+  "finished_at": "2026-09-20T12:55:05Z",
+  "duration_ms": 619,
+  "paid_request": false,
+  "repository_before": {
+    "branch": "main",
+    "head_commit": "b6e324769d573f8d223c13df720320537db96827",
+    "working_tree_dirty": true,
+    "working_tree_fingerprint": "17420c493d377930285dba5108dc267781a785a1239d8f37d10143cd25a06590"
+  },
+  "stdout_sha256": "048e4e2dc40387a87c98af5609cee6388d53f86bf478c5b4728fc1fee5af1c50",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "{\n  \"status\": \"FRESH_SESSION_HANDOFF_OK\",\n  \"read_order\": [\n    \"AGENTS.md\",\n    \"PROJECT_STATE.yaml\",\n    \"tasks/TASK-REPO-CONTROL-004.yaml\",\n    \".state/CURRENT.json\",\n    \".state/RESUME.md\",\n    \".state/journal.ndjson\"\n  ],\n  \"active_task_id\": \"TASK-REPO-CONTROL-004\",\n  \"phase\": \"PHASE_C_PASS\",\n  \"next_action\": \"Execute Phase D demonstrations; do not pass until CI and main branch protection are observed.\",\n  \"journal_sequence\": 10,\n  \"provider_preflight_started\": false,\n  \"paid_requests_allowed\": false\n}\n",
+  "stderr": "",
+  "stdout_truncated": false,
+  "stderr_truncated": false
+}

@@ -1,10 +1,10 @@
-# RESUME — TASK-REPO-CONTROL-003
+# RESUME — TASK-REPO-CONTROL-004
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
 - **Phase:** PHASE_C_PASS
-- **Checkpoint:** CP-1789908317076-b14eff11
-- **State version:** 7
+- **Checkpoint:** CP-1789908942158-078c8720
+- **State version:** 11
 - **Branch:** UNRECORDED
 - **HEAD:** UNRECORDED
 - **Working tree dirty:** UNRECORDED
@@ -14,9 +14,9 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Baseline regression suite:** true
 - **Phase B acceptance:** true
 - **Phase C acceptance:** true
-- **Latest evidence:** PHASE-C-TESTS
-- **Blocked:** none
-- **Next action:** Await Phase D: crash/corruption/concurrency/scope/anti-loop/fresh-session/CI demonstration
+- **Latest evidence:** PHASE-D-BRANCH-PROTECTION
+- **Blocked:** {'code': 'PHASE_D_BRANCH_PROTECTION_BLOCKED', 'detail': 'GitHub returned 403 for private-repository rulesets and branch-protection visibility through the connected installation; effective enforcement on main is not observed.'}
+- **Next action:** Run Repository Control CI remotely, then enable effective main branch protection/ruleset; only then transition to PHASE_D_PASS.
 
 ## Completed steps
 
@@ -49,7 +49,17 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - UNKNOWN_BILLING paid-request gate implemented
 - Phase C tests passed 8/8
 - Full regression suite passed 46/46
+- Phase D crash/cut tests passed
+- Phase D corruption tests passed
+- Phase D separate-process concurrency test passed
+- Phase D committed-diff scope test passed
+- Phase D cross-process anti-loop test passed
+- Phase D fresh-session durable handoff probe passed
+- Phase D tests passed 10/10
+- Full regression suite passed 56/56
+- Persistent Repository Control CI workflow materialized
+- Main branch protection/ruleset check blocked by GitHub plan/integration; PHASE_D_PASS withheld
 
 The active Task Contract SHA-256 is:
 
-`2f83bc34c36e3c54bf75b440c7e8d80755c80ddee484599edbec0dee163ba798`
+`ff398bb4d915496fe1588a033c197e2dfdad34a1444732165aebfda9beaa699a`

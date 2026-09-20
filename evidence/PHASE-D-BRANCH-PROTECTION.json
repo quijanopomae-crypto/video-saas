@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-D-BRANCH-PROTECTION",
+  "status": "BLOCKED",
+  "repository": "quijanopomae-crypto/video-saas",
+  "repository_visibility": "private",
+  "observations": [
+    {
+      "endpoint": "GET /repos/quijanopomae-crypto/video-saas/rulesets",
+      "http_status": 403,
+      "message": "Upgrade to GitHub Pro or make this repository public to enable this feature."
+    },
+    {
+      "endpoint": "GET /repos/quijanopomae-crypto/video-saas/branches/main/protection",
+      "http_status": 403,
+      "message": "Resource not accessible by integration"
+    }
+  ],
+  "effective_main_protection_observed": false,
+  "phase_d_pass_allowed": false,
+  "required_resolution": "Keep repository private; enable an account/plan and GitHub administration path that supports branch protection or an equivalent enforceable ruleset, then require Repository Control CI on main before declaring PHASE_D_PASS."
+}

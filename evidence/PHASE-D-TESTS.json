@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-D-TESTS",
+  "task_id": "TASK-REPO-CONTROL-004",
+  "status": "PASS",
+  "command": [
+    "python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests"
+  ],
+  "expected_exit": 0,
+  "exit_code": 0,
+  "started_at": "2026-09-20T12:54:57Z",
+  "finished_at": "2026-09-20T12:55:03Z",
+  "duration_ms": 6609,
+  "paid_request": false,
+  "repository_before": {
+    "branch": "main",
+    "head_commit": "b6e324769d573f8d223c13df720320537db96827",
+    "working_tree_dirty": true,
+    "working_tree_fingerprint": "17420c493d377930285dba5108dc267781a785a1239d8f37d10143cd25a06590"
+  },
+  "stdout_sha256": "49c45d5523f1a4a6a5d7ef1f4551aa0e1359a545d8b8db7ede134bffae4f58b3",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "........................................................                 [100%]\n56 passed in 4.62s\n",
+  "stderr": "",
+  "stdout_truncated": false,
+  "stderr_truncated": false
+}
