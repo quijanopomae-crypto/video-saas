@@ -2,7 +2,7 @@ schema_version: 1
 task:
   id: TASK-PRODUCT-LAB-001
   title: Probar el primer flujo vertical del producto en lab sin contaminar el canon
-  status: RUNNING
+  status: PASS
   risk: MEDIUM
 objective:
   expected_outcome: LAB_PRODUCT_FLOW_001_VALIDATED
