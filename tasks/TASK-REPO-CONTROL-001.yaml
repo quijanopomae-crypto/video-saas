@@ -1,0 +1,38 @@
+schema_version: 1
+task:
+  id: TASK-REPO-CONTROL-001
+  title: Implementar la Fase A del Repository Control Plane
+  status: READY
+  risk: MEDIUM
+objective:
+  expected_outcome: REPOSITORY_CONTROL_PHASE_A_PASS
+scope:
+  allowed_paths:
+    - AGENTS.md
+    - PROJECT_STATE.yaml
+    - tasks/TASK-REPO-CONTROL-001.yaml
+    - .state/**
+  forbidden_paths:
+    - apps/**
+    - manifests/**
+    - schemas/**
+    - evidence/**
+    - docs/ARCHITECTURE.md
+    - docs/adr/**
+constraints:
+  - No ejecutar Provider Preflight.
+  - No hacer requests pagados.
+  - No modificar BENCH20 ni BENCH100.
+  - No modificar scenario budgets.
+  - No cambiar pricing comercial.
+  - No añadir dependencias.
+  - No crear código del producto.
+  - No declarar pruebas no ejecutadas.
+acceptance:
+  - Los seis archivos requeridos existen.
+  - CURRENT.json es JSON válido.
+  - journal.ndjson contiene únicamente eventos JSON válidos.
+  - RESUME.md refleja CURRENT.json.
+  - PROJECT_STATE y CURRENT no duplican responsabilidades.
+  - Los tres seeds permanecen 19001, 19002 y 19003.
+  - El estado vigente permanece anterior a Provider Preflight.
