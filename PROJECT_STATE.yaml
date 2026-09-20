@@ -8,8 +8,8 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: DEV_INFRA
-active_task_id: TASK-DEV-INFRA-001
+current_authorized_phase: PRODUCT_LAB
+active_task_id: TASK-PRODUCT-LAB-001
 provider_preflight_allowed: false
 architecture_research_reopened: false
 paid_provider_requests_allowed: false
@@ -40,13 +40,20 @@ development_infrastructure:
   provider_preflight_started: false
   paid_provider_requests_executed: false
   repository_control_ci: PASS
-  repository_control_ci_run_id: 35518644353
   product_ci: PASS
-  product_ci_run_id: 35518644355
   backend: PASS
   frontend: PASS
   integration_smoke: PASS
   postgres_migration: PASS
   ffmpeg_smoke: PASS
   secret_hygiene: PASS
-next_gate: PROVIDER_PREFLIGHT_AUTHORIZATION
+product_lab:
+  implementation_status: IN_PROGRESS
+  canonical: false
+  root: lab/
+  active_experiment: product-flow-001
+  task_id: TASK-PRODUCT-LAB-001
+  provider_preflight_started: false
+  paid_provider_requests_executed: false
+  promotion_requires_explicit_user_approval: true
+next_gate: LAB_PRODUCT_FLOW_001_ACCEPTANCE
