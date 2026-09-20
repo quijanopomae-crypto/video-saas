@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "evidence_id": "LAB-PRODUCT-FLOW-001",
+  "status": "PASS",
+  "task_id": "TASK-PRODUCT-LAB-001",
+  "experiment_id": "product-flow-001",
+  "canonical": false,
+  "repository": "quijanopomae-crypto/video-saas",
+  "pull_request": 4,
+  "observed": {
+    "lab_ci": {
+      "run_id": 35525035133,
+      "conclusion": "success",
+      "tests": "5/5 PASS",
+      "demo": "LAB_PRODUCT_FLOW_001_OK"
+    },
+    "repository_control_ci": {
+      "run_id": 35525035183,
+      "conclusion": "success",
+      "scope": "SCOPE_OK",
+      "tests": "63/63 PASS",
+      "fresh_session": "FRESH_SESSION_HANDOFF_OK"
+    },
+    "product_ci": {
+      "run_id": 35525035263,
+      "conclusion": "success",
+      "backend": "PASS",
+      "frontend": "PASS",
+      "integration_smoke": "PASS",
+      "aggregate": "PASS"
+    },
+    "duration_conservation": "PASS",
+    "referential_integrity": "PASS",
+    "deterministic_output": "PASS",
+    "provider_independence": "PASS"
+  },
+  "provider_preflight_started": false,
+  "paid_provider_requests_executed": false,
+  "provider_credentials_added": false,
+  "canonical_apps_modified": false,
+  "promotion_state": "AWAITING_USER_APPROVAL"
+}
