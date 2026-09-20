@@ -3,3 +3,17 @@ __pycache__/
 .pytest_cache/
 *.tmp
 .state/locks/*.lock
+.env
+.env.*
+!.env.example
+.venv/
+**/.venv/
+node_modules/
+**/node_modules/
+.next/
+**/.next/
+dist/
+coverage/
+artifacts/
+*.mp4
+*.webm
