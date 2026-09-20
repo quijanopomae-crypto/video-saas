@@ -1,0 +1,8 @@
+amendment_id: PREFLIGHT-INTERNAL-FIX-02
+status: APPLIED_IN_BASELINE
+changes:
+- asset_kind_closed_enum
+- canonical_first_frame_compatibility
+- text_and_motion_reference_kinds
+- negative_zero_rejected
+- full_reference_integration_test_defined
