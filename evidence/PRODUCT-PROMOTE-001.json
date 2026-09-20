@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PRODUCT-PROMOTE-001",
+  "status": "PASS",
+  "task_id": "TASK-PRODUCT-PROMOTE-001",
+  "source_experiment": "product-flow-001",
+  "canonical_target": "apps/api/src/modules/planning/",
+  "explicit_user_approval": true,
+  "observed": {
+    "lab_ci": {
+      "run_id": 35529860252,
+      "conclusion": "success"
+    },
+    "repository_control_ci": {
+      "run_id": 35529860254,
+      "conclusion": "success",
+      "scope": "SCOPE_OK",
+      "tests": "65/65 PASS",
+      "fresh_session": "FRESH_SESSION_HANDOFF_OK"
+    },
+    "product_ci": {
+      "run_id": 35529860257,
+      "conclusion": "success",
+      "backend_tests": "15 PASS",
+      "frontend": "PASS",
+      "integration_smoke": "PASS",
+      "ffmpeg_smoke": "PASS",
+      "secret_hygiene": "PASS",
+      "aggregate": "PASS"
+    },
+    "canonical_runtime_lab_dependency": "NONE",
+    "exact_duration_conservation": "PASS",
+    "deterministic_output": "PASS",
+    "referential_integrity": "PASS",
+    "input_validation": "PASS"
+  },
+  "provider_preflight_started": false,
+  "paid_provider_requests_executed": false,
+  "credentials_added": false,
+  "manifests_modified": false,
+  "next_gate": "CANONICAL_PLANNING_API_INTEGRATION"
+}

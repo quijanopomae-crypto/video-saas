@@ -2,7 +2,7 @@ schema_version: 1
 task:
   id: TASK-PRODUCT-PROMOTE-001
   title: Promover product-flow-001 validado a backend canonico
-  status: RUNNING
+  status: PASS
   risk: MEDIUM
 objective:
   expected_outcome: CANONICAL_PRODUCT_PLANNING_READY

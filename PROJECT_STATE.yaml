@@ -8,7 +8,7 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: PRODUCT_PROMOTION
+current_authorized_phase: CANONICAL_PLANNING
 active_task_id: TASK-PRODUCT-PROMOTE-001
 provider_preflight_allowed: false
 architecture_research_reopened: false
@@ -47,7 +47,7 @@ development_infrastructure:
   ffmpeg_smoke: PASS
   secret_hygiene: PASS
 product_lab:
-  implementation_status: VALIDATED_PROMOTION_AUTHORIZED
+  implementation_status: PROMOTED_TO_CANONICAL
   canonical: false
   root: lab/
   active_experiment: product-flow-001
@@ -56,9 +56,20 @@ product_lab:
   paid_provider_requests_executed: false
   promotion_requires_explicit_user_approval: true
 product_promotion:
-  implementation_status: IN_PROGRESS
+  implementation_status: READY
+  canonical: true
   source_experiment: product-flow-001
   target_module: apps/api/src/modules/planning/
   task_id: TASK-PRODUCT-PROMOTE-001
   explicit_user_approval: true
-next_gate: CANONICAL_PRODUCT_FLOW_ACCEPTANCE
+  repository_control_ci: PASS
+  repository_control_ci_run_id: 35529860254
+  product_ci: PASS
+  product_ci_run_id: 35529860257
+  lab_ci: PASS
+  lab_ci_run_id: 35529860252
+  canonical_backend_tests: 15
+  repository_control_tests: 65
+  provider_preflight_started: false
+  paid_provider_requests_executed: false
+next_gate: CANONICAL_PLANNING_API_INTEGRATION

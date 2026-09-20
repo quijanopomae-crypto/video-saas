@@ -23,16 +23,15 @@ Read these before any repository work:
 
 ## Current Gate
 
-Repository Control A-D and the minimum development infrastructure are complete.
-`product-flow-001` passed the isolated Product Lab and the user authorized promotion.
-The explicitly authorized current phase is PRODUCT_PROMOTION.
+Repository Control A-D and minimum development infrastructure are complete.
+The validated `product-flow-001` planning core has been promoted to canonical backend code under `apps/api/src/modules/planning/`.
+The promotion task is complete subject to normal merge/post-merge verification.
 Provider Preflight remains forbidden and no paid provider requests are authorized.
 
-## Product promotion boundary
+## Canonical planning boundary
 
-- Promote only behavior already validated by `product-flow-001`.
-- Canonical code belongs under `apps/api/src/modules/planning/**`.
+- `apps/api/src/modules/planning/` is canonical product code.
 - Canonical `apps/**` MUST NOT import or depend on `lab/**`.
-- Do not add HTTP endpoints, persistence, provider SDKs or UI during this promotion task.
-- The validated lab artifact remains as provenance and must not be treated as a runtime dependency.
-- Do not declare promotion complete until Repository Control CI and Product CI pass on the exact promotion head.
+- `lab/**` remains provenance/experimentation, not a runtime dependency.
+- The next product gate is CANONICAL_PLANNING_API_INTEGRATION.
+- Do not add HTTP endpoints, persistence, UI, provider SDKs or paid provider calls without a new Task Contract that explicitly authorizes that scope.

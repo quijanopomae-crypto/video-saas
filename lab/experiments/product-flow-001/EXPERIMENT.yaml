@@ -26,7 +26,7 @@ constraints:
   - no_paid_requests
   - exact_duration_conservation
 promotion:
-  state: PROMOTION_AUTHORIZED
-  evidence_id: LAB-PRODUCT-FLOW-001
-  authorized_target:
+  state: PROMOTED
+  evidence_id: PRODUCT-PROMOTE-001
+  canonical_target:
     - apps/api/src/modules/planning/
