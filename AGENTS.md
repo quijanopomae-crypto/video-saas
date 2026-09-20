@@ -23,12 +23,16 @@ Read these before any repository work:
 
 ## Current Gate
 
-Repository Control Phase D is authorized for demonstration only.
-Provider Preflight is forbidden until a later authorized phase explicitly enables it.
-No paid provider requests are authorized.
+Repository Control A-D and the minimum development infrastructure are complete.
+The explicitly authorized current phase is PRODUCT_LAB.
+Provider Preflight remains forbidden and no paid provider requests are authorized.
 
-## Phase D boundary
+## Product Lab boundary
 
-Phase D may add only the crash/corruption/concurrency/scope/anti-loop/fresh-session tests, the durable handoff probe, repository-control CI, evidence, and the Phase D Task Contract/state updates.
-
-Do not declare `PHASE_D_PASS` unless all acceptance gates are observed, including effective protection/ruleset enforcement on `main`. If GitHub plan or installation permissions prevent that enforcement, record the blocker and keep Phase D blocked rather than treating CI alone as equivalent branch protection.
+- Experimental product code belongs under `lab/**` only.
+- `apps/**` is canonical product code and is outside the scope of the active lab task.
+- Canonical code MUST NOT import from `lab/**`.
+- Lab experiments must work without real provider credentials or paid external calls unless a later Task Contract explicitly authorizes them.
+- A lab experiment is not production merely because it passes tests.
+- Promotion to canonical code requires observed lab validation, Repository Control CI, Product CI, explicit user approval, and a separate promotion Task Contract.
+- Failed or superseded experiments stay non-canonical until an authorized cleanup task removes them.
