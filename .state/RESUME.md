@@ -3,10 +3,10 @@
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
 - **Phase:** PRODUCT_LAB_VALIDATED
-- **Checkpoint:** LAB-PRODUCT-FLOW-001-VALIDATED
-- **State version:** 23
-- **Branch:** lab-product-flow-001
-- **Checkpoint base HEAD:** 709c13070936dcf50dd1ab7f8d0b1b1523e71eed
+- **Checkpoint:** LAB-PRODUCT-FLOW-001-MAIN
+- **State version:** 24
+- **Branch:** main
+- **Checkpoint base HEAD:** 6abed8f4a531c016421515f05543ddf93ac7c24a
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** LAB-PRODUCT-FLOW-001
 - **Blocked:** none
-- **Next action:** Await explicit user approval to promote product-flow-001 from lab/** into canonical apps/** under a new promotion Task Contract. Provider Preflight and paid requests remain disabled.
+- **Next action:** Await explicit user approval to promote product-flow-001 from lab/** into canonical apps/** under a new promotion Task Contract. The validated lab is safely merged on main; Provider Preflight and paid requests remain disabled.
 
 ## Completed steps
 
@@ -90,6 +90,8 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - Repository Control CI run 35525347147 passed: scope + 63/63 tests + fresh-session
 - Product CI run 35525347142 passed: backend + frontend + integration-smoke + product-ci
 - product-flow-001 validated and remains non-canonical awaiting explicit user promotion approval
+- Lab PR #4 merged to main at 6abed8f4a531c016421515f05543ddf93ac7c24a
+- Main Lab CI run 35525611678 passed after merge
 
 The active Task Contract SHA-256 is:
 
