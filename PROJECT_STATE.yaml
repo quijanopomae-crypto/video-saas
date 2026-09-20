@@ -48,7 +48,7 @@ development_infrastructure:
   ffmpeg_smoke: PASS
   secret_hygiene: PASS
 product_lab:
-  implementation_status: IN_PROGRESS
+  implementation_status: VALIDATED_AWAITING_APPROVAL
   canonical: false
   root: lab/
   active_experiment: product-flow-001
@@ -56,4 +56,4 @@ product_lab:
   provider_preflight_started: false
   paid_provider_requests_executed: false
   promotion_requires_explicit_user_approval: true
-next_gate: LAB_PRODUCT_FLOW_001_ACCEPTANCE
+next_gate: EXPLICIT_USER_PROMOTION_APPROVAL
