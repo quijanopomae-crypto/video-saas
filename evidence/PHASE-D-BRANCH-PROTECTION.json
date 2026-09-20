@@ -1,22 +1,36 @@
 {
   "schema_version": 1,
   "evidence_id": "PHASE-D-BRANCH-PROTECTION",
-  "status": "BLOCKED",
+  "status": "PASS",
   "repository": "quijanopomae-crypto/video-saas",
-  "repository_visibility": "private",
-  "observations": [
-    {
-      "endpoint": "GET /repos/quijanopomae-crypto/video-saas/rulesets",
-      "http_status": 403,
-      "message": "Upgrade to GitHub Pro or make this repository public to enable this feature."
-    },
-    {
-      "endpoint": "GET /repos/quijanopomae-crypto/video-saas/branches/main/protection",
-      "http_status": 403,
-      "message": "Resource not accessible by integration"
-    }
-  ],
-  "effective_main_protection_observed": false,
-  "phase_d_pass_allowed": false,
-  "required_resolution": "Keep repository private; enable an account/plan and GitHub administration path that supports branch protection or an equivalent enforceable ruleset, then require Repository Control CI on main before declaring PHASE_D_PASS."
+  "repository_visibility": "public",
+  "observed_at": "2026-09-20T09:33:36-05:00",
+  "ruleset": {
+    "id": 23730563,
+    "name": "Protect main",
+    "target": "branch",
+    "enforcement": "active",
+    "target_condition": "~DEFAULT_BRANCH",
+    "bypass_actors": [],
+    "current_user_can_bypass": "never",
+    "rules": [
+      "non_fast_forward",
+      "deletion",
+      "pull_request",
+      "required_status_checks"
+    ],
+    "required_status_check": "repository-control",
+    "required_status_check_integration_id": 15368,
+    "required_approving_review_count": 0,
+    "require_extra_approval_for_unattributed_changes": false
+  },
+  "effective_main_protection_observed": true,
+  "phase_d_pass_allowed": true,
+  "provider_preflight_started": false,
+  "paid_requests_executed": false,
+  "notes": [
+    "GitHub reports the ruleset as active and targeting the default branch.",
+    "The required repository-control check is supplied by GitHub Actions.",
+    "No bypass actors are configured."
+  ]
 }
