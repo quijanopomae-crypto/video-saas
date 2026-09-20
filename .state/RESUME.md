@@ -1,12 +1,12 @@
-# RESUME — TASK-PRODUCT-LAB-001
+# RESUME — TASK-PRODUCT-PROMOTE-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** PRODUCT_LAB_VALIDATED
-- **Checkpoint:** LAB-PRODUCT-FLOW-001-MAIN
-- **State version:** 24
-- **Branch:** main
-- **Checkpoint base HEAD:** 6abed8f4a531c016421515f05543ddf93ac7c24a
+- **Phase:** PRODUCT_PROMOTION
+- **Checkpoint:** TASK-PRODUCT-PROMOTE-001-ACTIVATED
+- **State version:** 25
+- **Branch:** lab-promote-product-flow-001
+- **Checkpoint base HEAD:** ffb337a95405e756b678bfff789b2279b06cdcc3
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** LAB-PRODUCT-FLOW-001
 - **Blocked:** none
-- **Next action:** Await explicit user approval to promote product-flow-001 from lab/** into canonical apps/** under a new promotion Task Contract. The validated lab is safely merged on main; Provider Preflight and paid requests remain disabled.
+- **Next action:** Open promotion PR and require Repository Control CI and Product CI. If both pass on the exact promotion head, mark product-flow-001 PROMOTED and canonical planning READY.
 
 ## Completed steps
 
@@ -92,7 +92,11 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - product-flow-001 validated and remains non-canonical awaiting explicit user promotion approval
 - Lab PR #4 merged to main at 6abed8f4a531c016421515f05543ddf93ac7c24a
 - Main Lab CI run 35525611678 passed after merge
+- User authorized product-flow-001 promotion at the explicit promotion gate
+- TASK-PRODUCT-PROMOTE-001 activated
+- Validated lab planning core copied into apps/api/src/modules/planning without lab runtime dependency
+- Promotion snapshot probe observed content fingerprint d4bd7e42c1ce1d83fa9bf5435f2d3a675c397f6617208e15171e3200f2e55c0f
 
 The active Task Contract SHA-256 is:
 
-`4356ad08924a6104f548ee1e586e87fe4c38d560e706ee2e1d6e52946e4e2307`
+`87adc8a23e7b2d481e2e565a398653aac8a910e05146dc4744900cc094ec86f0`

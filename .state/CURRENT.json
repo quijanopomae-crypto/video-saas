@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "LAB-PRODUCT-FLOW-001-MAIN",
+  "checkpoint_id": "TASK-PRODUCT-PROMOTE-001-ACTIVATED",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "ba96575c23499de9f3c2cf60b961d11471d617e9a1aae12cbd84e92f0d0b7ee6",
-  "last_journal_sequence": 24,
+  "last_journal_event_sha256": "2e563d1fe4b4b18402133d32e0982616f0496061334aba6ca9ecb70c56b6fd17",
+  "last_journal_sequence": 25,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -82,26 +82,30 @@
       "Product CI run 35525347142 passed: backend + frontend + integration-smoke + product-ci",
       "product-flow-001 validated and remains non-canonical awaiting explicit user promotion approval",
       "Lab PR #4 merged to main at 6abed8f4a531c016421515f05543ddf93ac7c24a",
-      "Main Lab CI run 35525611678 passed after merge"
+      "Main Lab CI run 35525611678 passed after merge",
+      "User authorized product-flow-001 promotion at the explicit promotion gate",
+      "TASK-PRODUCT-PROMOTE-001 activated",
+      "Validated lab planning core copied into apps/api/src/modules/planning without lab runtime dependency",
+      "Promotion snapshot probe observed content fingerprint d4bd7e42c1ce1d83fa9bf5435f2d3a675c397f6617208e15171e3200f2e55c0f"
     ],
-    "next_action": "Await explicit user approval to promote product-flow-001 from lab/** into canonical apps/** under a new promotion Task Contract. The validated lab is safely merged on main; Provider Preflight and paid requests remain disabled.",
+    "next_action": "Open promotion PR and require Repository Control CI and Product CI. If both pass on the exact promotion head, mark product-flow-001 PROMOTED and canonical planning READY.",
     "next_command": null
   },
   "repository": {
-    "branch": "main",
-    "head_commit": "6abed8f4a531c016421515f05543ddf93ac7c24a",
+    "branch": "lab-promote-product-flow-001",
+    "head_commit": "ffb337a95405e756b678bfff789b2279b06cdcc3",
     "working_tree_dirty": false,
     "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "content_fingerprint": "401c6f549b087d1c7f56ac1bccea6a45f0a5c8db13b5c1da904b81b941fda044"
+    "content_fingerprint": "d4bd7e42c1ce1d83fa9bf5435f2d3a675c397f6617208e15171e3200f2e55c0f"
   },
   "schema_version": 1,
-  "state_version": 24,
+  "state_version": 25,
   "task": {
-    "task_id": "TASK-PRODUCT-LAB-001",
-    "task_contract_sha256": "4356ad08924a6104f548ee1e586e87fe4c38d560e706ee2e1d6e52946e4e2307",
-    "phase": "PRODUCT_LAB_VALIDATED"
+    "task_id": "TASK-PRODUCT-PROMOTE-001",
+    "task_contract_sha256": "87adc8a23e7b2d481e2e565a398653aac8a910e05146dc4744900cc094ec86f0",
+    "phase": "PRODUCT_PROMOTION"
   },
-  "updated_at": "2026-09-20T17:22:00Z",
+  "updated_at": "2026-09-20T18:38:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
@@ -134,6 +138,10 @@
     "lab_product_flow_001_acceptance_passed": true,
     "lab_product_flow_001_repository_control_ci_passed": true,
     "lab_product_flow_001_product_ci_passed": true,
-    "lab_product_flow_001_main_lab_ci_passed": true
+    "lab_product_flow_001_main_lab_ci_passed": true,
+    "product_promotion_authorized": true,
+    "product_promotion_repository_control_ci_passed": false,
+    "product_promotion_product_ci_passed": false,
+    "canonical_product_planning_ready": false
   }
 }
