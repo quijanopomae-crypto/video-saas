@@ -2,11 +2,11 @@
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** PRODUCT_LAB_VALIDATION
-- **Checkpoint:** LAB-PRODUCT-FLOW-001-SYNC
-- **State version:** 22
+- **Phase:** PRODUCT_LAB_VALIDATED
+- **Checkpoint:** LAB-PRODUCT-FLOW-001-VALIDATED
+- **State version:** 23
 - **Branch:** lab-product-flow-001
-- **Checkpoint base HEAD:** 4be4202bae218f0f61ae4227c1631912f66da79b
+- **Checkpoint base HEAD:** 709c13070936dcf50dd1ab7f8d0b1b1523e71eed
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** LAB-PRODUCT-FLOW-001
 - **Blocked:** none
-- **Next action:** Revalidate Lab CI, Repository Control CI and Product CI on the synchronized lab state. If all pass, record LAB_PRODUCT_FLOW_001_VALIDATED and await explicit user approval before promotion.
+- **Next action:** Await explicit user approval to promote product-flow-001 from lab/** into canonical apps/** under a new promotion Task Contract. Provider Preflight and paid requests remain disabled.
 
 ## Completed steps
 
@@ -86,6 +86,10 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - product-flow-001 remains non-canonical pending full CI and explicit promotion approval
 - LAB-PRODUCT-FLOW-001 evidence materialized
 - product-flow-001 marked VALIDATED_AWAITING_APPROVAL while final CI revalidation is pending
+- Lab CI run 35525347154 passed on synchronized validated state
+- Repository Control CI run 35525347147 passed: scope + 63/63 tests + fresh-session
+- Product CI run 35525347142 passed: backend + frontend + integration-smoke + product-ci
+- product-flow-001 validated and remains non-canonical awaiting explicit user promotion approval
 
 The active Task Contract SHA-256 is:
 
