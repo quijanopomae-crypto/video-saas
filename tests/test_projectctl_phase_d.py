@@ -14,6 +14,7 @@ from projectctl.core import (
     ScopeViolation,
     canonical_json_bytes,
     check_scope,
+    checkpoint,
     event_sha256,
     read_journal,
     recover,
@@ -258,3 +259,32 @@ def test_branch_protection_blocker_must_not_be_represented_as_phase_d_pass():
     # branch protection through the connected installation. Phase D must remain
     # blocked until enforcement is actually available and observed.
     assert True
+
+
+def test_committed_checkpoint_recovers_after_fresh_clone(tmp_path):
+    root = make_repo(tmp_path)
+    checkpoint(root, reason="persisted-checkpoint")
+    run(root, "git", "add", ".state")
+    run(root, "git", "commit", "-m", "persist checkpoint state")
+
+    clone = tmp_path / "fresh-clone"
+    run(tmp_path, "git", "clone", str(root), str(clone))
+    result = recover(clone)
+
+    assert result["status"] in {"RECOVERY_OK", "RECOVERY_REPAIRED"}
+    assert result["repository"]["branch"] == "main"
+
+
+def test_committed_non_state_change_after_checkpoint_is_blocked(tmp_path):
+    root = make_repo(tmp_path)
+    checkpoint(root, reason="baseline")
+    run(root, "git", "add", ".state")
+    run(root, "git", "commit", "-m", "persist checkpoint state")
+
+    (root / "AGENTS.md").write_text("# AGENTS\nchanged after checkpoint\n", encoding="utf-8")
+    run(root, "git", "add", "AGENTS.md")
+    run(root, "git", "commit", "-m", "mutate protected repository content")
+
+    with pytest.raises(RecoveryBlocked) as exc:
+        recover(root)
+    assert exc.value.code == "RECOVERY_STATE_MISMATCH"
