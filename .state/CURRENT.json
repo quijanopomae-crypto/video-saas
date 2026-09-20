@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "TASK-PRODUCT-LAB-001-ACTIVATED",
+  "checkpoint_id": "LAB-PRODUCT-FLOW-001-SYNC",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "69f377620ff3304947d73aa003ee03abbd77cbe6c717c6e4586f1c3806424211",
-  "last_journal_sequence": 21,
+  "last_journal_event_sha256": "7d473998649e9d675ef98576deac096fe282bad2ec16b2542c9f131b7b87f230",
+  "last_journal_sequence": 22,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -74,26 +74,28 @@
       "Durable repository cursor normalized to main after development infrastructure merge",
       "TASK-PRODUCT-LAB-001 activated with lab isolated from canonical apps",
       "Lab CI run 35524914368 passed: 5/5 tests + deterministic demo",
-      "product-flow-001 remains non-canonical pending full CI and explicit promotion approval"
+      "product-flow-001 remains non-canonical pending full CI and explicit promotion approval",
+      "LAB-PRODUCT-FLOW-001 evidence materialized",
+      "product-flow-001 marked VALIDATED_AWAITING_APPROVAL while final CI revalidation is pending"
     ],
-    "next_action": "Open the lab PR and require Lab CI, Repository Control CI and Product CI. Do not promote lab code to apps/** without explicit user approval and a new promotion Task Contract.",
+    "next_action": "Revalidate Lab CI, Repository Control CI and Product CI on the synchronized lab state. If all pass, record LAB_PRODUCT_FLOW_001_VALIDATED and await explicit user approval before promotion.",
     "next_command": null
   },
   "repository": {
     "branch": "lab-product-flow-001",
-    "head_commit": "dcf28e6d7e3f4b86b9899d7c04a2ae994d92c998",
+    "head_commit": "4be4202bae218f0f61ae4227c1631912f66da79b",
     "working_tree_dirty": false,
     "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "content_fingerprint": "4fadab59f599be9533f189fdb299d94f6d8f3fad1348e1eb066bfc4efe2b4596"
+    "content_fingerprint": "401c6f549b087d1c7f56ac1bccea6a45f0a5c8db13b5c1da904b81b941fda044"
   },
   "schema_version": 1,
-  "state_version": 21,
+  "state_version": 22,
   "task": {
     "task_id": "TASK-PRODUCT-LAB-001",
-    "task_contract_sha256": "406e8a34cbc3c6ba59e73a417f664f1003c814ee097950845ecaba2b2c85ff7c",
-    "phase": "PRODUCT_LAB"
+    "task_contract_sha256": "4356ad08924a6104f548ee1e586e87fe4c38d560e706ee2e1d6e52946e4e2307",
+    "phase": "PRODUCT_LAB_VALIDATION"
   },
-  "updated_at": "2026-09-20T17:10:00Z",
+  "updated_at": "2026-09-20T17:16:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
@@ -106,7 +108,7 @@
     "dev_infra_repository_control_ci_passed": true,
     "dev_infra_secret_hygiene_passed": true,
     "full_regression_suite_passed": "63/63",
-    "latest_evidence_id": "DEV-INFRA-001",
+    "latest_evidence_id": "LAB-PRODUCT-FLOW-001",
     "phase_a_acceptance_passed": true,
     "phase_b_acceptance_passed": true,
     "phase_b_tests_passed": "8/8",
@@ -123,6 +125,8 @@
     "main_final_head": "e9a29173ab52300da26c92cb6c488330203dea1f",
     "development_infrastructure_ready": true,
     "lab_product_flow_001_lab_ci_passed": true,
-    "lab_product_flow_001_acceptance_passed": false
+    "lab_product_flow_001_acceptance_passed": false,
+    "lab_product_flow_001_repository_control_ci_passed": false,
+    "lab_product_flow_001_product_ci_passed": false
   }
 }
