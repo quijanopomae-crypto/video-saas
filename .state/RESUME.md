@@ -3,11 +3,11 @@
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
 - **Phase:** DEV_INFRA_BUILD
-- **Checkpoint:** PHASE-D-PASS-001
-- **State version:** 16
-- **Branch:** UNRECORDED
-- **Checkpoint base HEAD:** UNRECORDED
-- **Checkpoint working tree dirty:** 'UNRECORDED'
+- **Checkpoint:** CP-1789916722506-76d71400
+- **State version:** 17
+- **Branch:** dev-infra-001
+- **Checkpoint base HEAD:** 7c27fd7a7bcfd7e76e7bdb8c10ba270a146ecac9
+- **Checkpoint working tree dirty:** True
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
 - **Phase A acceptance:** true
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** PHASE-D-BRANCH-PROTECTION
 - **Blocked:** none
-- **Next action:** Build and validate the minimal development infrastructure: API, web, PostgreSQL, local adapters, FFmpeg worker and Product CI.
+- **Next action:** Open the development infrastructure PR and require Repository Control CI plus Product CI.
 
 ## Completed steps
 

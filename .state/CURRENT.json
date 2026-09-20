@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "state_version": 16,
-  "checkpoint_id": "PHASE-D-PASS-001",
-  "updated_at": "2026-09-20T14:39:34Z",
+  "state_version": 17,
+  "checkpoint_id": "CP-1789916722506-76d71400",
+  "updated_at": "2026-09-20T15:05:22Z",
   "task": {
     "task_id": "TASK-DEV-INFRA-001",
     "task_contract_sha256": "8072d92008d300109ea2652c438d34e3125b1adc5fc4e7c71a535e3441660b05",
@@ -60,7 +60,7 @@
       "Phase D closure PR #1 Repository Control CI run 35517147247 passed: SCOPE_OK + 58/58 tests + fresh-session probe",
       "TASK-DEV-INFRA-001 activated with provider spending disabled"
     ],
-    "next_action": "Build and validate the minimal development infrastructure: API, web, PostgreSQL, local adapters, FFmpeg worker and Product CI.",
+    "next_action": "Open the development infrastructure PR and require Repository Control CI plus Product CI.",
     "next_command": null
   },
   "verification": {
@@ -87,7 +87,13 @@
     "pending_paid_requests": []
   },
   "blocked": null,
-  "last_journal_sequence": 16,
-  "last_journal_event_sha256": "9a2b985d5c59371b39b59c0aee5fbc036a5299c48d8bfcd9a08f68ab40256574",
-  "repository": {}
+  "last_journal_sequence": 17,
+  "last_journal_event_sha256": "22bfd67018d9cf00004d1062fe5241d6d24537d6b6ea18ba4c9e09a032f655d7",
+  "repository": {
+    "branch": "dev-infra-001",
+    "head_commit": "7c27fd7a7bcfd7e76e7bdb8c10ba270a146ecac9",
+    "working_tree_dirty": true,
+    "working_tree_fingerprint": "3b769ad983f8b24c779faeedbe6a4c7226dc639eb67dc31bafd969354e8d97da",
+    "content_fingerprint": "1355da9108bdbbdd6998dc7975cfb46958a41ea84855967f6790dec7af365013"
+  }
 }
