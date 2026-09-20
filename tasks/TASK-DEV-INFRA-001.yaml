@@ -1,0 +1,56 @@
+schema_version: 1
+task:
+  id: TASK-DEV-INFRA-001
+  title: Construir la infraestructura minima para programar VIDEO-SAAS
+  status: RUNNING
+  risk: MEDIUM
+objective:
+  expected_outcome: DEVELOPMENT_INFRASTRUCTURE_READY
+scope:
+  allowed_paths:
+    - PROJECT_STATE.yaml
+    - README.md
+    - .gitignore
+    - .env.example
+    - docker-compose.yml
+    - Makefile
+    - tasks/TASK-DEV-INFRA-001.yaml
+    - .state/**
+    - apps/**
+    - scripts/**
+    - docs/DEVELOPMENT.md
+    - .github/workflows/product-ci.yml
+    - tests/test_dev_infra_contract.py
+    - evidence/**
+  forbidden_paths:
+    - manifests/**
+    - schemas/**
+    - src/**
+    - projectctl/**
+    - AGENTS.md
+constraints:
+  - No ejecutar Provider Preflight.
+  - No hacer requests pagados.
+  - No agregar credenciales reales ni secretos al repositorio.
+  - No modificar BENCH20 ni BENCH100.
+  - No modificar manifests congelados.
+  - No mover ni borrar el src/ heredado del baseline.
+  - No introducir Kubernetes, Temporal, Kafka ni GPU propia.
+  - Los adapters cloud deben ser interfaces o fakes locales; no SDKs de proveedores en esta tarea.
+  - Mantener provider_preflight_allowed=false y paid_provider_requests_allowed=false.
+acceptance:
+  - FastAPI levanta y GET /health responde 200.
+  - GET /ready valida PostgreSQL cuando DATABASE_URL apunta a la base de desarrollo.
+  - Alembic upgrade head funciona sobre PostgreSQL limpio.
+  - Los adapters locales de storage, queue y workflow pasan pruebas.
+  - El worker FFmpeg genera un clip smoke determinista.
+  - Next.js compila, pasa typecheck y prueba estructural.
+  - El frontend puede consultar /api/health y ese route handler llega al backend.
+  - Docker Compose levanta PostgreSQL para desarrollo local.
+  - Existen comandos PowerShell para api, web, dev y tests.
+  - Product CI valida backend, frontend e integración end-to-end sin APIs externas.
+  - Repository Control CI continúa pasando.
+  - No hay secretos reales en Git.
+  - Provider Preflight permanece sin iniciar y no hay requests pagados.
+blocking_rule:
+  - No declarar DEVELOPMENT_INFRASTRUCTURE_READY si Product CI, Repository Control CI o el smoke end-to-end fallan.
