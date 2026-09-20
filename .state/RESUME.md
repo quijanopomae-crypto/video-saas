@@ -6,8 +6,8 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Checkpoint:** CP-1789909297355-d0d2daea
 - **State version:** 12
 - **Branch:** UNRECORDED
-- **HEAD:** UNRECORDED
-- **Working tree dirty:** UNRECORDED
+- **Checkpoint base HEAD:** UNRECORDED
+- **Checkpoint working tree dirty:** UNRECORDED
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
 - **Phase A acceptance:** true
