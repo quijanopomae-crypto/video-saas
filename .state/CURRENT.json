@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "state_version": 11,
-  "checkpoint_id": "CP-1789908942158-078c8720",
-  "updated_at": "2026-09-20T12:55:42Z",
+  "state_version": 12,
+  "checkpoint_id": "CP-1789909297355-d0d2daea",
+  "updated_at": "2026-09-20T13:01:37Z",
   "task": {
     "task_id": "TASK-REPO-CONTROL-004",
     "task_contract_sha256": "ff398bb4d915496fe1588a033c197e2dfdad34a1444732165aebfda9beaa699a",
@@ -48,15 +48,16 @@
       "Phase D tests passed 10/10",
       "Full regression suite passed 56/56",
       "Persistent Repository Control CI workflow materialized",
-      "Main branch protection/ruleset check blocked by GitHub plan/integration; PHASE_D_PASS withheld"
+      "Main branch protection/ruleset check blocked by GitHub plan/integration; PHASE_D_PASS withheld",
+      "Repository Control CI remote run 35512196617 passed: scope + 56/56 tests + fresh-session probe"
     ],
-    "next_action": "Run Repository Control CI remotely, then enable effective main branch protection/ruleset; only then transition to PHASE_D_PASS.",
+    "next_action": "Enable effective main branch protection/ruleset requiring Repository Control CI; PHASE_D_PASS remains blocked until observed.",
     "next_command": null
   },
   "verification": {
     "phase_a_acceptance_passed": true,
     "baseline_regression_suite_passed": true,
-    "latest_evidence_id": "PHASE-D-BRANCH-PROTECTION",
+    "latest_evidence_id": "PHASE-D-CI",
     "phase_b_acceptance_passed": true,
     "phase_b_tests_passed": "8/8",
     "full_regression_suite_passed": "56/56",
@@ -64,7 +65,7 @@
     "phase_c_tests_passed": "8/8",
     "phase_d_tests_passed": "10/10",
     "phase_d_fresh_session_process_passed": true,
-    "phase_d_ci_passed": false,
+    "phase_d_ci_passed": true,
     "phase_d_branch_protection_passed": false
   },
   "external_operations": {
@@ -75,8 +76,8 @@
   },
   "blocked": {
     "code": "PHASE_D_BRANCH_PROTECTION_BLOCKED",
-    "detail": "GitHub returned 403 for private-repository rulesets and branch-protection visibility through the connected installation; effective enforcement on main is not observed."
+    "detail": "GitHub rulesets returned 403 for this private repository without an eligible plan, and branch-protection visibility is not accessible through the connected integration; effective enforcement on main is not observed."
   },
-  "last_journal_sequence": 12,
-  "last_journal_event_sha256": "baafa0f90d80e003b7bf48c5e66d258ccbc7c9c711452b93a928f9fd8aa3dbb3"
+  "last_journal_sequence": 13,
+  "last_journal_event_sha256": "1d55d45f1939d5ec5943fe05867c50ac1e7f9f83077b288e23d01bd2aac7f2e6"
 }

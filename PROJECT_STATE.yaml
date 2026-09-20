@@ -24,6 +24,8 @@ phase_d:
   regression_tests: 56/56
   phase_d_tests: 10/10
   fresh_session_process_probe: PASS
-  ci_status: PENDING_REMOTE
+  ci_status: PASS_REMOTE
   branch_protection_status: BLOCKED_GITHUB_PLAN_OR_INTEGRATION
+  ci_run_id: 35512196617
+  ci_head_sha: 43fe7deb8e6d66942584111a38644d47e1678542
 next_gate: BRANCH_PROTECTION_REQUIRED_FOR_PHASE_D_PASS

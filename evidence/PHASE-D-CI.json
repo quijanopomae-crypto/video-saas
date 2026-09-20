@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PHASE-D-CI",
+  "status": "PASS",
+  "source": "github_actions",
+  "repository": "quijanopomae-crypto/video-saas",
+  "workflow": "Repository Control CI",
+  "run_id": 35512196617,
+  "head_sha": "43fe7deb8e6d66942584111a38644d47e1678542",
+  "conclusion": "success",
+  "observed_checks": {
+    "scope": "SCOPE_OK",
+    "regression_tests": "56/56 PASS",
+    "fresh_session": "FRESH_SESSION_HANDOFF_OK"
+  },
+  "provider_preflight_started": false,
+  "paid_requests_executed": false
+}

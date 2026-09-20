@@ -3,8 +3,8 @@
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
 - **Phase:** PHASE_C_PASS
-- **Checkpoint:** CP-1789908942158-078c8720
-- **State version:** 11
+- **Checkpoint:** CP-1789909297355-d0d2daea
+- **State version:** 12
 - **Branch:** UNRECORDED
 - **HEAD:** UNRECORDED
 - **Working tree dirty:** UNRECORDED
@@ -14,9 +14,9 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Baseline regression suite:** true
 - **Phase B acceptance:** true
 - **Phase C acceptance:** true
-- **Latest evidence:** PHASE-D-BRANCH-PROTECTION
-- **Blocked:** {'code': 'PHASE_D_BRANCH_PROTECTION_BLOCKED', 'detail': 'GitHub returned 403 for private-repository rulesets and branch-protection visibility through the connected installation; effective enforcement on main is not observed.'}
-- **Next action:** Run Repository Control CI remotely, then enable effective main branch protection/ruleset; only then transition to PHASE_D_PASS.
+- **Latest evidence:** PHASE-D-CI
+- **Blocked:** {'code': 'PHASE_D_BRANCH_PROTECTION_BLOCKED', 'detail': 'GitHub rulesets returned 403 for this private repository without an eligible plan, and branch-protection visibility is not accessible through the connected integration; effective enforcement on main is not observed.'}
+- **Next action:** Enable effective main branch protection/ruleset requiring Repository Control CI; PHASE_D_PASS remains blocked until observed.
 
 ## Completed steps
 
@@ -59,6 +59,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - Full regression suite passed 56/56
 - Persistent Repository Control CI workflow materialized
 - Main branch protection/ruleset check blocked by GitHub plan/integration; PHASE_D_PASS withheld
+- Repository Control CI remote run 35512196617 passed: scope + 56/56 tests + fresh-session probe
 
 The active Task Contract SHA-256 is:
 
