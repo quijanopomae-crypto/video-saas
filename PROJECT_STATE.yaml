@@ -8,8 +8,8 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: PHASE_D
-active_task_id: TASK-REPO-CONTROL-004
+current_authorized_phase: DEV_INFRA
+active_task_id: TASK-DEV-INFRA-001
 provider_preflight_allowed: false
 architecture_research_reopened: false
 paid_provider_requests_allowed: false
@@ -26,8 +26,6 @@ phase_d:
   fresh_session_process_probe: PASS
   ci_status: PASS_REMOTE
   branch_protection_status: PASS
-  ci_run_id: 35512907861
-  ci_head_sha: 5aeca47430ab10775b2df10c5c8ffa59f6097845
   persisted_checkpoint_fresh_clone: PASS
   ruleset_id: 23730563
   ruleset_name: Protect main
@@ -35,4 +33,10 @@ phase_d:
   ruleset_target: DEFAULT_BRANCH
   required_status_check: repository-control
   ruleset_bypass_actors: 0
-next_gate: PROVIDER_PREFLIGHT_AUTHORIZATION
+development_infrastructure:
+  implementation_status: IN_PROGRESS
+  task_id: TASK-DEV-INFRA-001
+  product_ci_required_before_merge: true
+  provider_preflight_started: false
+  paid_provider_requests_executed: false
+next_gate: DEV_INFRA_ACCEPTANCE
