@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "PRODUCT-PROMOTE-001-CAUSAL-FIX",
+  "checkpoint_id": "PRODUCT-PROMOTE-001-VALIDATED",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "decadee6c0a7b787c2d2a48bc58efe2f2c5ad518b60e4ab30cd52e942b44a5c2",
-  "last_journal_sequence": 26,
+  "last_journal_event_sha256": "da2467d47645690ee8ea40c892870df45e11457f5dcfb47cec835bc13037185e",
+  "last_journal_sequence": 27,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -89,26 +89,31 @@
       "Promotion snapshot probe observed content fingerprint d4bd7e42c1ce1d83fa9bf5435f2d3a675c397f6617208e15171e3200f2e55c0f",
       "Promotion test scope corrected to inspect canonical runtime instead of test source",
       "Canonical planning split collapsed to a single module after cross-file import failure",
-      "Lab CI observed canonical promotion content fingerprint 3725c90b409ddf571e11e29ff49f9852fd2b2609bb7fd21dc07975269d298dd6"
+      "Lab CI observed canonical promotion content fingerprint 3725c90b409ddf571e11e29ff49f9852fd2b2609bb7fd21dc07975269d298dd6",
+      "TASK-PRODUCT-PROMOTE-001 closed PASS",
+      "Product CI run 35530037442 passed after promotion metadata closure",
+      "Repository Control run 35530037441 passed scope + 65/65 regression; fresh-session mismatch isolated to stale Task Contract hash",
+      "Canonical planning promotion state synchronized with final PASS Task Contract hash",
+      "PRODUCT-PROMOTE-001 evidence materialized"
     ],
-    "next_action": "Revalidate Repository Control CI and Product CI on the simplified canonical planning module. Do not merge until both pass on the exact head.",
+    "next_action": "Canonical planning is ready. Next gate is CANONICAL_PLANNING_API_INTEGRATION under a new Task Contract; Provider Preflight and paid requests remain disabled.",
     "next_command": null
   },
   "repository": {
     "branch": "lab-promote-product-flow-001",
-    "head_commit": "7933c532c883fd7e3b50ff1ba87827b924a1ca88",
+    "head_commit": "a82e7151900ebcd310372922da680b600cdd6742",
     "working_tree_dirty": false,
     "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "content_fingerprint": "3725c90b409ddf571e11e29ff49f9852fd2b2609bb7fd21dc07975269d298dd6"
+    "content_fingerprint": "1c341411fe7bfc7181f58294de347d8933b1250f23186591de48a2a76c63d510"
   },
   "schema_version": 1,
-  "state_version": 26,
+  "state_version": 27,
   "task": {
     "task_id": "TASK-PRODUCT-PROMOTE-001",
-    "task_contract_sha256": "87adc8a23e7b2d481e2e565a398653aac8a910e05146dc4744900cc094ec86f0",
-    "phase": "PRODUCT_PROMOTION"
+    "task_contract_sha256": "0923934c695c9428d6f0c2401735d053b0f2e157c92ac99c6fea2942303eaea3",
+    "phase": "CANONICAL_PLANNING_READY"
   },
-  "updated_at": "2026-09-20T18:41:00Z",
+  "updated_at": "2026-09-20T18:46:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
@@ -121,7 +126,7 @@
     "dev_infra_repository_control_ci_passed": true,
     "dev_infra_secret_hygiene_passed": true,
     "full_regression_suite_passed": "63/63",
-    "latest_evidence_id": "LAB-PRODUCT-FLOW-001",
+    "latest_evidence_id": "PRODUCT-PROMOTE-001",
     "phase_a_acceptance_passed": true,
     "phase_b_acceptance_passed": true,
     "phase_b_tests_passed": "8/8",
@@ -143,8 +148,10 @@
     "lab_product_flow_001_product_ci_passed": true,
     "lab_product_flow_001_main_lab_ci_passed": true,
     "product_promotion_authorized": true,
-    "product_promotion_repository_control_ci_passed": false,
-    "product_promotion_product_ci_passed": false,
-    "canonical_product_planning_ready": false
+    "product_promotion_repository_control_ci_passed": true,
+    "product_promotion_product_ci_passed": true,
+    "canonical_product_planning_ready": true,
+    "product_promotion_repository_control_ci_run_id": 35529860254,
+    "product_promotion_product_ci_run_id": 35530037442
   }
 }

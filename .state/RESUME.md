@@ -2,11 +2,11 @@
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** PRODUCT_PROMOTION
-- **Checkpoint:** PRODUCT-PROMOTE-001-CAUSAL-FIX
-- **State version:** 26
+- **Phase:** CANONICAL_PLANNING_READY
+- **Checkpoint:** PRODUCT-PROMOTE-001-VALIDATED
+- **State version:** 27
 - **Branch:** lab-promote-product-flow-001
-- **Checkpoint base HEAD:** 7933c532c883fd7e3b50ff1ba87827b924a1ca88
+- **Checkpoint base HEAD:** a82e7151900ebcd310372922da680b600cdd6742
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -14,9 +14,9 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Baseline regression suite:** true
 - **Phase B acceptance:** true
 - **Phase C acceptance:** true
-- **Latest evidence:** LAB-PRODUCT-FLOW-001
+- **Latest evidence:** PRODUCT-PROMOTE-001
 - **Blocked:** none
-- **Next action:** Revalidate Repository Control CI and Product CI on the simplified canonical planning module. Do not merge until both pass on the exact head.
+- **Next action:** Canonical planning is ready. Next gate is CANONICAL_PLANNING_API_INTEGRATION under a new Task Contract; Provider Preflight and paid requests remain disabled.
 
 ## Completed steps
 
@@ -99,7 +99,12 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - Promotion test scope corrected to inspect canonical runtime instead of test source
 - Canonical planning split collapsed to a single module after cross-file import failure
 - Lab CI observed canonical promotion content fingerprint 3725c90b409ddf571e11e29ff49f9852fd2b2609bb7fd21dc07975269d298dd6
+- TASK-PRODUCT-PROMOTE-001 closed PASS
+- Product CI run 35530037442 passed after promotion metadata closure
+- Repository Control run 35530037441 passed scope + 65/65 regression; fresh-session mismatch isolated to stale Task Contract hash
+- Canonical planning promotion state synchronized with final PASS Task Contract hash
+- PRODUCT-PROMOTE-001 evidence materialized
 
 The active Task Contract SHA-256 is:
 
-`87adc8a23e7b2d481e2e565a398653aac8a910e05146dc4744900cc094ec86f0`
+`0923934c695c9428d6f0c2401735d053b0f2e157c92ac99c6fea2942303eaea3`
