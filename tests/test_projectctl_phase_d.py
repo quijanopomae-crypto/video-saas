@@ -11,6 +11,7 @@ from projectctl.core import (
     EquivalentAttemptBlocked,
     JournalCorruption,
     LockBusy,
+    RecoveryBlocked,
     ScopeViolation,
     canonical_json_bytes,
     check_scope,
