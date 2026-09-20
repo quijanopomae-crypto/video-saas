@@ -34,9 +34,19 @@ phase_d:
   required_status_check: repository-control
   ruleset_bypass_actors: 0
 development_infrastructure:
-  implementation_status: IN_PROGRESS
+  implementation_status: READY
   task_id: TASK-DEV-INFRA-001
   product_ci_required_before_merge: true
   provider_preflight_started: false
   paid_provider_requests_executed: false
-next_gate: DEV_INFRA_ACCEPTANCE
+  repository_control_ci: PASS
+  repository_control_ci_run_id: 35518644353
+  product_ci: PASS
+  product_ci_run_id: 35518644355
+  backend: PASS
+  frontend: PASS
+  integration_smoke: PASS
+  postgres_migration: PASS
+  ffmpeg_smoke: PASS
+  secret_hygiene: PASS
+next_gate: PROVIDER_PREFLIGHT_AUTHORIZATION
