@@ -14,5 +14,7 @@
     "fresh_session": "FRESH_SESSION_HANDOFF_OK"
   },
   "provider_preflight_started": false,
-  "paid_requests_executed": false
+  "paid_requests_executed": false,
+  "durable_state_commit": "99a5af2fec78c3e0fc4e06c42cb521b93c596db3",
+  "final_confirmation_requested": true
 }
