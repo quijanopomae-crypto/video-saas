@@ -54,7 +54,7 @@ jobs:
         run: python -B scripts/fresh_session_probe.py --root .
 
   sync-phase-d-state:
-    if: github.event_name == 'push' && github.event.head_commit.message == 'chore: trigger Phase D state sync'
+    if: "${{ github.event_name == 'push' && github.event.head_commit.message == 'chore: trigger Phase D state sync' }}"
     needs: repository-control
     permissions:
       contents: write
