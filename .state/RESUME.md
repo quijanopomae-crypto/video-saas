@@ -3,10 +3,10 @@
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
 - **Phase:** DEV_INFRA_PASS
-- **Checkpoint:** DEV-INFRA-FINAL-001
-- **State version:** 19
-- **Branch:** dev-infra-001
-- **Checkpoint base HEAD:** 27696bd278c4aac599d16875bfcbd88deb4cef93
+- **Checkpoint:** DEV-INFRA-MAIN-FINAL-001
+- **State version:** 20
+- **Branch:** main
+- **Checkpoint base HEAD:** e9a29173ab52300da26c92cb6c488330203dea1f
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** DEV-INFRA-001
 - **Blocked:** none
-- **Next action:** Before Provider Preflight or adding credentials, review repository privacy and explicitly authorize Provider Preflight; paid provider requests remain disabled.
+- **Next action:** Repository control and development infrastructure are complete on main. Before Provider Preflight or adding credentials, make the repository private and explicitly authorize Provider Preflight; paid provider requests remain disabled.
 
 ## Completed steps
 
@@ -78,6 +78,9 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - Secret hygiene scan passed
 - Repository Control CI run 35518644353 passed: SCOPE_OK + 63/63 tests + fresh-session
 - Product CI run 35518644355 passed: backend + frontend + integration-smoke + product-ci
+- Main Repository Control CI run 35519069836 passed after PR #2 merge
+- Main Product CI run 35519069950 passed after PR #2 merge: backend + frontend + integration-smoke + product-ci
+- Durable repository cursor normalized to main after development infrastructure merge
 
 The active Task Contract SHA-256 is:
 
