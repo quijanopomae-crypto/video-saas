@@ -1,0 +1,7 @@
+amendment_id: PREFLIGHT-INTERNAL-FIX-03
+status: APPLIED_IN_BASELINE
+changes:
+- asset_manifest_authoritative_for_asset_kind
+- duplicate_detection_before_indexing
+- pre_asset_vs_frozen_schema_split
+- state_machine_integrity_gate
