@@ -7,7 +7,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **State version:** 14
 - **Branch:** main
 - **Checkpoint base HEAD:** 70692070a228771a5e163754be4271644e5081e1
-- **Checkpoint working tree dirty:** False
+- **Checkpoint working tree dirty:** false
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
 - **Phase A acceptance:** true
