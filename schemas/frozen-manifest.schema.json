@@ -3,12 +3,226 @@
   "type": "object",
   "additionalProperties": true,
   "$defs": {
-    "canonicalDecimal": {"type":"string","pattern":"^(?:0|[1-9][0-9]*|(?:0|[1-9][0-9]*)\\.[0-9]*[1-9]|-[1-9][0-9]*(?:\\.[0-9]*[1-9])?|-0\\.[0-9]*[1-9])$","x-canonical-scalar":"decimal"},
-    "subjectAllocation": {"type":"object","additionalProperties":false,"required":["subject_id","reference_count","share"],"properties":{"subject_id":{"type":"string","minLength":1},"reference_count":{"type":"integer","minimum":1},"share":{"$ref":"#/$defs/canonicalDecimal"}}},
-    "orderedReference": {"type":"object","additionalProperties":false,"required":["ordinal","asset_id","asset_sha256","semantic_role","subject_id","asset_kind","object_storage_version_id"],"properties":{"ordinal":{"type":"integer","minimum":1},"asset_id":{"type":"string","minLength":1},"asset_sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"},"semantic_role":{"type":"string","minLength":1},"subject_id":{"type":"string","minLength":1},"asset_kind":{"type":"string","enum":["CANONICAL_FIRST_FRAME","CHARACTER_REFERENCE","PRODUCT_REFERENCE","TEXT_REFERENCE","MOTION_REFERENCE","ENVIRONMENT_REFERENCE","COMPOSITE_REFERENCE","STYLE_REFERENCE"]},"object_storage_version_id":{"type":"string","minLength":1,"not":{"const":"PENDING_ASSET_FREEZE"}}}},
-    "conditioning": {"type":"object","additionalProperties":false,"required":["subject_allocations","ordered_references","canonical_reference_set_sha256"],"properties":{"subject_allocations":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/subjectAllocation"}},"ordered_references":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/orderedReference"}},"canonical_reference_set_sha256":{"type":"string","pattern":"^[a-f0-9]{64}$"}}},
-    "record": {"type":"object","additionalProperties":false,"required":["case_id","treatment_id","reference_set_id","reference_conditioning"],"properties":{"case_id":{"type":"string","pattern":"^B[0-9]{3}$"},"treatment_id":{"type":"string","enum":["I2V_ONE","REFERENCE_THREE","REFERENCE_FIVE"]},"reference_set_id":{"type":"string","minLength":1},"reference_conditioning":{"$ref":"#/$defs/conditioning"}}}
+    "canonicalDecimal": {
+      "type": "string",
+      "pattern": "^(?:0|[1-9][0-9]*|(?:0|[1-9][0-9]*)\\.[0-9]*[1-9]|-[1-9][0-9]*(?:\\.[0-9]*[1-9])?|-0\\.[0-9]*[1-9])$",
+      "x-canonical-scalar": "decimal"
+    },
+    "subjectAllocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subject_id",
+        "reference_count",
+        "share"
+      ],
+      "properties": {
+        "subject_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reference_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "share": {
+          "$ref": "#/$defs/canonicalDecimal"
+        }
+      }
+    },
+    "orderedReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ordinal",
+        "asset_id",
+        "asset_sha256",
+        "semantic_role",
+        "subject_id",
+        "asset_kind",
+        "object_storage_version_id"
+      ],
+      "properties": {
+        "ordinal": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "asset_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "asset_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "semantic_role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "asset_kind": {
+          "type": "string",
+          "enum": [
+            "CANONICAL_FIRST_FRAME",
+            "CHARACTER_REFERENCE",
+            "PRODUCT_REFERENCE",
+            "TEXT_REFERENCE",
+            "MOTION_REFERENCE",
+            "ENVIRONMENT_REFERENCE",
+            "COMPOSITE_REFERENCE",
+            "STYLE_REFERENCE"
+          ]
+        },
+        "object_storage_version_id": {
+          "type": "string",
+          "minLength": 1,
+          "not": {
+            "const": "PENDING_ASSET_FREEZE"
+          }
+        }
+      }
+    },
+    "conditioning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "subject_allocations",
+        "ordered_references",
+        "canonical_reference_set_sha256"
+      ],
+      "properties": {
+        "subject_allocations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/subjectAllocation"
+          }
+        },
+        "ordered_references": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/orderedReference"
+          }
+        },
+        "canonical_reference_set_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "treatment_id",
+        "reference_set_id",
+        "reference_conditioning"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "pattern": "^B[0-9]{3}$"
+        },
+        "treatment_id": {
+          "type": "string",
+          "enum": [
+            "I2V_ONE",
+            "REFERENCE_THREE",
+            "REFERENCE_FIVE"
+          ]
+        },
+        "reference_set_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reference_conditioning": {
+          "$ref": "#/$defs/conditioning"
+        }
+      }
+    }
   },
-  "required":["manifest_id","current_state","scenario_budgets","seeds","reference_conditioning_cases","asset_manifest"],
-  "properties":{"manifest_id":{"const":"MODEL-MANIFEST-BENCH100-v1.1"},"current_state":{"type":"string"},"scenario_budgets":{"type":"object","required":["economy","standard"],"properties":{"economy":{"type":"object","required":["usd_per_final_accepted_minute","status"],"properties":{"usd_per_final_accepted_minute":{"$ref":"#/$defs/canonicalDecimal"},"status":{"const":"TARGET_NOT_OBSERVED"}}},"standard":{"type":"object","required":["usd_per_final_accepted_minute","status"],"properties":{"usd_per_final_accepted_minute":{"$ref":"#/$defs/canonicalDecimal"},"status":{"const":"TARGET_NOT_OBSERVED"}}}}},"seeds":{"type":"object","required":["values"],"properties":{"values":{"const":[19001,19002,19003]}}},"reference_conditioning_cases":{"type":"array","items":{"$ref":"#/$defs/record"}},"asset_manifest":{"type":"object"}}
+  "required": [
+    "manifest_id",
+    "current_state",
+    "scenario_budgets",
+    "seeds",
+    "reference_conditioning_cases",
+    "asset_manifest"
+  ],
+  "properties": {
+    "manifest_id": {
+      "const": "MODEL-MANIFEST-BENCH100-v1.1"
+    },
+    "current_state": {
+      "type": "string"
+    },
+    "scenario_budgets": {
+      "type": "object",
+      "required": [
+        "economy",
+        "standard"
+      ],
+      "properties": {
+        "economy": {
+          "type": "object",
+          "required": [
+            "usd_per_final_accepted_minute",
+            "status"
+          ],
+          "properties": {
+            "usd_per_final_accepted_minute": {
+              "$ref": "#/$defs/canonicalDecimal"
+            },
+            "status": {
+              "const": "TARGET_NOT_OBSERVED"
+            }
+          }
+        },
+        "standard": {
+          "type": "object",
+          "required": [
+            "usd_per_final_accepted_minute",
+            "status"
+          ],
+          "properties": {
+            "usd_per_final_accepted_minute": {
+              "$ref": "#/$defs/canonicalDecimal"
+            },
+            "status": {
+              "const": "TARGET_NOT_OBSERVED"
+            }
+          }
+        }
+      }
+    },
+    "seeds": {
+      "type": "object",
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "const": [
+            19001,
+            19002,
+            19003
+          ]
+        }
+      }
+    },
+    "reference_conditioning_cases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/record"
+      }
+    },
+    "asset_manifest": {
+      "type": "object"
+    }
+  }
 }
