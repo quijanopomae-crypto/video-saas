@@ -5,7 +5,7 @@
   "updated_at": "2026-09-20T13:19:50Z",
   "task": {
     "task_id": "TASK-REPO-CONTROL-004",
-    "task_contract_sha256": "2f571d5febf5a7bbc83a9b4f7d1fe2bd49e144cfa7fe555716845874a628f5d1",
+    "task_contract_sha256": "9030f076ab09869e5980d8749dc33ffd28fb52800405abcdac318536b716b576",
     "phase": "PHASE_D_BLOCKED_BRANCH_PROTECTION"
   },
   "progress": {
