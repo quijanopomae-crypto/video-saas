@@ -3,7 +3,7 @@ project_id: VIDEO-SAAS
 repository_control_plane:
   decision: VIDEO-SAAS_REPOSITORY_CONTROL_PLANE_APPROVED_WITH_MINOR_STRUCTURAL_SIMPLIFICATION
   design_status: APPROVED
-  implementation_status: PHASE_D_BLOCKED_BRANCH_PROTECTION
+  implementation_status: PHASE_D_PASS
   root_business_src: FORBIDDEN
   repository_control_code: projectctl/
   backend_code: apps/api/src/
@@ -20,13 +20,19 @@ baseline:
   asset_freeze_validation: DEFERRED
   provider_probes_executed: false
 phase_d:
-  software_demonstration_status: PASS_REMOTE_EXCEPT_BRANCH_PROTECTION
+  software_demonstration_status: PASS
   regression_tests: 58/58
   phase_d_tests: 12/12
   fresh_session_process_probe: PASS
   ci_status: PASS_REMOTE
-  branch_protection_status: BLOCKED_GITHUB_PLAN_OR_INTEGRATION
+  branch_protection_status: PASS
   ci_run_id: 35512907861
   ci_head_sha: 5aeca47430ab10775b2df10c5c8ffa59f6097845
   persisted_checkpoint_fresh_clone: PASS
-next_gate: BRANCH_PROTECTION_REQUIRED_FOR_PHASE_D_PASS
+  ruleset_id: 23730563
+  ruleset_name: Protect main
+  ruleset_enforcement: active
+  ruleset_target: DEFAULT_BRANCH
+  required_status_check: repository-control
+  ruleset_bypass_actors: 0
+next_gate: PROVIDER_PREFLIGHT_AUTHORIZATION
