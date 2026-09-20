@@ -180,3 +180,12 @@ jobs:
           assert data["service"] == "video-saas-api", data
           print("WEB_TO_API_SMOKE_OK")
           PY
+
+  product-ci:
+    name: product-ci
+    needs: [backend, frontend, integration-smoke]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm complete product validation
+        run: echo "PRODUCT_CI_OK"
+
