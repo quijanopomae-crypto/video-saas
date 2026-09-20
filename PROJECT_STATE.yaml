@@ -1,0 +1,22 @@
+schema_version: 1
+project_id: VIDEO-SAAS
+repository_control_plane:
+  decision: VIDEO-SAAS_REPOSITORY_CONTROL_PLANE_APPROVED_WITH_MINOR_STRUCTURAL_SIMPLIFICATION
+  design_status: APPROVED
+  implementation_status: PHASE_A_PASS
+  root_business_src: FORBIDDEN
+  repository_control_code: projectctl/
+  backend_code: apps/api/src/
+  frontend_code: apps/web/src/
+current_authorized_phase: PHASE_A
+active_task_id: TASK-REPO-CONTROL-001
+provider_preflight_allowed: false
+architecture_research_reopened: false
+paid_provider_requests_allowed: false
+baseline:
+  id: CANONICAL-EXECUTABLE-BASELINE-v1.1
+  origin: BUILT_FROM_APPROVED_SPECIFICATION
+  manifest_internal_integrity: PASS
+  asset_freeze_validation: DEFERRED
+  provider_probes_executed: false
+next_gate: PHASE_B_AUTHORIZATION
