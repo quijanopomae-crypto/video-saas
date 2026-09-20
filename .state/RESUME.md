@@ -2,7 +2,7 @@
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** DEV_INFRA_BUILD
+- **Phase:** DEV_INFRA_PASS
 - **Checkpoint:** CP-1789916722506-76d71400
 - **State version:** 17
 - **Branch:** dev-infra-001
@@ -14,9 +14,9 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Baseline regression suite:** true
 - **Phase B acceptance:** true
 - **Phase C acceptance:** true
-- **Latest evidence:** PHASE-D-BRANCH-PROTECTION
+- **Latest evidence:** DEV-INFRA-001
 - **Blocked:** none
-- **Next action:** Open the development infrastructure PR and require Repository Control CI plus Product CI.
+- **Next action:** Before Provider Preflight or adding credentials, review repository privacy and explicitly authorize Provider Preflight; paid provider requests remain disabled.
 
 ## Completed steps
 
@@ -69,7 +69,16 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - Ruleset requires pull requests and repository-control status checks with no bypass actors
 - Phase D closure PR #1 Repository Control CI run 35517147247 passed: SCOPE_OK + 58/58 tests + fresh-session probe
 - TASK-DEV-INFRA-001 activated with provider spending disabled
+- FastAPI health and PostgreSQL readiness passed
+- Alembic clean-database migration 0001_infra_meta passed
+- Local storage, queue and workflow adapters passed tests
+- FFmpeg deterministic smoke passed
+- Next.js structural tests, typecheck and production build passed
+- Web -> Next route handler -> FastAPI integration smoke passed
+- Secret hygiene scan passed
+- Repository Control CI run 35518644353 passed: SCOPE_OK + 63/63 tests + fresh-session
+- Product CI run 35518644355 passed: backend + frontend + integration-smoke + product-ci
 
 The active Task Contract SHA-256 is:
 
-`8072d92008d300109ea2652c438d34e3125b1adc5fc4e7c71a535e3441660b05`
+`a91ee7adb356adb4c8d8e199e63a40d620a39f2963906f7459fb6fd7629fbafe`
