@@ -1,0 +1,7 @@
+amendment_id: PREFLIGHT-INTERNAL-FIX-01
+status: APPLIED_IN_BASELINE
+changes:
+- subject_allocations_separated_from_ordered_references
+- recursive_unicode_nfc
+- canonical_decimal_strings
+- mandatory_hash_tests
