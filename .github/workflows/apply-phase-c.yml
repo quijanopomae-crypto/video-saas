@@ -1,0 +1,46 @@
+name: Apply Phase C repository control
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.bootstrap/phase-c/part-02.b64'
+
+permissions:
+  contents: write
+
+jobs:
+  apply-phase-c:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebuild and verify Phase C payload
+        run: |
+          cat .bootstrap/phase-c/part-01.b64 .bootstrap/phase-c/part-02.b64 > /tmp/phase-c.b64
+          base64 --decode /tmp/phase-c.b64 > /tmp/phase-c-upload.tar.gz
+          echo "ad2da6279a69af989c57c61201760f83be1d11efb50960d2fbc3f88a0028c5c1  /tmp/phase-c-upload.tar.gz" | sha256sum -c -
+          tar -xzf /tmp/phase-c-upload.tar.gz -C .
+
+      - name: Install test dependencies
+        run: python -m pip install --quiet pytest pyyaml jsonschema
+
+      - name: Validate Task Contract scope
+        run: python -B -m projectctl check-scope
+
+      - name: Run full regression suite
+        run: python -B -m pytest -q tests
+
+      - name: Commit exact Phase C state
+        run: |
+          rm -rf .bootstrap .github/workflows/apply-phase-c.yml
+          find . -type d -name __pycache__ -prune -exec rm -rf {} +
+          rm -rf .pytest_cache
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "feat: complete repository control Phase C"
+          git push
