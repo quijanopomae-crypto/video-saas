@@ -193,6 +193,68 @@ def _git(root: Path, *args: str, check: bool = True) -> bytes:
     return proc.stdout
 
 
+def _repository_content_fingerprint(root: Path) -> str:
+    """Hash repository-visible bytes outside .state/ independent of commit identity.
+
+    A durable checkpoint is normally committed after it is created. Therefore an
+    exact HEAD equality check is self-referential: committing CURRENT/journal
+    necessarily creates a new HEAD. This fingerprint tracks the actual repository
+    content that the checkpoint is protecting while excluding the control cursor
+    itself.
+    """
+    raw = _git(root, "ls-files", "-z", "--cached", "--others", "--exclude-standard")
+    paths = sorted(
+        {
+            item.decode("utf-8", "surrogateescape")
+            for item in raw.split(b"\0")
+            if item
+            and item != b".state"
+            and not item.startswith(b".state/")
+        }
+    )
+    digest = hashlib.sha256()
+    for rel in paths:
+        path = root / rel
+        try:
+            st = path.lstat()
+        except FileNotFoundError:
+            # A path disappearing while the snapshot is being taken is itself a
+            # concurrent mutation. Encode it so verification cannot silently pass.
+            kind = b"M"
+            payload = b""
+            mode = 0
+        else:
+            mode = st.st_mode & 0o777
+            if path.is_symlink():
+                kind = b"L"
+                payload = os.readlink(path).encode("utf-8", "surrogateescape")
+            elif path.is_file():
+                kind = b"F"
+                payload = path.read_bytes()
+            else:
+                kind = b"O"
+                payload = b""
+        rel_bytes = rel.encode("utf-8", "surrogateescape")
+        digest.update(len(rel_bytes).to_bytes(8, "big"))
+        digest.update(rel_bytes)
+        digest.update(kind)
+        digest.update(mode.to_bytes(4, "big"))
+        digest.update(len(payload).to_bytes(8, "big"))
+        digest.update(payload)
+    return digest.hexdigest()
+
+
+def _git_is_ancestor(root: Path, ancestor: str, descendant: str) -> bool:
+    proc = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", ancestor, descendant],
+        cwd=root,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    return proc.returncode == 0
+
+
 def git_snapshot(root: Path) -> dict[str, Any]:
     top = Path(_git(root, "rev-parse", "--show-toplevel").decode().strip()).resolve()
     if top != root.resolve():
@@ -200,8 +262,9 @@ def git_snapshot(root: Path) -> dict[str, Any]:
     branch = _git(root, "branch", "--show-current").decode().strip()
     head = _git(root, "rev-parse", "HEAD").decode().strip()
     # `.state/` is the agent cursor itself; checkpoint/recovery writes there must
-    # not make the checkpoint immediately look stale. Reconcile all other
-    # repository changes, including untracked files.
+    # not make the checkpoint immediately look stale. The content fingerprint is
+    # deliberately commit-independent so persisting the checkpoint does not make
+    # its own HEAD assertion impossible to satisfy.
     status = _git(
         root,
         "status",
@@ -216,6 +279,7 @@ def git_snapshot(root: Path) -> dict[str, Any]:
         "head_commit": head,
         "working_tree_dirty": bool(status),
         "working_tree_fingerprint": hashlib.sha256(status).hexdigest(),
+        "content_fingerprint": _repository_content_fingerprint(root),
     }
 
 
@@ -321,7 +385,7 @@ def _materialize_after_event(
     return snapshot
 
 
-def _verify_snapshot_vs_git(current: dict[str, Any], observed: dict[str, Any]) -> None:
+def _verify_snapshot_vs_git(root: Path, current: dict[str, Any], observed: dict[str, Any]) -> None:
     expected = current.get("repository")
     if not expected:
         return
@@ -330,6 +394,26 @@ def _verify_snapshot_vs_git(current: dict[str, Any], observed: dict[str, Any]) -
             "RECOVERY_WRONG_BRANCH",
             f"expected {expected.get('branch')!r}; observed {observed.get('branch')!r}",
         )
+
+    expected_content = expected.get("content_fingerprint")
+    if expected_content is not None:
+        if expected_content != observed.get("content_fingerprint"):
+            raise RecoveryBlocked(
+                "RECOVERY_STATE_MISMATCH",
+                "repository content outside .state differs from checkpoint",
+            )
+        expected_head = expected.get("head_commit")
+        observed_head = observed.get("head_commit")
+        if expected_head and observed_head and expected_head != observed_head:
+            if not _git_is_ancestor(root, expected_head, observed_head):
+                raise RecoveryBlocked(
+                    "RECOVERY_STATE_MISMATCH",
+                    f"checkpoint HEAD {expected_head} is not an ancestor of observed HEAD {observed_head}",
+                )
+        return
+
+    # Backward compatibility for checkpoints written before content_fingerprint
+    # existed. These retain the stricter legacy semantics.
     if expected.get("head_commit") != observed.get("head_commit"):
         raise RecoveryBlocked(
             "RECOVERY_STATE_MISMATCH",
@@ -435,7 +519,7 @@ def recover(root: Path) -> dict[str, Any]:
 
         observed = git_snapshot(root)
         if current.get("repository"):
-            _verify_snapshot_vs_git(current, observed)
+            _verify_snapshot_vs_git(root, current, observed)
         else:
             current["repository"] = observed
             current["state_version"] = int(current.get("state_version", 0)) + 1
