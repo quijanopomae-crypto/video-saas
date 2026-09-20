@@ -1,12 +1,12 @@
-# RESUME — TASK-DEV-INFRA-001
+# RESUME — TASK-PRODUCT-LAB-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** DEV_INFRA_PASS
-- **Checkpoint:** DEV-INFRA-MAIN-FINAL-001
-- **State version:** 20
-- **Branch:** main
-- **Checkpoint base HEAD:** e9a29173ab52300da26c92cb6c488330203dea1f
+- **Phase:** PRODUCT_LAB
+- **Checkpoint:** TASK-PRODUCT-LAB-001-ACTIVATED
+- **State version:** 21
+- **Branch:** lab-product-flow-001
+- **Checkpoint base HEAD:** dcf28e6d7e3f4b86b9899d7c04a2ae994d92c998
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** DEV-INFRA-001
 - **Blocked:** none
-- **Next action:** Repository control and development infrastructure are complete on main. Before Provider Preflight or adding credentials, make the repository private and explicitly authorize Provider Preflight; paid provider requests remain disabled.
+- **Next action:** Open the lab PR and require Lab CI, Repository Control CI and Product CI. Do not promote lab code to apps/** without explicit user approval and a new promotion Task Contract.
 
 ## Completed steps
 
@@ -81,7 +81,10 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - Main Repository Control CI run 35519069836 passed after PR #2 merge
 - Main Product CI run 35519069950 passed after PR #2 merge: backend + frontend + integration-smoke + product-ci
 - Durable repository cursor normalized to main after development infrastructure merge
+- TASK-PRODUCT-LAB-001 activated with lab isolated from canonical apps
+- Lab CI run 35524914368 passed: 5/5 tests + deterministic demo
+- product-flow-001 remains non-canonical pending full CI and explicit promotion approval
 
 The active Task Contract SHA-256 is:
 
-`a91ee7adb356adb4c8d8e199e63a40d620a39f2963906f7459fb6fd7629fbafe`
+`406e8a34cbc3c6ba59e73a417f664f1003c814ee097950845ecaba2b2c85ff7c`

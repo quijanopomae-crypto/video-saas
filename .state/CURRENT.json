@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "DEV-INFRA-MAIN-FINAL-001",
+  "checkpoint_id": "TASK-PRODUCT-LAB-001-ACTIVATED",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "715d226e70e55b6945d664c231a382e8536b297627c3fcf8c0f12151bcc0f743",
-  "last_journal_sequence": 20,
+  "last_journal_event_sha256": "69f377620ff3304947d73aa003ee03abbd77cbe6c717c6e4586f1c3806424211",
+  "last_journal_sequence": 21,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -71,26 +71,29 @@
       "Product CI run 35518644355 passed: backend + frontend + integration-smoke + product-ci",
       "Main Repository Control CI run 35519069836 passed after PR #2 merge",
       "Main Product CI run 35519069950 passed after PR #2 merge: backend + frontend + integration-smoke + product-ci",
-      "Durable repository cursor normalized to main after development infrastructure merge"
+      "Durable repository cursor normalized to main after development infrastructure merge",
+      "TASK-PRODUCT-LAB-001 activated with lab isolated from canonical apps",
+      "Lab CI run 35524914368 passed: 5/5 tests + deterministic demo",
+      "product-flow-001 remains non-canonical pending full CI and explicit promotion approval"
     ],
-    "next_action": "Repository control and development infrastructure are complete on main. Before Provider Preflight or adding credentials, make the repository private and explicitly authorize Provider Preflight; paid provider requests remain disabled.",
+    "next_action": "Open the lab PR and require Lab CI, Repository Control CI and Product CI. Do not promote lab code to apps/** without explicit user approval and a new promotion Task Contract.",
     "next_command": null
   },
   "repository": {
-    "branch": "main",
-    "head_commit": "e9a29173ab52300da26c92cb6c488330203dea1f",
+    "branch": "lab-product-flow-001",
+    "head_commit": "dcf28e6d7e3f4b86b9899d7c04a2ae994d92c998",
     "working_tree_dirty": false,
     "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "content_fingerprint": "f6fd946107dfac808a53bda37a1428166e2a6ef4e5fc8205b900b2bef9ba0fb1"
+    "content_fingerprint": "4fadab59f599be9533f189fdb299d94f6d8f3fad1348e1eb066bfc4efe2b4596"
   },
   "schema_version": 1,
-  "state_version": 20,
+  "state_version": 21,
   "task": {
-    "phase": "DEV_INFRA_PASS",
-    "task_contract_sha256": "a91ee7adb356adb4c8d8e199e63a40d620a39f2963906f7459fb6fd7629fbafe",
-    "task_id": "TASK-DEV-INFRA-001"
+    "task_id": "TASK-PRODUCT-LAB-001",
+    "task_contract_sha256": "406e8a34cbc3c6ba59e73a417f664f1003c814ee097950845ecaba2b2c85ff7c",
+    "phase": "PRODUCT_LAB"
   },
-  "updated_at": "2026-09-20T15:23:00Z",
+  "updated_at": "2026-09-20T17:10:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
@@ -118,6 +121,8 @@
     "main_final_repository_control_ci_passed": true,
     "main_final_product_ci_passed": true,
     "main_final_head": "e9a29173ab52300da26c92cb6c488330203dea1f",
-    "development_infrastructure_ready": true
+    "development_infrastructure_ready": true,
+    "lab_product_flow_001_lab_ci_passed": true,
+    "lab_product_flow_001_acceptance_passed": false
   }
 }
