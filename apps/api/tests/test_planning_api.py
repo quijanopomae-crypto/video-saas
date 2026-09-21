@@ -20,7 +20,7 @@ def test_planning_api_returns_canonical_flow() -> None:
     response = client.post("/planning", json=PAYLOAD)
     assert response.status_code == 200
     expected = run_product_flow(ProjectRequest.from_dict(PAYLOAD)).to_dict()
-    assert response.json() == expected
+    assert response.json() == __import__("json").loads(__import__("json").dumps(expected))
     assert response.json()["preview_plan"]["total_duration_sec"] == 60
 
 
