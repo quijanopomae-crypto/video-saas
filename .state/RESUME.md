@@ -7,7 +7,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **State version:** 30
 - **Branch:** task-canonical-planning-api-001
 - **Checkpoint base HEAD:** ca67e5d4847f7aa6f5ee4f040c49fb1ed95e2689
-- **Checkpoint working tree dirty:** false
+- **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
 - **Phase A acceptance:** true
