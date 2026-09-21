@@ -329,3 +329,24 @@ def test_close_active_task_materializes_idle_state_with_durable_event(tmp_path):
     assert events[-1]["event_type"] == "TASK_CLOSED"
     assert events[-1]["payload"]["closed_task_id"] == "TASK-REPO-CONTROL-004"
 
+def test_terminal_idle_cursor_recovers_after_branch_change(tmp_path):
+    root = make_repo(tmp_path)
+    evidence_id = "TASK-CLOSE-BRANCH-EVIDENCE"
+    (root / "evidence" / f"{evidence_id}.json").write_text(
+        json.dumps({"status": "PASS", "evidence_id": evidence_id}) + "\n",
+        encoding="utf-8",
+    )
+    close_active_task(root, final_phase="PHASE_D_PASS", evidence_ids=[evidence_id])
+
+    run(root, "git", "add", ".")
+    run(root, "git", "commit", "-m", "persist terminal idle state")
+    run(root, "git", "checkout", "-b", "merged-main")
+
+    result = recover(root)
+    current = json.loads((root / ".state" / "CURRENT.json").read_text(encoding="utf-8"))
+
+    assert result["status"] in {"RECOVERY_OK", "RECOVERY_REPAIRED"}
+    assert current["repository"]["branch"] is None
+    assert current["task"]["task_id"] is None
+    assert current["progress"]["next_action"] is None
+
