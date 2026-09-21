@@ -3,10 +3,10 @@
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
 - **Phase:** POST_PR13_STABILIZATION_PASS
-- **Checkpoint:** CP-1789996856779-e91329a8
-- **State version:** 35
+- **Checkpoint:** CP-1789997194514-0aeabb2c
+- **State version:** 36
 - **Branch:** main
-- **Checkpoint base HEAD:** 8c80b66a8cc91e01c61487672fde60a60cf6f60d
+- **Checkpoint base HEAD:** 62a74c04a79dae4edcd55590dd5340759efa5a86
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -112,6 +112,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - Protect main ruleset requires exactly repository-control and product-ci with no bypass actors
 - POST-PR13-STABILIZATION-001 evidence materialized
 - TASK-POST-PR13-STABILIZATION-001 closed PASS with no later product gate authorized
+- README final state synchronized with POST_PR13_STABILIZATION_PASS
 
 The active Task Contract SHA-256 is:
 
