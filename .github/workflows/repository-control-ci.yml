@@ -23,7 +23,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install validation dependencies
-        run: python -m pip install --quiet pytest pyyaml jsonschema
+        run: python -m pip install --quiet pytest==9.1.1 pyyaml==6.0.3 jsonschema==4.26.0
 
       - name: Resolve scope base
         id: base
