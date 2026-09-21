@@ -1061,6 +1061,121 @@ def _load_evidence(root: Path, evidence_id: str) -> dict[str, Any]:
     return evidence
 
 
+def close_active_task(root: Path, *, final_phase: str, evidence_ids: list[str]) -> dict[str, Any]:
+    """Close the current authorized task and materialize a durable IDLE cursor."""
+    root = root.resolve()
+    with task_lock(root):
+        operating = validate_operating_state(root)
+        if operating.get("status") != "OPERATING_STATE_ACTIVE":
+            raise OperatingStateError("NO_ACTIVE_TASK", "only an ACTIVE task can be closed")
+
+        current = load_json(root / ".state" / "CURRENT.json")
+        events, incomplete = read_journal(root)
+        if incomplete:
+            raise RecoveryBlocked("RECOVERY_INCOMPLETE_FINAL_LINE", "run projectctl recover before task close")
+        _ensure_state_journal_aligned(current, events)
+
+        project_path = root / "PROJECT_STATE.yaml"
+        project = load_yaml(project_path)
+        task_id = project.get("active_task_id")
+        if not isinstance(task_id, str) or not task_id:
+            raise OperatingStateError("NO_ACTIVE_TASK", "PROJECT_STATE has no active task")
+        contract_path = root / "tasks" / f"{task_id}.yaml"
+        contract = load_yaml(contract_path)
+        task = contract.get("task") or {}
+        if task.get("id") != task_id:
+            raise OperatingStateError("ACTIVE_TASK_ID_MISMATCH", f"{task_id} != {task.get('id')}")
+        if str(task.get("status") or "").upper() in TERMINAL_TASK_STATUSES:
+            raise OperatingStateError("ACTIVE_TASK_TERMINAL", f"{task_id} is already terminal")
+
+        ext = current.get("external_operations", {})
+        if ext.get("unknown_billing_requests") or ext.get("pending_paid_requests"):
+            raise TransitionBlocked("TASK_CLOSE_BLOCKED_EXTERNAL_OPERATION", task_id)
+        if ext.get("provider_preflight_started"):
+            raise TransitionBlocked("TASK_CLOSE_BLOCKED_PROVIDER_PREFLIGHT", task_id)
+        if not evidence_ids:
+            raise TransitionBlocked("TASK_CLOSE_EVIDENCE_REQUIRED", task_id)
+        for evidence_id in evidence_ids:
+            _load_evidence(root, evidence_id)
+
+        # Scope is checked while the task is still ACTIVE. The resulting closing
+        # commit is subsequently verifiable from IDLE by check_scope(base_ref=...).
+        check_scope(root)
+
+        expected_outcome = ((contract.get("objective") or {}).get("expected_outcome"))
+        if expected_outcome and final_phase != expected_outcome:
+            raise TransitionBlocked(
+                "TASK_CLOSE_OUTCOME_MISMATCH",
+                f"expected {expected_outcome}; requested {final_phase}",
+            )
+
+        new_state = deepcopy(current)
+        new_state["task"] = {
+            "task_id": None,
+            "task_contract_sha256": None,
+            "phase": final_phase,
+        }
+        new_state["blocked"] = None
+        new_state.setdefault("progress", {})["next_action"] = None
+        new_state["progress"]["next_command"] = None
+        completed = new_state["progress"].setdefault("completed_steps", [])
+        completed.append(f"{task_id} closed DONE with {final_phase}")
+        new_state.setdefault("verification", {})["latest_evidence_id"] = evidence_ids[-1]
+        new_state["verification"]["audit_remediation_passed"] = final_phase == "AUDIT_REMEDIATION_PASS"
+        new_state.setdefault("external_operations", {})["provider_preflight_started"] = False
+        new_state["external_operations"]["paid_requests_allowed"] = False
+        new_state["external_operations"]["pending_paid_requests"] = []
+        new_state["external_operations"]["unknown_billing_requests"] = []
+
+        materialized = _append_control_event_locked(
+            root,
+            current,
+            events,
+            event_type="TASK_CLOSED",
+            payload={
+                "closed_task_id": task_id,
+                "final_phase": final_phase,
+                "evidence_ids": evidence_ids,
+            },
+            state_after=new_state,
+        )
+
+        contract.setdefault("task", {})["status"] = "DONE"
+        contract["closure"] = {
+            "final_phase": final_phase,
+            "evidence_ids": evidence_ids,
+            "provider_preflight_started": False,
+            "paid_provider_requests_executed": False,
+        }
+        write_atomic(
+            contract_path,
+            yaml.safe_dump(contract, sort_keys=False, allow_unicode=True).encode("utf-8"),
+        )
+
+        project["current_authorized_phase"] = final_phase
+        project["active_task_id"] = None
+        project["next_gate"] = "NONE_AUTHORIZED"
+        project["next_gate_authorized"] = False
+        project["provider_preflight_allowed"] = False
+        project["paid_provider_requests_allowed"] = False
+        for value in project.values():
+            if isinstance(value, dict) and value.get("task_id") == task_id:
+                if "status" in value:
+                    value["status"] = "PASS"
+                value["completion_phase"] = final_phase
+        write_atomic(
+            project_path,
+            yaml.safe_dump(project, sort_keys=False, allow_unicode=True).encode("utf-8"),
+        )
+        return {
+            "status": "TASK_CLOSE_OK",
+            "task_id": task_id,
+            "final_phase": final_phase,
+            "checkpoint_id": materialized["checkpoint_id"],
+            "evidence_ids": evidence_ids,
+        }
+
+
 def transition_repository_state(root: Path, *, to_phase: str, evidence_ids: list[str]) -> dict[str, Any]:
     root = root.resolve()
     with task_lock(root):
