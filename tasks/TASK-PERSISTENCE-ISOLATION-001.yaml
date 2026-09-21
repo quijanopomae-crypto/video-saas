@@ -1,8 +1,8 @@
 schema_version: 1
 task:
   id: TASK-PERSISTENCE-ISOLATION-001
-  title: Persist canonical planning with five-user isolation
-  status: IMPLEMENTING
+  title: Persist canonical planning with owner-scoped partitioning
+  status: DONE
   risk: MEDIUM
 objective:
   expected_outcome: PERSISTENT_OWNER_SCOPED_CANONICAL_PLANNING
@@ -30,7 +30,7 @@ constraints:
   - Preserve canonical ProductFlow semantics and serialization unchanged.
   - Persist owner_id, canonical project_id and canonical ProductFlow JSON only, plus database-managed created_at.
   - Storage identity must include owner_id and project_id so identical requests from different owners do not collide.
-  - Require explicit owner_id at the persistence API boundary; do not claim or implement authentication/login.
+  - Require explicit owner_id at the persistence API boundary; this proves partitioning only and MUST NOT be claimed as authentication, authorization, or secure multi-user isolation.
   - Reads must constrain by both owner_id and project_id and return non-leaking not-found for another owner.
   - Reuse existing SQLAlchemy engine and Alembic conventions; no infrastructure refactor.
   - Do not add queues, workflows, storage providers, provider SDKs or provider calls.
@@ -47,5 +47,6 @@ acceptance:
   - Repository Control CI passes.
   - Product CI passes.
   - Provider Preflight and paid requests remain OFF.
+  - Authentication/authorization remains mandatory before the five-user pilot.
 blocking_rule:
   - Do not integrate if isolation leaks, canonical planning semantics change, CI fails, or forbidden external operations are required.
