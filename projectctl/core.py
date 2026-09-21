@@ -38,6 +38,16 @@ class LockBusy(ProjectCtlError):
     pass
 
 
+class OperatingStateError(ProjectCtlError):
+    def __init__(self, code: str, detail: str):
+        super().__init__(f"{code}: {detail}")
+        self.code = code
+        self.detail = detail
+
+
+TERMINAL_TASK_STATUSES = {"DONE", "PASS"}
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
 
@@ -329,13 +339,15 @@ def read_journal(root: Path, *, repair_incomplete_final_line: bool = False) -> t
 
 def render_resume(current: dict[str, Any]) -> str:
     task = current.get("task", {})
+    task_id = task.get("task_id") or "IDLE"
+    task_contract_sha256 = task.get("task_contract_sha256") or "none"
     progress = current.get("progress", {})
     verification = current.get("verification", {})
     external = current.get("external_operations", {})
     repository = current.get("repository", {})
     completed = progress.get("completed_steps") or []
     lines = [
-        f"# RESUME — {task.get('task_id', 'UNKNOWN')}",
+        f"# RESUME — {task_id}",
         "",
         "Generated view of `.state/CURRENT.json`. It is not an independent source of truth.",
         "",
@@ -363,7 +375,7 @@ def render_resume(current: dict[str, Any]) -> str:
         "",
         "The active Task Contract SHA-256 is:",
         "",
-        f"`{task.get('task_contract_sha256')}`",
+        f"`{task_contract_sha256}`",
         "",
     ]
     return "\n".join(lines)
@@ -587,11 +599,70 @@ def load_yaml(path: Path) -> dict[str, Any]:
     return value
 
 
+def validate_operating_state(root: Path) -> dict[str, Any]:
+    """Validate ACTIVE vs IDLE semantics for the repository operating cursor."""
+    root = root.resolve()
+    project = load_yaml(root / "PROJECT_STATE.yaml")
+    active_task_id = project.get("active_task_id")
+    next_gate = project.get("next_gate")
+    next_gate_authorized = project.get("next_gate_authorized")
+
+    if not isinstance(next_gate_authorized, bool):
+        raise OperatingStateError("NEXT_GATE_AUTHORIZATION_INVALID", "next_gate_authorized must be boolean")
+    if not isinstance(next_gate, str) or not next_gate:
+        raise OperatingStateError("NEXT_GATE_INVALID", "next_gate must be a non-empty string")
+
+    if active_task_id is None:
+        if next_gate != "NONE_AUTHORIZED" or next_gate_authorized:
+            raise OperatingStateError(
+                "IDLE_WITH_AUTHORIZED_GATE",
+                "active_task_id=null is valid only with next_gate=NONE_AUTHORIZED and next_gate_authorized=false",
+            )
+        return {
+            "status": "OPERATING_STATE_IDLE",
+            "active_task_id": None,
+            "next_gate": next_gate,
+            "next_gate_authorized": False,
+        }
+
+    if not isinstance(active_task_id, str) or not active_task_id:
+        raise OperatingStateError("ACTIVE_TASK_ID_INVALID", "active_task_id must be a non-empty string or null")
+
+    path = root / "tasks" / f"{active_task_id}.yaml"
+    if not path.exists():
+        raise OperatingStateError("ACTIVE_TASK_CONTRACT_MISSING", str(path.relative_to(root)))
+    contract = load_yaml(path)
+    task = contract.get("task") or {}
+    if task.get("id") != active_task_id:
+        raise OperatingStateError("ACTIVE_TASK_ID_MISMATCH", f"{active_task_id} != {task.get('id')}")
+    status = str(task.get("status") or "").upper()
+    if status in TERMINAL_TASK_STATUSES:
+        raise OperatingStateError(
+            "ACTIVE_TASK_TERMINAL",
+            f"{active_task_id} has terminal status {status}; set active_task_id=null when no later gate is authorized",
+        )
+    if not next_gate_authorized or next_gate == "NONE_AUTHORIZED":
+        raise OperatingStateError(
+            "ACTIVE_TASK_WITHOUT_AUTHORIZED_GATE",
+            "a non-terminal active task requires a named authorized gate",
+        )
+    return {
+        "status": "OPERATING_STATE_ACTIVE",
+        "active_task_id": active_task_id,
+        "task_status": status,
+        "task_contract": str(path.relative_to(root)),
+        "next_gate": next_gate,
+        "next_gate_authorized": True,
+    }
+
+
 def active_task_contract_path(root: Path) -> Path:
     project = load_yaml(root / "PROJECT_STATE.yaml")
     task_id = project.get("active_task_id")
+    if task_id is None:
+        raise OperatingStateError("NO_ACTIVE_TASK", "repository is IDLE; no Task Contract is active")
     if not isinstance(task_id, str) or not task_id:
-        raise ProjectCtlError("PROJECT_STATE.yaml has no active_task_id")
+        raise OperatingStateError("ACTIVE_TASK_ID_INVALID", "active_task_id must be a non-empty string or null")
     path = root / "tasks" / f"{task_id}.yaml"
     if not path.exists():
         raise ProjectCtlError(f"active Task Contract not found: {path}")

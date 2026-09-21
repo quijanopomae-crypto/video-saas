@@ -47,6 +47,9 @@ jobs:
             python -B -m projectctl check-scope
           fi
 
+      - name: Validate operational ACTIVE/IDLE state
+        run: python -B -m projectctl validate-state
+
       - name: Run repository-control regression suite
         run: python -B -m pytest -q -p no:cacheprovider tests
 

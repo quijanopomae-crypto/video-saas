@@ -2,7 +2,7 @@ schema_version: 1
 task:
   id: TASK-CANONICAL-PLANNING-API-001
   title: Integrate canonical planning through FastAPI
-  status: IMPLEMENTING
+  status: DONE
   risk: MEDIUM
 objective:
   expected_outcome: CANONICAL_PLANNING_API_INTEGRATED
@@ -45,3 +45,6 @@ acceptance:
   - Provider Preflight and paid requests remain OFF.
 blocking_rule:
   - Do not integrate if CI fails, canonical planning semantics change, or forbidden external operations are required.
+
+closure_evidence:
+  note: "PR #11 merged canonical planning API into main and main CI passed."

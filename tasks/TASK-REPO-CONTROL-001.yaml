@@ -2,7 +2,7 @@ schema_version: 1
 task:
   id: TASK-REPO-CONTROL-001
   title: Implementar la Fase A del Repository Control Plane
-  status: READY
+  status: DONE
   risk: MEDIUM
 objective:
   expected_outcome: REPOSITORY_CONTROL_PHASE_A_PASS
@@ -36,3 +36,6 @@ acceptance:
   - PROJECT_STATE y CURRENT no duplican responsabilidades.
   - Los tres seeds permanecen 19001, 19002 y 19003.
   - El estado vigente permanece anterior a Provider Preflight.
+
+closure_evidence:
+  note: "Superseded by repository_control_plane implementation_status PHASE_D_PASS."

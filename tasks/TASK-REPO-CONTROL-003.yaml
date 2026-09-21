@@ -2,7 +2,7 @@ schema_version: 1
 task:
   id: TASK-REPO-CONTROL-003
   title: Implementar la Fase C del Repository Control Plane
-  status: READY
+  status: DONE
   risk: MEDIUM
 objective:
   expected_outcome: REPOSITORY_CONTROL_PHASE_C_PASS
@@ -44,3 +44,6 @@ acceptance:
   - La suite previa de 38 tests continúa pasando.
   - Los tests nuevos de Fase C pasan.
   - Provider Preflight permanece sin iniciar.
+
+closure_evidence:
+  note: "Superseded by repository_control_plane implementation_status PHASE_D_PASS."

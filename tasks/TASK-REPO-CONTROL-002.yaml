@@ -2,7 +2,7 @@ schema_version: 1
 task:
   id: TASK-REPO-CONTROL-002
   title: Implementar la Fase B del Repository Control Plane
-  status: READY
+  status: DONE
   risk: MEDIUM
 objective:
   expected_outcome: REPOSITORY_CONTROL_PHASE_B_PASS
@@ -41,3 +41,6 @@ acceptance:
   - El lock impide dos escritores simultáneos.
   - La suite previa de 30 tests continúa pasando.
   - Provider Preflight permanece sin iniciar.
+
+closure_evidence:
+  note: "Superseded by repository_control_plane implementation_status PHASE_D_PASS."

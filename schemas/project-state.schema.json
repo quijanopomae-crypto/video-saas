@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://video-saas.local/schemas/project-state.schema.json",
+  "title": "VIDEO-SAAS operational project state",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "project_id",
+    "current_authorized_phase",
+    "active_task_id",
+    "provider_preflight_allowed",
+    "paid_provider_requests_allowed",
+    "next_gate",
+    "next_gate_authorized"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "project_id": {"const": "VIDEO-SAAS"},
+    "current_authorized_phase": {"type": "string", "minLength": 1},
+    "active_task_id": {"type": ["string", "null"], "minLength": 1},
+    "provider_preflight_allowed": {"type": "boolean"},
+    "paid_provider_requests_allowed": {"type": "boolean"},
+    "next_gate": {"type": "string", "minLength": 1},
+    "next_gate_authorized": {"type": "boolean"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"active_task_id": {"type": "null"}}},
+      "then": {
+        "properties": {
+          "next_gate": {"const": "NONE_AUTHORIZED"},
+          "next_gate_authorized": {"const": false}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"next_gate_authorized": {"const": true}}},
+      "then": {
+        "properties": {
+          "active_task_id": {"type": "string", "minLength": 1},
+          "next_gate": {"not": {"const": "NONE_AUTHORIZED"}}
+        }
+      }
+    }
+  ]
+}
