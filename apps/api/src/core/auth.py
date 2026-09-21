@@ -61,16 +61,17 @@ def get_current_principal(token: str = Depends(OAUTH2_SCHEME)) -> Principal:
         detail="invalid or expired credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    secret = _secret()
     try:
         payload = jwt.decode(
             token,
-            _secret(),
+            secret,
             algorithms=[JWT_ALGORITHM],
             audience=settings.auth_jwt_audience,
             issuer=settings.auth_jwt_issuer,
             options={"require": ["sub", "email", "iat", "exp"]},
         )
-    except (InvalidTokenError, HTTPException):
+    except InvalidTokenError:
         raise credentials_error
     user_id = payload.get("sub")
     email = payload.get("email")
