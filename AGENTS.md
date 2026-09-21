@@ -15,7 +15,9 @@ Read these before any repository work:
 - `.state/` MUST NOT store customer video job state.
 - Customer production state belongs to PostgreSQL, Queues/Workflows, provider ledgers and asset/cost ledgers.
 - Task scope comes from the active Task Contract. Do not expand it silently.
-- Frozen manifests are authoritative and must not be modified unless an approved amendment explicitly authorizes it.
+- Frozen manifests are authoritative baseline artifacts and must not be modified unless an approved amendment explicitly authorizes it.
+- A state string inside a frozen manifest (including `READY_FOR_PROVIDER_PREFLIGHT`) is baseline metadata, NOT the operational cursor and MUST NOT authorize provider activity or NEXT_ACTION.
+- Operational NEXT_ACTION authority comes from `PROJECT_STATE.yaml`, the active Task Contract when one exists, and the durable `.state/` cursor.
 - Never claim a test, probe, cost, provider capability or external action was executed unless it was actually observed.
 - Never store API keys, tokens, credentials or secrets in `.state/`, tasks, manifests or evidence.
 - Equivalent attempts must not be repeated without a causal change or a verified transient failure.
@@ -27,6 +29,7 @@ Repository Control A-D and minimum development infrastructure are complete.
 The validated `product-flow-001` planning core has been promoted to canonical backend code under `apps/api/src/modules/planning/`.
 Canonical planning API integration and owner-scoped planning persistence have been merged. The persistence boundary is partitioning by caller-supplied `owner_id`; it is not authentication or authorization.
 Provider Preflight remains forbidden and no paid provider requests are authorized.
+The owner has explicitly authorized only `TASK-AUDIT-REMEDIATION-001`; this is remediation work, not a new product gate.
 
 ## Canonical planning boundary
 
@@ -84,6 +87,8 @@ Use the existing repository mechanisms rather than creating a second orchestrati
 
 Canonical task states:
 `BACKLOG -> NEEDS_RESEARCH -> RESEARCHED -> READY -> IMPLEMENTING -> PR_OPEN -> AUDIT -> CI -> DONE`.
+
+When there is no authorized work, the repository is explicitly IDLE: `active_task_id: null`, `next_gate: NONE_AUTHORIZED`, and `next_gate_authorized: false`. A Task Contract in `DONE` or legacy terminal `PASS` state MUST NOT remain active.
 
 Failure states:
 `BLOCKED`, `AUDIT_FAIL`, `CI_FAIL`.
