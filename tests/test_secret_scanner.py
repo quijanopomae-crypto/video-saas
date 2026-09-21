@@ -42,3 +42,8 @@ def test_tracked_env_files_are_rejected_but_examples_are_allowed():
     assert MODULE.is_forbidden_env_path("apps/api/.env.production")
     assert not MODULE.is_forbidden_env_path(".env.example")
     assert not MODULE.is_forbidden_env_path("apps/api/.env.sample")
+
+def test_empty_example_secret_does_not_consume_the_next_env_line():
+    text = "AUTH_JWT_SECRET=\nAUTH_JWT_ISSUER=video-saas\n"
+    assert MODULE.scan_text(text) == []
+
