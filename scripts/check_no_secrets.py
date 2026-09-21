@@ -29,7 +29,7 @@ GENERIC_QUOTED_ASSIGNMENT = re.compile(
     r"""(?ix)
     \b(api[_-]?key|access[_-]?token|auth[_-]?token|client[_-]?secret|
        jwt[_-]?secret|private[_-]?token|password)\b
-    \s*[:=]\s*
+    [ \t]*[:=][ \t]*
     (["'])([^"'\r\n]{16,})\2
     """
 )
@@ -37,7 +37,7 @@ GENERIC_ENV_ASSIGNMENT = re.compile(
     r"""(?imx)
     ^\s*(?:export\s+)?
     ([A-Z0-9_]*(?:API_KEY|ACCESS_TOKEN|AUTH_TOKEN|CLIENT_SECRET|JWT_SECRET|PASSWORD))
-    \s*=\s*([^\s#]{16,})\s*$
+    [ \t]*=[ \t]*([^\s#]{16,})[ \t]*$
     """
 )
 
