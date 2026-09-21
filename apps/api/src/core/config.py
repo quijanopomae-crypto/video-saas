@@ -16,6 +16,10 @@ class Settings(BaseSettings):
     storage_backend: str = "memory"
     queue_backend: str = "memory"
     workflow_backend: str = "memory"
+    auth_jwt_secret: str = ""
+    auth_jwt_issuer: str = "video-saas"
+    auth_jwt_audience: str = "video-saas-users"
+    auth_access_token_minutes: int = 30
 
     @property
     def cors_origin_list(self) -> list[str]:
