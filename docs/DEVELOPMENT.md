@@ -41,3 +41,13 @@ La persistencia multiusuario ya no confía en un `owner_id` enviado por el clien
 Para desarrollo local define `AUTH_JWT_SECRET` en `.env` con un valor aleatorio de al menos 32 caracteres. El ejemplo versionado lo deja vacío deliberadamente. Las contraseñas se almacenan con hash Argon2 mediante `pwdlib`; los tokens no se persisten en PostgreSQL.
 
 El comportamiento actual de `project_id` sigue siendo determinista: la misma solicitud canónica del mismo owner produce el mismo `project_id` y el POST persistente actúa de forma idempotente (upsert). Cambiar a “un proyecto nuevo por cada click” es una decisión de producto OWNER-ONLY y no se cambia silenciosamente durante esta remediación.
+
+## Reproducible installs
+
+Frontend CI and local validation use `npm ci` against the versioned `apps/web/package-lock.json`; do not replace it with `npm install` in validation paths.
+
+Backend direct requirements are exact pins in `apps/api/requirements.txt`. The resolved dependency set proven in CI is captured in `apps/api/requirements.lock.txt` and installed as constraints so platform-specific optional dependencies remain portable while Linux CI resolves to the recorded versions.
+
+The production integration smoke builds the Next.js artifact and runs `next start`, then verifies `/api/ready` through the web server to FastAPI's PostgreSQL readiness probe. Development mode is not production E2E evidence.
+
+Critical GitHub Actions are pinned to full commit SHAs with the human major tag retained as a comment.
