@@ -14,6 +14,7 @@ scope:
     - apps/api/src/main.py
     - apps/api/src/modules/planning/router.py
     - apps/api/tests/test_planning_api.py
+    - tests/test_product_promotion_contract.py
     - evidence/**
   forbidden_paths:
     - apps/web/**
