@@ -12,7 +12,7 @@ SCRIPT_ROOT = Path(__file__).resolve().parents[1]
 if str(SCRIPT_ROOT) not in sys.path:
     sys.path.insert(0, str(SCRIPT_ROOT))
 
-from projectctl.core import git_snapshot, read_journal, render_resume
+from projectctl.core import git_snapshot, read_journal, render_resume, validate_operating_state
 
 
 def sha256_file(path: Path) -> str:
@@ -31,18 +31,27 @@ def probe(root: Path) -> dict:
 
     project = yaml.safe_load(project_path.read_text(encoding="utf-8"))
     current = json.loads(current_path.read_text(encoding="utf-8"))
+    operating = validate_operating_state(root)
     active_task_id = project.get("active_task_id")
-    task_path = root / "tasks" / f"{active_task_id}.yaml"
-    if not task_path.exists():
-        raise RuntimeError(f"active Task Contract missing: {task_path.relative_to(root)}")
-    contract = yaml.safe_load(task_path.read_text(encoding="utf-8"))
-    if (contract.get("task") or {}).get("id") != active_task_id:
-        raise RuntimeError("Task Contract id does not match PROJECT_STATE active_task_id")
-    if (current.get("task") or {}).get("task_id") != active_task_id:
-        raise RuntimeError("CURRENT task_id does not match PROJECT_STATE active_task_id")
-    expected_contract_hash = sha256_file(task_path)
-    if (current.get("task") or {}).get("task_contract_sha256") != expected_contract_hash:
-        raise RuntimeError("CURRENT Task Contract SHA-256 mismatch")
+    task_path = None
+    if active_task_id is None:
+        current_task = current.get("task") or {}
+        if current_task.get("task_id") is not None:
+            raise RuntimeError("CURRENT task_id must be null while repository is IDLE")
+        if current_task.get("task_contract_sha256") not in {None, ""}:
+            raise RuntimeError("CURRENT Task Contract hash must be null while repository is IDLE")
+    else:
+        task_path = root / "tasks" / f"{active_task_id}.yaml"
+        if not task_path.exists():
+            raise RuntimeError(f"active Task Contract missing: {task_path.relative_to(root)}")
+        contract = yaml.safe_load(task_path.read_text(encoding="utf-8"))
+        if (contract.get("task") or {}).get("id") != active_task_id:
+            raise RuntimeError("Task Contract id does not match PROJECT_STATE active_task_id")
+        if (current.get("task") or {}).get("task_id") != active_task_id:
+            raise RuntimeError("CURRENT task_id does not match PROJECT_STATE active_task_id")
+        expected_contract_hash = sha256_file(task_path)
+        if (current.get("task") or {}).get("task_contract_sha256") != expected_contract_hash:
+            raise RuntimeError("CURRENT Task Contract SHA-256 mismatch")
     expected_resume = render_resume(current)
     if resume_path.read_text(encoding="utf-8") != expected_resume:
         raise RuntimeError("RESUME.md is not the generated view of CURRENT.json")
@@ -61,16 +70,15 @@ def probe(root: Path) -> dict:
     if ext.get("paid_requests_allowed"):
         raise RuntimeError("paid provider requests unexpectedly enabled")
 
+    read_order = ["AGENTS.md", "PROJECT_STATE.yaml"]
+    if task_path is not None:
+        read_order.append(str(task_path.relative_to(root)))
+    read_order += [".state/CURRENT.json", ".state/RESUME.md", ".state/journal.ndjson"]
+
     return {
         "status": "FRESH_SESSION_HANDOFF_OK",
-        "read_order": [
-            "AGENTS.md",
-            "PROJECT_STATE.yaml",
-            str(task_path.relative_to(root)),
-            ".state/CURRENT.json",
-            ".state/RESUME.md",
-            ".state/journal.ndjson",
-        ],
+        "operating_state": operating["status"],
+        "read_order": read_order,
         "active_task_id": active_task_id,
         "phase": (current.get("task") or {}).get("phase"),
         "next_action": (current.get("progress") or {}).get("next_action"),
