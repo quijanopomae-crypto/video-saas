@@ -109,13 +109,13 @@
     "content_fingerprint": "1c341411fe7bfc7181f58294de347d8933b1250f23186591de48a2a76c63d510"
   },
   "schema_version": 1,
-  "state_version": 30,
+  "state_version": 31,
   "task": {
     "task_id": "TASK-CANONICAL-PLANNING-API-001",
-    "task_contract_sha256": "9c4f6fa826e469188b5ee19cf325734e4364544b71c16508ce01b545f30657e3",
+    "task_contract_sha256": "e171aafa405c61b9088dd81651adde221e07ed5a7fbcfa7760bd69406941c03f",
     "phase": "CANONICAL_PLANNING_API_INTEGRATION"
   },
-  "updated_at": "2026-09-21T04:13:00Z",
+  "updated_at": "2026-09-21T04:18:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
