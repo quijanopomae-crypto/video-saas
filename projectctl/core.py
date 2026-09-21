@@ -709,6 +709,88 @@ def assert_frozen_manifests_immutable(root: Path, changed_paths: Iterable[str]) 
         raise TransitionBlocked("FROZEN_MANIFEST_MODIFICATION_BLOCKED", ", ".join(touched))
 
 
+def _load_yaml_from_git_ref(root: Path, ref: str, rel_path: str) -> dict[str, Any]:
+    proc = subprocess.run(
+        ["git", "show", f"{ref}:{rel_path}"],
+        cwd=root,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    if proc.returncode != 0:
+        raise OperatingStateError(
+            "BASE_STATE_UNAVAILABLE",
+            f"cannot read {rel_path} from {ref}: {proc.stderr.decode('utf-8', 'replace').strip()}",
+        )
+    try:
+        value = yaml.safe_load(proc.stdout.decode("utf-8"))
+    except (UnicodeDecodeError, yaml.YAMLError) as exc:
+        raise OperatingStateError("BASE_STATE_INVALID", f"{ref}:{rel_path}") from exc
+    if not isinstance(value, dict):
+        raise OperatingStateError("BASE_STATE_INVALID", f"{ref}:{rel_path} is not a YAML object")
+    return value
+
+
+def _scope_contract(
+    root: Path,
+    *,
+    task_contract_path: Path | None,
+    base_ref: str | None,
+) -> tuple[Path, dict[str, Any], str]:
+    if task_contract_path is not None:
+        path = task_contract_path if task_contract_path.is_absolute() else root / task_contract_path
+        return path, load_yaml(path), "explicit"
+
+    project = load_yaml(root / "PROJECT_STATE.yaml")
+    active_task_id = project.get("active_task_id")
+    if isinstance(active_task_id, str) and active_task_id:
+        path = root / "tasks" / f"{active_task_id}.yaml"
+        return path, load_yaml(path), "current"
+
+    # Closing a task legitimately produces an IDLE destination tree. In that
+    # tree there is intentionally no active Task Contract, so scope authority
+    # must come from the active contract in the comparison base. This keeps the
+    # closing PR/merge verifiable without weakening the scope gate.
+    operating = validate_operating_state(root)
+    if operating.get("status") != "OPERATING_STATE_IDLE":
+        raise OperatingStateError("NO_ACTIVE_TASK", "no current active Task Contract")
+
+    if not base_ref:
+        raise OperatingStateError(
+            "NO_ACTIVE_TASK",
+            "repository is IDLE and no base_ref was supplied to recover prior scope authority",
+        )
+
+    base_project = _load_yaml_from_git_ref(root, base_ref, "PROJECT_STATE.yaml")
+    base_task_id = base_project.get("active_task_id")
+    if not isinstance(base_task_id, str) or not base_task_id:
+        raise OperatingStateError(
+            "NO_PRIOR_ACTIVE_TASK",
+            f"{base_ref} does not contain an active Task Contract authorizing this transition",
+        )
+    if base_project.get("next_gate_authorized") is not True or base_project.get("next_gate") == "NONE_AUTHORIZED":
+        raise OperatingStateError(
+            "PRIOR_TASK_NOT_AUTHORIZED",
+            f"{base_ref} does not show an authorized active gate",
+        )
+
+    rel = f"tasks/{base_task_id}.yaml"
+    contract = _load_yaml_from_git_ref(root, base_ref, rel)
+    task = contract.get("task") or {}
+    if task.get("id") != base_task_id:
+        raise OperatingStateError(
+            "PRIOR_TASK_ID_MISMATCH",
+            f"{base_task_id} != {task.get('id')}",
+        )
+    status = str(task.get("status") or "").upper()
+    if status in TERMINAL_TASK_STATUSES:
+        raise OperatingStateError(
+            "PRIOR_ACTIVE_TASK_TERMINAL",
+            f"{base_task_id} was already terminal ({status}) in {base_ref}",
+        )
+    return root / rel, contract, f"base_ref:{base_ref}"
+
+
 def check_scope(
     root: Path,
     *,
@@ -717,8 +799,11 @@ def check_scope(
     base_ref: str | None = None,
 ) -> dict[str, Any]:
     root = root.resolve()
-    contract_path = task_contract_path or active_task_contract_path(root)
-    contract = load_yaml(contract_path)
+    contract_path, contract, contract_source = _scope_contract(
+        root,
+        task_contract_path=task_contract_path,
+        base_ref=base_ref,
+    )
     scope = contract.get("scope") or {}
     allowed = list(scope.get("allowed_paths") or [])
     forbidden = list(scope.get("forbidden_paths") or [])
@@ -738,6 +823,7 @@ def check_scope(
         "status": "SCOPE_OK",
         "task_id": (contract.get("task") or {}).get("id"),
         "task_contract": str(contract_path.relative_to(root)),
+        "contract_source": contract_source,
         "paths_checked": changed,
     }
 
