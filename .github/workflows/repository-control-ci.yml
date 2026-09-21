@@ -53,5 +53,19 @@ jobs:
       - name: Run repository-control regression suite
         run: python -B -m pytest -q -p no:cacheprovider tests
 
+      - name: Recover durable repository state when IDLE
+        shell: bash
+        run: |
+          python - <<'PY'
+          import subprocess
+          import yaml
+          from pathlib import Path
+          project = yaml.safe_load(Path("PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+          if project.get("active_task_id") is None:
+              subprocess.run(["python", "-B", "-m", "projectctl", "recover"], check=True)
+          else:
+              print("RECOVERY_SKIPPED_ACTIVE_TASK")
+          PY
+
       - name: Fresh-session durable handoff probe
         run: python -B scripts/fresh_session_probe.py --root .
