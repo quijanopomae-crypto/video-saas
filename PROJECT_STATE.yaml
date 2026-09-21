@@ -8,8 +8,8 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: POST_PR13_STABILIZATION_PASS
-active_task_id: TASK-POST-PR13-STABILIZATION-001
+current_authorized_phase: AUDIT_REMEDIATION
+active_task_id: TASK-AUDIT-REMEDIATION-001
 provider_preflight_allowed: false
 architecture_research_reopened: false
 paid_provider_requests_allowed: false
@@ -19,6 +19,8 @@ baseline:
   manifest_internal_integrity: PASS
   asset_freeze_validation: DEFERRED
   provider_probes_executed: false
+  operational_cursor: false
+  manifest_state_must_not_drive_next_action: true
 phase_d:
   software_demonstration_status: PASS
   regression_tests: 58/58
@@ -58,7 +60,7 @@ product_lab:
   paid_provider_requests_executed: false
   promotion_requires_explicit_user_approval: true
 product_promotion:
-  implementation_status: READY
+  implementation_status: PASS
   canonical: true
   source_experiment: product-flow-001
   target_module: apps/api/src/modules/planning/
@@ -99,5 +101,12 @@ post_pr13_stabilization:
     lab_ci_run_id: 35602957822
   state_integrity: PASS
   ruleset_status: PASS
-next_gate: NONE_AUTHORIZED
-next_gate_authorized: false
+audit_remediation:
+  status: IMPLEMENTING
+  task_id: TASK-AUDIT-REMEDIATION-001
+  expected_outcome: AUDIT_REMEDIATION_PASS
+  opens_new_product_gate: false
+  provider_preflight_started: false
+  paid_provider_requests_executed: false
+next_gate: AUDIT_REMEDIATION
+next_gate_authorized: true
