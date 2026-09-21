@@ -16,6 +16,7 @@ from .core import (
     resume,
     run_evidence,
     transition_repository_state,
+    validate_operating_state,
 )
 
 
@@ -30,6 +31,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     sub.add_parser("recover", help="validate and repair recoverable repository-control state")
     sub.add_parser("resume", help="recover if needed and print generated resume state")
+    sub.add_parser("validate-state", help="validate ACTIVE vs IDLE operational repository state")
 
     scope = sub.add_parser("check-scope", help="validate repository changes against the active Task Contract")
     scope.add_argument("--task", type=Path, default=None, help="explicit Task Contract path")
@@ -68,6 +70,9 @@ def main(argv: list[str] | None = None) -> int:
             result, text = resume(root)
             print(json.dumps(result, ensure_ascii=False, indent=2))
             print(text)
+        elif args.command == "validate-state":
+            result = validate_operating_state(root)
+            print(json.dumps(result, ensure_ascii=False, indent=2))
         elif args.command == "check-scope":
             task = args.task
             if task is not None and not task.is_absolute():
