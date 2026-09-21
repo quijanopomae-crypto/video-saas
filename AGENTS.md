@@ -25,7 +25,7 @@ Read these before any repository work:
 
 Repository Control A-D and minimum development infrastructure are complete.
 The validated `product-flow-001` planning core has been promoted to canonical backend code under `apps/api/src/modules/planning/`.
-The promotion task is complete subject to normal merge/post-merge verification.
+Canonical planning API integration and owner-scoped planning persistence have been merged. The persistence boundary is partitioning by caller-supplied `owner_id`; it is not authentication or authorization.
 Provider Preflight remains forbidden and no paid provider requests are authorized.
 
 ## Canonical planning boundary
@@ -33,8 +33,9 @@ Provider Preflight remains forbidden and no paid provider requests are authorize
 - `apps/api/src/modules/planning/` is canonical product code.
 - Canonical `apps/**` MUST NOT import or depend on `lab/**`.
 - `lab/**` remains provenance/experimentation, not a runtime dependency.
-- The next product gate is CANONICAL_PLANNING_API_INTEGRATION.
-- Do not add HTTP endpoints, persistence, UI, provider SDKs or paid provider calls without a new Task Contract that explicitly authorizes that scope.
+- Owner-scoped persistence is canonical, but secure multi-user isolation is NOT complete until authentication/authorization derives ownership from a trusted identity.
+- Authentication/authorization is mandatory before the five-user pilot.
+- Do not add later product scope, UI, provider SDKs or paid provider calls without a Task Contract that explicitly authorizes that scope.
 
 ## Single Autonomous Operator
 
