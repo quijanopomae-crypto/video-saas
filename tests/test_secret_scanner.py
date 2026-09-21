@@ -27,7 +27,7 @@ def test_known_secret_formats_are_detected_without_real_credentials():
 
 
 def test_generic_secret_assignment_is_detected():
-    text = "AUTH_" + "TOKEN=" + "Z" * 32
+    text = "AUTH_" + "TOKEN=\"" + "Z" * 32 + "\""
     findings = MODULE.scan_text(text)
     assert any(item.startswith("generic_") for item in findings)
 
