@@ -401,10 +401,11 @@ def _verify_snapshot_vs_git(root: Path, current: dict[str, Any], observed: dict[
     expected = current.get("repository")
     if not expected:
         return
-    if expected.get("branch") != observed.get("branch"):
+    expected_branch = expected.get("branch")
+    if expected_branch and expected_branch != observed.get("branch"):
         raise RecoveryBlocked(
             "RECOVERY_WRONG_BRANCH",
-            f"expected {expected.get('branch')!r}; observed {observed.get('branch')!r}",
+            f"expected {expected_branch!r}; observed {observed.get('branch')!r}",
         )
 
     expected_content = expected.get("content_fingerprint")
@@ -1109,37 +1110,6 @@ def close_active_task(root: Path, *, final_phase: str, evidence_ids: list[str]) 
                 f"expected {expected_outcome}; requested {final_phase}",
             )
 
-        new_state = deepcopy(current)
-        new_state["task"] = {
-            "task_id": None,
-            "task_contract_sha256": None,
-            "phase": final_phase,
-        }
-        new_state["blocked"] = None
-        new_state.setdefault("progress", {})["next_action"] = None
-        new_state["progress"]["next_command"] = None
-        completed = new_state["progress"].setdefault("completed_steps", [])
-        completed.append(f"{task_id} closed DONE with {final_phase}")
-        new_state.setdefault("verification", {})["latest_evidence_id"] = evidence_ids[-1]
-        new_state["verification"]["audit_remediation_passed"] = final_phase == "AUDIT_REMEDIATION_PASS"
-        new_state.setdefault("external_operations", {})["provider_preflight_started"] = False
-        new_state["external_operations"]["paid_requests_allowed"] = False
-        new_state["external_operations"]["pending_paid_requests"] = []
-        new_state["external_operations"]["unknown_billing_requests"] = []
-
-        materialized = _append_control_event_locked(
-            root,
-            current,
-            events,
-            event_type="TASK_CLOSED",
-            payload={
-                "closed_task_id": task_id,
-                "final_phase": final_phase,
-                "evidence_ids": evidence_ids,
-            },
-            state_after=new_state,
-        )
-
         contract.setdefault("task", {})["status"] = "DONE"
         contract["closure"] = {
             "final_phase": final_phase,
@@ -1166,6 +1136,42 @@ def close_active_task(root: Path, *, final_phase: str, evidence_ids: list[str]) 
         write_atomic(
             project_path,
             yaml.safe_dump(project, sort_keys=False, allow_unicode=True).encode("utf-8"),
+        )
+
+        new_state = deepcopy(current)
+        new_state["task"] = {
+            "task_id": None,
+            "task_contract_sha256": None,
+            "phase": final_phase,
+        }
+        new_state["blocked"] = None
+        new_state.setdefault("progress", {})["next_action"] = None
+        new_state["progress"]["next_command"] = None
+        completed = new_state["progress"].setdefault("completed_steps", [])
+        completed.append(f"{task_id} closed DONE with {final_phase}")
+        new_state.setdefault("verification", {})["latest_evidence_id"] = evidence_ids[-1]
+        new_state["verification"]["audit_remediation_passed"] = final_phase == "AUDIT_REMEDIATION_PASS"
+        new_state.setdefault("external_operations", {})["provider_preflight_started"] = False
+        new_state["external_operations"]["paid_requests_allowed"] = False
+        new_state["external_operations"]["pending_paid_requests"] = []
+        new_state["external_operations"]["unknown_billing_requests"] = []
+        terminal_snapshot = git_snapshot(root)
+        # A terminal IDLE cursor is content-bound but branch-agnostic so the same
+        # tree remains recoverable after the closing PR becomes a merge commit on main.
+        terminal_snapshot["branch"] = None
+        new_state["repository"] = terminal_snapshot
+
+        materialized = _append_control_event_locked(
+            root,
+            current,
+            events,
+            event_type="TASK_CLOSED",
+            payload={
+                "closed_task_id": task_id,
+                "final_phase": final_phase,
+                "evidence_ids": evidence_ids,
+            },
+            state_after=new_state,
         )
         return {
             "status": "TASK_CLOSE_OK",
