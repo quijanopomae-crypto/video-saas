@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "evidence_id": "AUDIT-REMEDIATION-BRANCH-CLASSIFICATION",
+  "source": "GitHub compare main...branch",
+  "observed_main": "473828d5463d3e574ecca4df79822937e30a9127",
+  "classifications": {
+    "MERGED_SAFE_TO_DELETE": [
+      "agent-coordination-v1",
+      "canonical-planning-main-normalize",
+      "close-post-pr13-stabilization-final",
+      "dev-infra-001",
+      "dev-infra-main-final",
+      "fix-post-pr13-readme-final",
+      "lab-main-normalize",
+      "lab-product-flow-001",
+      "lab-promote-product-flow-001",
+      "phase-d-pass",
+      "promote-product-flow-001",
+      "stabilize-post-pr13",
+      "task-audit-remediation-001-a",
+      "task-audit-remediation-001-b",
+      "task-canonical-planning-api-001",
+      "task-persistence-isolation-001"
+    ],
+    "UNMERGED_UNIQUE_WORK": [
+      "single-autonomous-operator-v1"
+    ],
+    "ACTIVE": [
+      "task-audit-remediation-001-c"
+    ]
+  },
+  "physical_deletion": {
+    "status": "OPERATIONAL_LIMITATION_NON_BLOCKING",
+    "reason": "The connected GitHub action surface exposes ref updates but no branch/ref deletion action; no branch was deleted blindly."
+  }
+}
