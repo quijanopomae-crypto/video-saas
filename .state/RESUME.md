@@ -1,12 +1,12 @@
-# RESUME — TASK-PRODUCT-PROMOTE-001
+# RESUME — TASK-CANONICAL-PLANNING-API-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** CANONICAL_PLANNING_READY
-- **Checkpoint:** PRODUCT-PROMOTE-001-MAIN
-- **State version:** 28
-- **Branch:** main
-- **Checkpoint base HEAD:** 1226767d8441f0a59ead47527a77b685946d6604
+- **Phase:** CANONICAL_PLANNING_API_INTEGRATION
+- **Checkpoint:** CANONICAL-PLANNING-API-001-PR
+- **State version:** 31
+- **Branch:** task-canonical-planning-api-001
+- **Checkpoint base HEAD:** ca67e5d4847f7aa6f5ee4f040c49fb1ed95e2689
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** PRODUCT-PROMOTE-001
 - **Blocked:** none
-- **Next action:** Canonical planning is ready on main. Next gate is CANONICAL_PLANNING_API_INTEGRATION under a new Task Contract; Provider Preflight and paid requests remain disabled.
+- **Next action:** Complete CI and audit for canonical planning API integration; integrate when gates pass.
 
 ## Completed steps
 
@@ -109,4 +109,4 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 
 The active Task Contract SHA-256 is:
 
-`0923934c695c9428d6f0c2401735d053b0f2e157c92ac99c6fea2942303eaea3`
+`e171aafa405c61b9088dd81651adde221e07ed5a7fbcfa7760bd69406941c03f`

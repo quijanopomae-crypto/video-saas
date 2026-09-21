@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .core.config import get_settings
 from .modules.health.router import router as health_router
+from .modules.planning.router import router as planning_router
 
 settings = get_settings()
 
@@ -21,3 +22,4 @@ app.add_middleware(
 )
 
 app.include_router(health_router)
+app.include_router(planning_router)

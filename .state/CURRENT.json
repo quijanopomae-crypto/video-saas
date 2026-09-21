@@ -1,6 +1,6 @@
 {
   "blocked": null,
-  "checkpoint_id": "PRODUCT-PROMOTE-001-MAIN",
+  "checkpoint_id": "CANONICAL-PLANNING-API-001-PR",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
@@ -98,24 +98,24 @@
       "Promotion PR #6 merged to main at 1226767d8441f0a59ead47527a77b685946d6604",
       "Durable canonical planning cursor normalized to main"
     ],
-    "next_action": "Canonical planning is ready on main. Next gate is CANONICAL_PLANNING_API_INTEGRATION under a new Task Contract; Provider Preflight and paid requests remain disabled.",
+    "next_action": "Complete CI and audit for canonical planning API integration; integrate when gates pass.",
     "next_command": null
   },
   "repository": {
-    "branch": "main",
-    "head_commit": "1226767d8441f0a59ead47527a77b685946d6604",
+    "branch": "task-canonical-planning-api-001",
+    "head_commit": "ca67e5d4847f7aa6f5ee4f040c49fb1ed95e2689",
     "working_tree_dirty": false,
     "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "content_fingerprint": "1c341411fe7bfc7181f58294de347d8933b1250f23186591de48a2a76c63d510"
   },
   "schema_version": 1,
-  "state_version": 28,
+  "state_version": 31,
   "task": {
-    "task_id": "TASK-PRODUCT-PROMOTE-001",
-    "task_contract_sha256": "0923934c695c9428d6f0c2401735d053b0f2e157c92ac99c6fea2942303eaea3",
-    "phase": "CANONICAL_PLANNING_READY"
+    "task_id": "TASK-CANONICAL-PLANNING-API-001",
+    "task_contract_sha256": "e171aafa405c61b9088dd81651adde221e07ed5a7fbcfa7760bd69406941c03f",
+    "phase": "CANONICAL_PLANNING_API_INTEGRATION"
   },
-  "updated_at": "2026-09-20T18:49:00Z",
+  "updated_at": "2026-09-21T04:18:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,

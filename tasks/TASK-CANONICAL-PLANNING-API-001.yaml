@@ -1,0 +1,47 @@
+schema_version: 1
+task:
+  id: TASK-CANONICAL-PLANNING-API-001
+  title: Integrate canonical planning through FastAPI
+  status: IMPLEMENTING
+  risk: MEDIUM
+objective:
+  expected_outcome: CANONICAL_PLANNING_API_INTEGRATED
+scope:
+  allowed_paths:
+    - PROJECT_STATE.yaml
+    - tasks/TASK-CANONICAL-PLANNING-API-001.yaml
+    - .state/**
+    - apps/api/src/main.py
+    - apps/api/src/modules/planning/router.py
+    - apps/api/tests/test_planning_api.py
+    - tests/test_product_promotion_contract.py
+    - scripts/check_no_secrets.py
+    - evidence/**
+  forbidden_paths:
+    - apps/web/**
+    - apps/api/src/modules/planning/__init__.py
+    - manifests/**
+    - schemas/**
+    - projectctl/**
+    - src/**
+    - .env
+    - .env.*
+constraints:
+  - Expose exactly POST /planning as a thin transport adapter.
+  - Delegate product validation to ProjectRequest.from_dict.
+  - Delegate execution to run_product_flow and return to_dict unchanged.
+  - Map canonical ValueError to HTTP 422 with canonical message in detail.
+  - Do not add persistence, migrations, queues, workflows, storage, provider SDKs or provider calls.
+  - Do not execute Provider Preflight or paid requests.
+  - Do not add secrets or dependencies.
+acceptance:
+  - Valid POST /planning returns canonical ProductFlow JSON.
+  - Same request twice returns equivalent deterministic JSON.
+  - Invalid canonical input returns HTTP 422 with canonical validation detail.
+  - Existing canonical planning tests remain green.
+  - Canonical runtime remains free of lab runtime dependencies.
+  - Repository Control CI passes.
+  - Product CI passes.
+  - Provider Preflight and paid requests remain OFF.
+blocking_rule:
+  - Do not integrate if CI fails, canonical planning semantics change, or forbidden external operations are required.
