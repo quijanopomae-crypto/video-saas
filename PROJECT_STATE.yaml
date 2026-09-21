@@ -8,7 +8,7 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: POST_PR13_STABILIZATION
+current_authorized_phase: POST_PR13_STABILIZATION_PASS
 active_task_id: TASK-POST-PR13-STABILIZATION-001
 provider_preflight_allowed: false
 architecture_research_reopened: false
@@ -83,4 +83,21 @@ persistence_isolation:
   repository_control_ci: PASS
   product_ci: PASS
   lab_ci: PASS
-next_gate: POST_PR13_STABILIZATION
+post_pr13_stabilization:
+  status: PASS
+  task_id: TASK-POST-PR13-STABILIZATION-001
+  pull_request: 15
+  pull_request_head: 90944adc3a2005b282bc662067ea03287e05b14d
+  merge_commit: 3dfbf864ffa3a27490d12205fa9ecd4a713dc7fd
+  pull_request_ci:
+    repository_control_run_id: 35602695185
+    product_ci_run_id: 35602695191
+    lab_ci_run_id: 35602695177
+  main_ci:
+    repository_control_run_id: 35602957834
+    product_ci_run_id: 35602957908
+    lab_ci_run_id: 35602957822
+  state_integrity: PASS
+  ruleset_status: PASS
+next_gate: NONE_AUTHORIZED
+next_gate_authorized: false

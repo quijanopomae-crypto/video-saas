@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "evidence_id": "POST-PR13-STABILIZATION-001",
+  "status": "PASS",
+  "task_id": "TASK-POST-PR13-STABILIZATION-001",
+  "observed": {
+    "pull_request_15": {
+      "head": "90944adc3a2005b282bc662067ea03287e05b14d",
+      "merge_commit": "3dfbf864ffa3a27490d12205fa9ecd4a713dc7fd",
+      "merged": true
+    },
+    "pull_request_ci": {
+      "repository_control": {
+        "run_id": 35602695185,
+        "conclusion": "success",
+        "scope": "SCOPE_OK",
+        "tests": "65/65 PASS",
+        "fresh_session": "FRESH_SESSION_HANDOFF_OK"
+      },
+      "product_ci": {
+        "run_id": 35602695191,
+        "conclusion": "success"
+      },
+      "lab_ci": {
+        "run_id": 35602695177,
+        "conclusion": "success"
+      }
+    },
+    "main_ci": {
+      "repository_control": {
+        "run_id": 35602957834,
+        "conclusion": "success"
+      },
+      "product_ci": {
+        "run_id": 35602957908,
+        "conclusion": "success"
+      },
+      "lab_ci": {
+        "run_id": 35602957822,
+        "conclusion": "success"
+      }
+    },
+    "ruleset": {
+      "id": 23730563,
+      "name": "Protect main",
+      "enforcement": "active",
+      "target": "DEFAULT_BRANCH",
+      "required_status_checks": [
+        "repository-control",
+        "product-ci"
+      ],
+      "duplicate_required_checks": false,
+      "bypass_actors": 0
+    },
+    "canonical_interpretation": {
+      "pr_13_outcome": "OWNER_SCOPED_PERSISTENCE_PARTITIONING",
+      "authentication_authorization_implemented": false,
+      "secure_multi_user_isolation_implemented": false,
+      "authentication_authorization_required_before_pilot": true
+    },
+    "durable_state": {
+      "task_contract_hash": "PASS",
+      "journal_hash_chain": "PASS",
+      "resume_generated_from_current": "PASS",
+      "normalized_branch": "main"
+    },
+    "scope": {
+      "product_paths_modified": false,
+      "later_product_gate_started": false
+    }
+  },
+  "provider_preflight_started": false,
+  "paid_provider_requests_executed": false,
+  "next_gate": "NONE_AUTHORIZED"
+}

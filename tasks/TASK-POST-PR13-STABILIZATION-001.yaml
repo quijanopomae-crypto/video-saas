@@ -2,7 +2,7 @@ schema_version: 1
 task:
   id: TASK-POST-PR13-STABILIZATION-001
   title: Normalize post-PR13 canonical state and governance
-  status: IMPLEMENTING
+  status: DONE
   risk: LOW
 objective:
   expected_outcome: POST_PR13_STATE_AND_GOVERNANCE_SYNCHRONIZED
