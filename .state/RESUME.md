@@ -1,12 +1,12 @@
-# RESUME — TASK-CANONICAL-PLANNING-API-001
+# RESUME — TASK-PERSISTENCE-ISOLATION-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** CANONICAL_PLANNING_API_INTEGRATION
-- **Checkpoint:** CANONICAL-PLANNING-API-001-PR
-- **State version:** 31
-- **Branch:** task-canonical-planning-api-001
-- **Checkpoint base HEAD:** ca67e5d4847f7aa6f5ee4f040c49fb1ed95e2689
+- **Phase:** PERSISTENCE_ISOLATION
+- **Checkpoint:** PERSISTENCE-ISOLATION-001-IMPLEMENTING
+- **State version:** 32
+- **Branch:** task-persistence-isolation-001
+- **Checkpoint base HEAD:** 86ea7f63208c602465e9a88bf4bd3d2b12e6d76b
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** PRODUCT-PROMOTE-001
 - **Blocked:** none
-- **Next action:** Complete CI and audit for canonical planning API integration; integrate when gates pass.
+- **Next action:** Run CI and audit persistence/isolation implementation; fix only demonstrated failures.
 
 ## Completed steps
 
@@ -109,4 +109,4 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 
 The active Task Contract SHA-256 is:
 
-`e171aafa405c61b9088dd81651adde221e07ed5a7fbcfa7760bd69406941c03f`
+`e2833e6cac4cba372f77335c6a1b89567a4a6549356ecc738415cbf9031a6ad8`

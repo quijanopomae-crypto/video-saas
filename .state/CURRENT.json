@@ -1,6 +1,6 @@
 {
   "blocked": null,
-  "checkpoint_id": "CANONICAL-PLANNING-API-001-PR",
+  "checkpoint_id": "PERSISTENCE-ISOLATION-001-IMPLEMENTING",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
@@ -98,24 +98,24 @@
       "Promotion PR #6 merged to main at 1226767d8441f0a59ead47527a77b685946d6604",
       "Durable canonical planning cursor normalized to main"
     ],
-    "next_action": "Complete CI and audit for canonical planning API integration; integrate when gates pass.",
+    "next_action": "Run CI and audit persistence/isolation implementation; fix only demonstrated failures.",
     "next_command": null
   },
   "repository": {
-    "branch": "task-canonical-planning-api-001",
-    "head_commit": "ca67e5d4847f7aa6f5ee4f040c49fb1ed95e2689",
+    "branch": "task-persistence-isolation-001",
+    "head_commit": "86ea7f63208c602465e9a88bf4bd3d2b12e6d76b",
     "working_tree_dirty": false,
     "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "content_fingerprint": "1c341411fe7bfc7181f58294de347d8933b1250f23186591de48a2a76c63d510"
   },
   "schema_version": 1,
-  "state_version": 31,
+  "state_version": 32,
   "task": {
-    "task_id": "TASK-CANONICAL-PLANNING-API-001",
-    "task_contract_sha256": "e171aafa405c61b9088dd81651adde221e07ed5a7fbcfa7760bd69406941c03f",
-    "phase": "CANONICAL_PLANNING_API_INTEGRATION"
+    "task_id": "TASK-PERSISTENCE-ISOLATION-001",
+    "task_contract_sha256": "e2833e6cac4cba372f77335c6a1b89567a4a6549356ecc738415cbf9031a6ad8",
+    "phase": "PERSISTENCE_ISOLATION"
   },
-  "updated_at": "2026-09-21T04:18:00Z",
+  "updated_at": "2026-09-21T11:40:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
