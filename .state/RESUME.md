@@ -1,13 +1,13 @@
-# RESUME — TASK-POST-PR13-STABILIZATION-001
+# RESUME — TASK-AUDIT-REMEDIATION-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** POST_PR13_STABILIZATION_PASS
-- **Checkpoint:** CP-1789997194514-0aeabb2c
-- **State version:** 36
+- **Phase:** AUDIT_REMEDIATION
+- **Checkpoint:** CP-AUDIT-REMEDIATION-001-ACTIVATE
+- **State version:** 37
 - **Branch:** main
-- **Checkpoint base HEAD:** 62a74c04a79dae4edcd55590dd5340759efa5a86
-- **Checkpoint working tree dirty:** False
+- **Checkpoint base HEAD:** 881e202f9582870c462748bf17ffd3d077fe8661
+- **Checkpoint working tree dirty:** false
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
 - **Phase A acceptance:** true
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** POST-PR13-STABILIZATION-001
 - **Blocked:** none
-- **Next action:** Post-PR13 stabilization is complete on main. No later product gate is authorized. Authentication/authorization remains mandatory before the five-user pilot; Provider Preflight and paid requests remain OFF.
+- **Next action:** Execute TASK-AUDIT-REMEDIATION-001 only: control-plane loop prevention, auth/authz, reproducibility, CI and security hardening. Provider Preflight and paid requests remain OFF.
 
 ## Completed steps
 
@@ -113,7 +113,8 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - POST-PR13-STABILIZATION-001 evidence materialized
 - TASK-POST-PR13-STABILIZATION-001 closed PASS with no later product gate authorized
 - README final state synchronized with POST_PR13_STABILIZATION_PASS
+- Owner explicitly authorized TASK-AUDIT-REMEDIATION-001 without opening a product gate
 
 The active Task Contract SHA-256 is:
 
-`f0b00182033bb69d596fa21ab01b0c578c598fd0dcab74a95d9166b7c35d3803`
+`c714d67605365625e3afaa620edbec971e1734701229f2d91a0bc267451eceae`
