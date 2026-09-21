@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-1789997194514-0aeabb2c",
+  "checkpoint_id": "CP-AUDIT-REMEDIATION-001-ACTIVATE",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "03761915d8918a8255282a6d77d5d055afc23a59c6baa26da59879e356e3095d",
-  "last_journal_sequence": 31,
+  "last_journal_event_sha256": "d9cee8abed8c6d2dbcfffcb4540c26839fa21442bab0ff3dacbaf22c446ad378",
+  "last_journal_sequence": 32,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -103,26 +103,27 @@
       "Protect main ruleset requires exactly repository-control and product-ci with no bypass actors",
       "POST-PR13-STABILIZATION-001 evidence materialized",
       "TASK-POST-PR13-STABILIZATION-001 closed PASS with no later product gate authorized",
-      "README final state synchronized with POST_PR13_STABILIZATION_PASS"
+      "README final state synchronized with POST_PR13_STABILIZATION_PASS",
+      "Owner explicitly authorized TASK-AUDIT-REMEDIATION-001 without opening a product gate"
     ],
-    "next_action": "Post-PR13 stabilization is complete on main. No later product gate is authorized. Authentication/authorization remains mandatory before the five-user pilot; Provider Preflight and paid requests remain OFF.",
+    "next_action": "Execute TASK-AUDIT-REMEDIATION-001 only: control-plane loop prevention, auth/authz, reproducibility, CI and security hardening. Provider Preflight and paid requests remain OFF.",
     "next_command": null
   },
   "repository": {
     "branch": "main",
-    "head_commit": "62a74c04a79dae4edcd55590dd5340759efa5a86",
+    "head_commit": "881e202f9582870c462748bf17ffd3d077fe8661",
     "working_tree_dirty": false,
     "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "content_fingerprint": "98c9f64030129d70fd307d96444f1b90b4b2830280d947c0d1f1f5214d247b3f"
   },
   "schema_version": 1,
-  "state_version": 36,
+  "state_version": 37,
   "task": {
-    "task_id": "TASK-POST-PR13-STABILIZATION-001",
-    "task_contract_sha256": "f0b00182033bb69d596fa21ab01b0c578c598fd0dcab74a95d9166b7c35d3803",
-    "phase": "POST_PR13_STABILIZATION_PASS"
+    "task_id": "TASK-AUDIT-REMEDIATION-001",
+    "task_contract_sha256": "c714d67605365625e3afaa620edbec971e1734701229f2d91a0bc267451eceae",
+    "phase": "AUDIT_REMEDIATION"
   },
-  "updated_at": "2026-09-21T13:26:34Z",
+  "updated_at": "2026-09-21T16:58:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
