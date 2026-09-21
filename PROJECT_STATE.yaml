@@ -9,7 +9,7 @@ repository_control_plane:
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
 current_authorized_phase: POST_PR13_STABILIZATION
-active_task_id: TASK-PERSISTENCE-ISOLATION-001
+active_task_id: TASK-POST-PR13-STABILIZATION-001
 provider_preflight_allowed: false
 architecture_research_reopened: false
 paid_provider_requests_allowed: false
