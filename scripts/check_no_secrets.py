@@ -25,12 +25,19 @@ SECRET_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ),
 )
 
-GENERIC_ASSIGNMENT = re.compile(
+GENERIC_QUOTED_ASSIGNMENT = re.compile(
     r"""(?ix)
     \b(api[_-]?key|access[_-]?token|auth[_-]?token|client[_-]?secret|
        jwt[_-]?secret|private[_-]?token|password)\b
     \s*[:=]\s*
-    ["']?([A-Za-z0-9+/=_-]{16,})["']?
+    (["'])([^"'\r\n]{16,})\2
+    """
+)
+GENERIC_ENV_ASSIGNMENT = re.compile(
+    r"""(?imx)
+    ^\s*(?:export\s+)?
+    ([A-Z0-9_]*(?:API_KEY|ACCESS_TOKEN|AUTH_TOKEN|CLIENT_SECRET|JWT_SECRET|PASSWORD))
+    \s*=\s*([^\s#]{16,})\s*$
     """
 )
 
@@ -80,9 +87,12 @@ def scan_text(text: str) -> list[str]:
     for name, pattern in SECRET_PATTERNS:
         if pattern.search(text):
             findings.append(name)
-    for match in GENERIC_ASSIGNMENT.finditer(text):
-        if not _placeholder(match.group(2)):
+    for match in GENERIC_QUOTED_ASSIGNMENT.finditer(text):
+        if not _placeholder(match.group(3)):
             findings.append(f"generic_{match.group(1).lower().replace('-', '_')}")
+    for match in GENERIC_ENV_ASSIGNMENT.finditer(text):
+        if not _placeholder(match.group(2)):
+            findings.append(f"generic_{match.group(1).lower()}")
     return sorted(set(findings))
 
 
