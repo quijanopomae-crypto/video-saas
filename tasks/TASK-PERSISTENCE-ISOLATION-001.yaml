@@ -1,0 +1,51 @@
+schema_version: 1
+task:
+  id: TASK-PERSISTENCE-ISOLATION-001
+  title: Persist canonical planning with five-user isolation
+  status: READY
+  risk: MEDIUM
+objective:
+  expected_outcome: PERSISTENT_OWNER_SCOPED_CANONICAL_PLANNING
+scope:
+  allowed_paths:
+    - PROJECT_STATE.yaml
+    - tasks/TASK-PERSISTENCE-ISOLATION-001.yaml
+    - .state/**
+    - apps/api/migrations/versions/0002_planning_projects.py
+    - apps/api/src/main.py
+    - apps/api/src/modules/planning/router.py
+    - apps/api/src/modules/planning/persistence.py
+    - apps/api/tests/test_planning_persistence.py
+    - evidence/**
+  forbidden_paths:
+    - apps/web/**
+    - apps/api/src/modules/planning/__init__.py
+    - lab/**
+    - manifests/**
+    - schemas/**
+    - projectctl/**
+    - .env
+    - .env.*
+constraints:
+  - Preserve canonical ProductFlow semantics and serialization unchanged.
+  - Persist owner_id, canonical project_id and canonical ProductFlow JSON only, plus database-managed created_at.
+  - Storage identity must include owner_id and project_id so identical requests from different owners do not collide.
+  - Require explicit owner_id at the persistence API boundary; do not claim or implement authentication/login.
+  - Reads must constrain by both owner_id and project_id and return non-leaking not-found for another owner.
+  - Reuse existing SQLAlchemy engine and Alembic conventions; no infrastructure refactor.
+  - Do not add queues, workflows, storage providers, provider SDKs or provider calls.
+  - Do not execute Provider Preflight or paid requests.
+  - Do not add secrets or dependencies.
+acceptance:
+  - Canonical planning output persists without semantic mutation.
+  - Same owner can read its persisted project.
+  - Different owner cannot read another owner's project.
+  - Isolation test covers at least five distinct owner identifiers.
+  - Identical canonical request can be stored independently for different owners.
+  - Existing canonical planning determinism tests remain green.
+  - Alembic upgrade from clean database passes.
+  - Repository Control CI passes.
+  - Product CI passes.
+  - Provider Preflight and paid requests remain OFF.
+blocking_rule:
+  - Do not integrate if isolation leaks, canonical planning semantics change, CI fails, or forbidden external operations are required.
