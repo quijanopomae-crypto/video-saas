@@ -21,14 +21,35 @@ class ProjectRequest:
 
     @classmethod
     def from_dict(cls, payload: dict[str, Any]) -> "ProjectRequest":
+        if not isinstance(payload, dict):
+            raise TypeError("planning payload must be an object")
+        allowed = {"title", "idea", "duration_sec", "aspect_ratio", "audience", "tone", "language"}
+        required = {"title", "idea", "duration_sec"}
+        extra = sorted(set(payload) - allowed)
+        missing = sorted(required - set(payload))
+        if extra:
+            raise ValueError(f"unexpected fields: {', '.join(extra)}")
+        if missing:
+            raise ValueError(f"missing required fields: {', '.join(missing)}")
+
+        def strict_text(name: str, default: str | None = None) -> str:
+            value = payload[name] if name in payload else default
+            if not isinstance(value, str):
+                raise TypeError(f"{name} must be a string")
+            return value.strip()
+
+        duration = payload["duration_sec"]
+        if type(duration) is not int:
+            raise TypeError("duration_sec must be an integer")
+
         request = cls(
-            title=str(payload["title"]).strip(),
-            idea=str(payload["idea"]).strip(),
-            duration_sec=int(payload["duration_sec"]),
-            aspect_ratio=str(payload.get("aspect_ratio", "16:9")).strip(),
-            audience=str(payload.get("audience", "general")).strip(),
-            tone=str(payload.get("tone", "clear")).strip(),
-            language=str(payload.get("language", "es")).strip(),
+            title=strict_text("title"),
+            idea=strict_text("idea"),
+            duration_sec=duration,
+            aspect_ratio=strict_text("aspect_ratio", "16:9"),
+            audience=strict_text("audience", "general"),
+            tone=strict_text("tone", "clear"),
+            language=strict_text("language", "es"),
         )
         request.validate()
         return request
@@ -36,12 +57,22 @@ class ProjectRequest:
     def validate(self) -> None:
         if not self.title:
             raise ValueError("title is required")
+        if len(self.title) > 200:
+            raise ValueError("title must be at most 200 characters")
         if not self.idea:
             raise ValueError("idea is required")
+        if len(self.idea) > 5000:
+            raise ValueError("idea must be at most 5000 characters")
         if not 5 <= self.duration_sec <= 600:
             raise ValueError("duration_sec must be between 5 and 600")
         if self.aspect_ratio not in _ALLOWED_ASPECT_RATIOS:
             raise ValueError(f"unsupported aspect_ratio: {self.aspect_ratio}")
+        if not self.audience or len(self.audience) > 200:
+            raise ValueError("audience must be between 1 and 200 characters")
+        if not self.tone or len(self.tone) > 100:
+            raise ValueError("tone must be between 1 and 100 characters")
+        if not self.language or len(self.language) > 20:
+            raise ValueError("language must be between 1 and 20 characters")
 
 
 @dataclass(frozen=True)
