@@ -8,7 +8,7 @@ Created: 2026-09-17T22:35:02.111009Z
 
 Source documents are recorded by SHA-256 in `manifests/model-manifest-bench100-v1.1.yaml`.
 
-Current state: `READY_FOR_PROVIDER_PREFLIGHT`.
+Current state: `POST_PR13_STABILIZATION`; canonical planning and owner-scoped persistence are merged. Authentication/authorization is still required before the five-user pilot. Provider Preflight remains OFF.
 
 Integrity result: `30/30 passed`; Asset Freeze remains `DEFERRED`; provider probes have not been executed.
 
@@ -18,7 +18,7 @@ Run integrity suite:
 python -m pytest -q tests
 ```
 
-No provider probes or spend are authorized until integrity passes.
+No provider probes or spend are authorized. Provider Preflight and paid provider requests remain OFF until explicit owner authorization.
 
 ## Development infrastructure
 
