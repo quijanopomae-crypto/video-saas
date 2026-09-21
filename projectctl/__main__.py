@@ -10,6 +10,7 @@ from .core import (
     attempt_fingerprint,
     check_scope,
     checkpoint,
+    close_active_task,
     find_root,
     recover,
     register_attempt,
@@ -53,6 +54,10 @@ def build_parser() -> argparse.ArgumentParser:
     transition = sub.add_parser("transition", help="apply a gated repository-control phase transition")
     transition.add_argument("--to", required=True, dest="to_phase")
     transition.add_argument("--evidence", action="append", default=[])
+
+    close_task = sub.add_parser("close-task", help="close the active task and enter durable IDLE")
+    close_task.add_argument("--final-phase", required=True)
+    close_task.add_argument("--evidence", action="append", default=[])
     return parser
 
 
@@ -115,6 +120,13 @@ def main(argv: list[str] | None = None) -> int:
             return 0 if result["status"] == "PASS" else 1
         elif args.command == "transition":
             result = transition_repository_state(root, to_phase=args.to_phase, evidence_ids=args.evidence)
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+        elif args.command == "close-task":
+            result = close_active_task(
+                root,
+                final_phase=args.final_phase,
+                evidence_ids=args.evidence,
+            )
             print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0
     except (ProjectCtlError, json.JSONDecodeError) as exc:
