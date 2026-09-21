@@ -8,7 +8,7 @@ Created: 2026-09-17T22:35:02.111009Z
 
 Source documents are recorded by SHA-256 in `manifests/model-manifest-bench100-v1.1.yaml`.
 
-Current state: `POST_PR13_STABILIZATION_PASS`; canonical planning and owner-scoped persistence are merged. Authentication/authorization is still required before the five-user pilot. Provider Preflight remains OFF.
+Current state: `POST_PR13_STABILIZATION_PASS`; canonical planning and owner-scoped persistence are merged. Audit remediation is in progress. Authentication/authorization is implemented in the remediation branch and remains subject to CI/integration before the five-user pilot. Provider Preflight remains OFF.
 
 Integrity result: `30/30 passed`; Asset Freeze remains `DEFERRED`; provider probes have not been executed.
 
@@ -33,3 +33,8 @@ Copy-Item .env.example .env
 ```
 
 See `docs/DEVELOPMENT.md` for the local workflow.
+
+
+## Operational state vs frozen baseline
+
+Strings such as `READY_FOR_PROVIDER_PREFLIGHT` inside frozen manifests describe the experimental baseline only. They never authorize an operational action. Operational NEXT_ACTION authority comes from `PROJECT_STATE.yaml`, the active Task Contract when present, and `.state/`.
