@@ -1,0 +1,40 @@
+schema_version: 1
+task:
+  id: TASK-POST-PR13-STABILIZATION-001
+  title: Normalize post-PR13 canonical state and governance
+  status: IMPLEMENTING
+  risk: LOW
+objective:
+  expected_outcome: POST_PR13_STATE_AND_GOVERNANCE_SYNCHRONIZED
+scope:
+  allowed_paths:
+    - AGENTS.md
+    - README.md
+    - PROJECT_STATE.yaml
+    - tasks/TASK-POST-PR13-STABILIZATION-001.yaml
+    - tasks/TASK-PERSISTENCE-ISOLATION-001.yaml
+    - .state/**
+    - evidence/**
+  forbidden_paths:
+    - apps/**
+    - lab/**
+    - manifests/**
+    - schemas/**
+    - projectctl/**
+    - .env
+    - .env.*
+constraints:
+  - Do not modify product implementation.
+  - Record PR 13 as owner-scoped persistence partitioning, not authentication or authorization.
+  - Authentication and authorization remain mandatory before the five-user pilot.
+  - Provider Preflight and paid provider requests remain OFF.
+  - Do not open a later product gate in parallel.
+acceptance:
+  - AGENTS.md, README.md, PROJECT_STATE.yaml and task status no longer contradict the merged PR 13 outcome.
+  - Repository Control CI passes.
+  - Product CI passes.
+  - Lab CI passes.
+  - Main branch protection requires repository-control and Product CI without duplicate required checks.
+  - Issue 14 can be closed with verification evidence.
+blocking_rule:
+  - Do not close stabilization while canonical state or branch protection remains inconsistent.

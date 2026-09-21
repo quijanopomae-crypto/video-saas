@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "PERSISTENCE-ISOLATION-001-IMPLEMENTING",
+  "checkpoint_id": "CP-1789995426833-08eb9235",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "a230206e778a75ef6e76b99c6a98c947d7559aade84dee499f2746860deb3452",
-  "last_journal_sequence": 28,
+  "last_journal_event_sha256": "2da66690d402d9b5fe521f847ee277f1e2f1492f5e4f58b133d8e522e77dc525",
+  "last_journal_sequence": 29,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -98,24 +98,24 @@
       "Promotion PR #6 merged to main at 1226767d8441f0a59ead47527a77b685946d6604",
       "Durable canonical planning cursor normalized to main"
     ],
-    "next_action": "Run CI and audit persistence/isolation implementation; fix only demonstrated failures.",
+    "next_action": "Pass CI for PR #15, merge it, verify main, correct required checks, and close Issue #14 only after all gates pass.",
     "next_command": null
   },
   "repository": {
-    "branch": "task-persistence-isolation-001",
-    "head_commit": "86ea7f63208c602465e9a88bf4bd3d2b12e6d76b",
+    "branch": "stabilize-post-pr13",
+    "head_commit": "cd1563070a02bcfeaba546156234d35cfa9bc1b2",
     "working_tree_dirty": false,
     "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "content_fingerprint": "1c341411fe7bfc7181f58294de347d8933b1250f23186591de48a2a76c63d510"
+    "content_fingerprint": "165ce63bf155d7213c1270eebbf47c1ac7664142b64a04e6b5505be7dbb98e17"
   },
   "schema_version": 1,
-  "state_version": 32,
+  "state_version": 34,
   "task": {
-    "task_id": "TASK-PERSISTENCE-ISOLATION-001",
-    "task_contract_sha256": "e2833e6cac4cba372f77335c6a1b89567a4a6549356ecc738415cbf9031a6ad8",
-    "phase": "PERSISTENCE_ISOLATION"
+    "task_id": "TASK-POST-PR13-STABILIZATION-001",
+    "task_contract_sha256": "0eed761df547fb720cb8e7db764f53f02707e39022e0d8c29cb938f7ce9e250f",
+    "phase": "POST_PR13_STABILIZATION"
   },
-  "updated_at": "2026-09-21T11:40:00Z",
+  "updated_at": "2026-09-21T12:57:06Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,

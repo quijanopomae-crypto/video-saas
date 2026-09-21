@@ -8,8 +8,8 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: PERSISTENCE_ISOLATION
-active_task_id: TASK-PERSISTENCE-ISOLATION-001
+current_authorized_phase: POST_PR13_STABILIZATION
+active_task_id: TASK-POST-PR13-STABILIZATION-001
 provider_preflight_allowed: false
 architecture_research_reopened: false
 paid_provider_requests_allowed: false
@@ -31,7 +31,9 @@ phase_d:
   ruleset_name: Protect main
   ruleset_enforcement: active
   ruleset_target: DEFAULT_BRANCH
-  required_status_check: repository-control
+  required_status_checks:
+    - repository-control
+    - product-ci
   ruleset_bypass_actors: 0
 development_infrastructure:
   implementation_status: READY
@@ -72,4 +74,13 @@ product_promotion:
   repository_control_tests: 65
   provider_preflight_started: false
   paid_provider_requests_executed: false
-next_gate: PERSISTENCE_ISOLATION
+persistence_isolation:
+  implementation_status: OWNER_SCOPED_PERSISTENCE_MERGED
+  task_id: TASK-PERSISTENCE-ISOLATION-001
+  secure_multi_user_isolation: false
+  authentication_authorization_required_before_pilot: true
+  merge_commit: 32ca94d9410c98591c186ecb043cbef0c162ea66
+  repository_control_ci: PASS
+  product_ci: PASS
+  lab_ci: PASS
+next_gate: POST_PR13_STABILIZATION
