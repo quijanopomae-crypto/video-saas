@@ -10,7 +10,8 @@ def test_product_promotion_contract_is_narrow_and_safe():
     project = yaml.safe_load((ROOT / "PROJECT_STATE.yaml").read_text(encoding="utf-8"))
     task = yaml.safe_load((ROOT / "tasks" / "TASK-PRODUCT-PROMOTE-001.yaml").read_text(encoding="utf-8"))
 
-    assert project["active_task_id"] == "TASK-PRODUCT-PROMOTE-001"
+    assert project["product_promotion"]["task_id"] == "TASK-PRODUCT-PROMOTE-001"
+    assert project["product_promotion"]["implementation_status"] == "READY"
     assert project["provider_preflight_allowed"] is False
     assert project["paid_provider_requests_allowed"] is False
     assert task["approval"]["explicit_user_approval"] is True
