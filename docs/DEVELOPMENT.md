@@ -33,3 +33,11 @@ Los adapters de storage, queue y workflow son fakes en memoria. R2, Queues y Wor
 ## Seguridad
 
 `.env` está ignorado. `.env.example` solo contiene valores locales no secretos. Provider Preflight y requests pagados permanecen deshabilitados en esta fase.
+
+## Autenticación local
+
+La persistencia multiusuario ya no confía en un `owner_id` enviado por el cliente como identidad. Los endpoints `/owners/{owner_id}/...` requieren un Bearer JWT válido y el `owner_id` de la ruta debe coincidir con el `user_id` autenticado.
+
+Para desarrollo local define `AUTH_JWT_SECRET` en `.env` con un valor aleatorio de al menos 32 caracteres. El ejemplo versionado lo deja vacío deliberadamente. Las contraseñas se almacenan con hash Argon2 mediante `pwdlib`; los tokens no se persisten en PostgreSQL.
+
+El comportamiento actual de `project_id` sigue siendo determinista: la misma solicitud canónica del mismo owner produce el mismo `project_id` y el POST persistente actúa de forma idempotente (upsert). Cambiar a “un proyecto nuevo por cada click” es una decisión de producto OWNER-ONLY y no se cambia silenciosamente durante esta remediación.
