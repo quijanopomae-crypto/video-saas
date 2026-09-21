@@ -53,6 +53,7 @@ def make_repo(tmp_path: Path) -> Path:
         "provider_preflight_allowed": False,
         "paid_provider_requests_allowed": False,
         "next_gate": "PHASE_D_EXECUTION",
+        "next_gate_authorized": True,
     }
     (root / "PROJECT_STATE.yaml").write_text(yaml.safe_dump(project, sort_keys=False), encoding="utf-8")
     task = {
