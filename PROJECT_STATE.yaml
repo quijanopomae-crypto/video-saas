@@ -77,11 +77,13 @@ product_promotion:
   provider_preflight_started: false
   paid_provider_requests_executed: false
 persistence_isolation:
-  implementation_status: OWNER_SCOPED_PERSISTENCE_MERGED
+  implementation_status: AUTHENTICATED_OWNER_ISOLATION_PASS
   task_id: TASK-PERSISTENCE-ISOLATION-001
-  secure_multi_user_isolation: false
+  secure_multi_user_isolation: true
   authentication_authorization_required_before_pilot: true
-  merge_commit: 32ca94d9410c98591c186ecb043cbef0c162ea66
+  authentication_authorization_status: PASS
+  owner_scoped_persistence_merge_commit: 32ca94d9410c98591c186ecb043cbef0c162ea66
+  authentication_authorization_merge_commit: 473828d5463d3e574ecca4df79822937e30a9127
   repository_control_ci: PASS
   product_ci: PASS
   lab_ci: PASS
@@ -105,6 +107,9 @@ audit_remediation:
   status: IMPLEMENTING
   task_id: TASK-AUDIT-REMEDIATION-001
   expected_outcome: AUDIT_REMEDIATION_PASS
+  control_plane_pr: 18
+  authentication_authorization_pr: 19
+  closure_pr: 20
   opens_new_product_gate: false
   provider_preflight_started: false
   paid_provider_requests_executed: false
