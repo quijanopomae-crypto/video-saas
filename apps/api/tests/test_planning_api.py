@@ -31,7 +31,9 @@ def test_planning_api_is_deterministic() -> None:
     assert first.json() == second.json()
 
 
-def test_planning_api_maps_canonical_validation_to_422() -> None:
+def test_planning_api_maps_validation_to_422() -> None:
     response = client.post("/planning", json={**PAYLOAD, "duration_sec": 4})
     assert response.status_code == 422
-    assert response.json()["detail"] == "duration_sec must be between 5 and 600"
+    detail = response.json()["detail"]
+    assert isinstance(detail, list)
+    assert any(item["loc"][-1] == "duration_sec" for item in detail)
