@@ -8,8 +8,8 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: CANONICAL_PLANNING
-active_task_id: TASK-PRODUCT-PROMOTE-001
+current_authorized_phase: CANONICAL_PLANNING_API_INTEGRATION
+active_task_id: TASK-CANONICAL-PLANNING-API-001
 provider_preflight_allowed: false
 architecture_research_reopened: false
 paid_provider_requests_allowed: false
