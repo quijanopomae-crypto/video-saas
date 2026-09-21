@@ -33,7 +33,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install repository-control dependency
-        run: python -m pip install --quiet pyyaml
+        run: python -m pip install --quiet pyyaml==6.0.3
 
       - name: Print repository snapshot
         run: |
