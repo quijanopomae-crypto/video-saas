@@ -4,7 +4,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 
 - **Phase:** CANONICAL_PLANNING_API_INTEGRATION
 - **Checkpoint:** CANONICAL-PLANNING-API-001-PR
-- **State version:** 30
+- **State version:** 31
 - **Branch:** task-canonical-planning-api-001
 - **Checkpoint base HEAD:** ca67e5d4847f7aa6f5ee4f040c49fb1ed95e2689
 - **Checkpoint working tree dirty:** False
@@ -109,4 +109,4 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 
 The active Task Contract SHA-256 is:
 
-`9c4f6fa826e469188b5ee19cf325734e4364544b71c16508ce01b545f30657e3`
+`e171aafa405c61b9088dd81651adde221e07ed5a7fbcfa7760bd69406941c03f`
