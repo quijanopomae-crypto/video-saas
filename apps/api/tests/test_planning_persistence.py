@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 from src.main import app
 
 client = TestClient(app)
-PASSWORD = "correct-horse-battery-42"
+PASSWORD = "test-only-not-valid-password-42"
 PAYLOAD = {
     "title": "Persistent planning",
     "idea": "Prove authenticated owner scoped persistence without changing canonical planning semantics.",
