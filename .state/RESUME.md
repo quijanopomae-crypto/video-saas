@@ -1,12 +1,12 @@
-# RESUME — TASK-PERSISTENCE-ISOLATION-001
+# RESUME — TASK-POST-PR13-STABILIZATION-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** PERSISTENCE_ISOLATION
-- **Checkpoint:** PERSISTENCE-ISOLATION-001-IMPLEMENTING
-- **State version:** 32
-- **Branch:** task-persistence-isolation-001
-- **Checkpoint base HEAD:** 86ea7f63208c602465e9a88bf4bd3d2b12e6d76b
+- **Phase:** POST_PR13_STABILIZATION
+- **Checkpoint:** CP-1789995426833-08eb9235
+- **State version:** 34
+- **Branch:** stabilize-post-pr13
+- **Checkpoint base HEAD:** cd1563070a02bcfeaba546156234d35cfa9bc1b2
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** PRODUCT-PROMOTE-001
 - **Blocked:** none
-- **Next action:** Run CI and audit persistence/isolation implementation; fix only demonstrated failures.
+- **Next action:** Pass CI for PR #15, merge it, verify main, correct required checks, and close Issue #14 only after all gates pass.
 
 ## Completed steps
 
@@ -109,4 +109,4 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 
 The active Task Contract SHA-256 is:
 
-`e2833e6cac4cba372f77335c6a1b89567a4a6549356ecc738415cbf9031a6ad8`
+`0eed761df547fb720cb8e7db764f53f02707e39022e0d8c29cb938f7ce9e250f`
