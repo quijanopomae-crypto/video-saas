@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-1789995426833-08eb9235",
+  "checkpoint_id": "CP-1789996856779-e91329a8",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "2da66690d402d9b5fe521f847ee277f1e2f1492f5e4f58b133d8e522e77dc525",
-  "last_journal_sequence": 29,
+  "last_journal_event_sha256": "3e4d9215bac4d0808cf7193d20ff2f89cb44deb8a9e7ba8cb9f8295ea9011759",
+  "last_journal_sequence": 30,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -96,26 +96,32 @@
       "Canonical planning promotion state synchronized with final PASS Task Contract hash",
       "PRODUCT-PROMOTE-001 evidence materialized",
       "Promotion PR #6 merged to main at 1226767d8441f0a59ead47527a77b685946d6604",
-      "Durable canonical planning cursor normalized to main"
+      "Durable canonical planning cursor normalized to main",
+      "PR #15 head 90944adc3a2005b282bc662067ea03287e05b14d passed Repository Control, Product CI and Lab CI",
+      "PR #15 merged to main at 3dfbf864ffa3a27490d12205fa9ecd4a713dc7fd",
+      "Main merge head passed Repository Control run 35602957834, Product CI run 35602957908 and Lab CI run 35602957822",
+      "Protect main ruleset requires exactly repository-control and product-ci with no bypass actors",
+      "POST-PR13-STABILIZATION-001 evidence materialized",
+      "TASK-POST-PR13-STABILIZATION-001 closed PASS with no later product gate authorized"
     ],
-    "next_action": "Pass CI for PR #15, merge it, verify main, correct required checks, and close Issue #14 only after all gates pass.",
+    "next_action": "Post-PR13 stabilization is complete on main. No later product gate is authorized. Authentication/authorization remains mandatory before the five-user pilot; Provider Preflight and paid requests remain OFF.",
     "next_command": null
   },
   "repository": {
-    "branch": "stabilize-post-pr13",
-    "head_commit": "cd1563070a02bcfeaba546156234d35cfa9bc1b2",
+    "branch": "main",
+    "head_commit": "8c80b66a8cc91e01c61487672fde60a60cf6f60d",
     "working_tree_dirty": false,
     "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "content_fingerprint": "165ce63bf155d7213c1270eebbf47c1ac7664142b64a04e6b5505be7dbb98e17"
+    "content_fingerprint": "b2e43b515fcf2217eddcfd3fac2054bfc491b1de06d974f9f30576d886abf1b7"
   },
   "schema_version": 1,
-  "state_version": 34,
+  "state_version": 35,
   "task": {
     "task_id": "TASK-POST-PR13-STABILIZATION-001",
-    "task_contract_sha256": "0eed761df547fb720cb8e7db764f53f02707e39022e0d8c29cb938f7ce9e250f",
-    "phase": "POST_PR13_STABILIZATION"
+    "task_contract_sha256": "f0b00182033bb69d596fa21ab01b0c578c598fd0dcab74a95d9166b7c35d3803",
+    "phase": "POST_PR13_STABILIZATION_PASS"
   },
-  "updated_at": "2026-09-21T12:57:06Z",
+  "updated_at": "2026-09-21T13:20:56Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
@@ -127,8 +133,8 @@
     "dev_infra_product_ci_passed": true,
     "dev_infra_repository_control_ci_passed": true,
     "dev_infra_secret_hygiene_passed": true,
-    "full_regression_suite_passed": "63/63",
-    "latest_evidence_id": "PRODUCT-PROMOTE-001",
+    "full_regression_suite_passed": "65/65",
+    "latest_evidence_id": "POST-PR13-STABILIZATION-001",
     "phase_a_acceptance_passed": true,
     "phase_b_acceptance_passed": true,
     "phase_b_tests_passed": "8/8",
@@ -142,7 +148,11 @@
     "phase_d_tests_passed": "12/12",
     "main_final_repository_control_ci_passed": true,
     "main_final_product_ci_passed": true,
-    "main_final_head": "e9a29173ab52300da26c92cb6c488330203dea1f",
+    "main_final_head": "3dfbf864ffa3a27490d12205fa9ecd4a713dc7fd",
+    "main_final_repository_control_ci_run_id": 35602957834,
+    "main_final_product_ci_run_id": 35602957908,
+    "main_final_lab_ci_passed": true,
+    "main_final_lab_ci_run_id": 35602957822,
     "development_infrastructure_ready": true,
     "lab_product_flow_001_lab_ci_passed": true,
     "lab_product_flow_001_acceptance_passed": true,
@@ -153,6 +163,16 @@
     "product_promotion_repository_control_ci_passed": true,
     "product_promotion_product_ci_passed": true,
     "canonical_product_planning_ready": true,
+    "post_pr13_stabilization_passed": true,
+    "post_pr13_stabilization_pr_head": "90944adc3a2005b282bc662067ea03287e05b14d",
+    "post_pr13_stabilization_merge_head": "3dfbf864ffa3a27490d12205fa9ecd4a713dc7fd",
+    "post_pr13_stabilization_state_integrity_passed": true,
+    "main_ruleset_id": 23730563,
+    "main_ruleset_required_status_checks": [
+      "repository-control",
+      "product-ci"
+    ],
+    "main_ruleset_bypass_actors": 0,
     "product_promotion_repository_control_ci_run_id": 35529860254,
     "product_promotion_product_ci_run_id": 35530037442,
     "canonical_product_planning_merged_to_main": true,

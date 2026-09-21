@@ -2,11 +2,11 @@
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** POST_PR13_STABILIZATION
-- **Checkpoint:** CP-1789995426833-08eb9235
-- **State version:** 34
-- **Branch:** stabilize-post-pr13
-- **Checkpoint base HEAD:** cd1563070a02bcfeaba546156234d35cfa9bc1b2
+- **Phase:** POST_PR13_STABILIZATION_PASS
+- **Checkpoint:** CP-1789996856779-e91329a8
+- **State version:** 35
+- **Branch:** main
+- **Checkpoint base HEAD:** 8c80b66a8cc91e01c61487672fde60a60cf6f60d
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -14,9 +14,9 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Baseline regression suite:** true
 - **Phase B acceptance:** true
 - **Phase C acceptance:** true
-- **Latest evidence:** PRODUCT-PROMOTE-001
+- **Latest evidence:** POST-PR13-STABILIZATION-001
 - **Blocked:** none
-- **Next action:** Pass CI for PR #15, merge it, verify main, correct required checks, and close Issue #14 only after all gates pass.
+- **Next action:** Post-PR13 stabilization is complete on main. No later product gate is authorized. Authentication/authorization remains mandatory before the five-user pilot; Provider Preflight and paid requests remain OFF.
 
 ## Completed steps
 
@@ -106,7 +106,13 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - PRODUCT-PROMOTE-001 evidence materialized
 - Promotion PR #6 merged to main at 1226767d8441f0a59ead47527a77b685946d6604
 - Durable canonical planning cursor normalized to main
+- PR #15 head 90944adc3a2005b282bc662067ea03287e05b14d passed Repository Control, Product CI and Lab CI
+- PR #15 merged to main at 3dfbf864ffa3a27490d12205fa9ecd4a713dc7fd
+- Main merge head passed Repository Control run 35602957834, Product CI run 35602957908 and Lab CI run 35602957822
+- Protect main ruleset requires exactly repository-control and product-ci with no bypass actors
+- POST-PR13-STABILIZATION-001 evidence materialized
+- TASK-POST-PR13-STABILIZATION-001 closed PASS with no later product gate authorized
 
 The active Task Contract SHA-256 is:
 
-`0eed761df547fb720cb8e7db764f53f02707e39022e0d8c29cb938f7ce9e250f`
+`f0b00182033bb69d596fa21ab01b0c578c598fd0dcab74a95d9166b7c35d3803`
