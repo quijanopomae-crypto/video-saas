@@ -34,9 +34,9 @@ jobs:
       WORKFLOW_BACKEND: memory
       PYTHONDONTWRITEBYTECODE: "1"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.12"
 
@@ -44,7 +44,7 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg
-          python -m pip install --quiet -r apps/api/requirements.txt
+          python -m pip install --quiet -r apps/api/requirements.txt -c apps/api/requirements.lock.txt
 
       - name: Apply database migrations
         working-directory: apps/api
@@ -82,15 +82,15 @@ jobs:
       NEXT_PUBLIC_API_BASE_URL: http://127.0.0.1:8000
       API_INTERNAL_URL: http://127.0.0.1:8000
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: "24"
 
       - name: Install frontend dependencies
         working-directory: apps/web
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Run frontend structural tests
         working-directory: apps/web
@@ -133,37 +133,41 @@ jobs:
       NEXT_TELEMETRY_DISABLED: "1"
       PYTHONDONTWRITEBYTECODE: "1"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.12"
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: "24"
 
       - name: Install application dependencies
         run: |
-          python -m pip install --quiet -r apps/api/requirements.txt
+          python -m pip install --quiet -r apps/api/requirements.txt -c apps/api/requirements.lock.txt
           cd apps/web
-          npm install --no-audit --no-fund
+          npm ci --no-audit --no-fund
 
       - name: Apply migrations
         working-directory: apps/api
         run: alembic upgrade head
 
-      - name: Boot API and Web, then verify Web to API path
+      - name: Build production web artifact
+        working-directory: apps/web
+        run: npm run build
+
+      - name: Boot API and production Web, then verify Web to API to PostgreSQL path
         shell: bash
         run: |
           (cd apps/api && python -m uvicorn src.main:app --host 127.0.0.1 --port 8000) > /tmp/api.log 2>&1 &
           API_PID=$!
-          (cd apps/web && npm run dev -- --hostname 127.0.0.1 --port 3000) > /tmp/web.log 2>&1 &
+          (cd apps/web && npm run start -- --hostname 127.0.0.1 --port 3000) > /tmp/web.log 2>&1 &
           WEB_PID=$!
           trap 'kill "$API_PID" "$WEB_PID" 2>/dev/null || true' EXIT
 
           for i in {1..45}; do
-            if curl -fsS http://127.0.0.1:8000/health >/dev/null; then break; fi
+            if curl -fsS http://127.0.0.1:8000/ready >/tmp/api-ready.json; then break; fi
             sleep 1
           done
           for i in {1..60}; do
@@ -173,12 +177,15 @@ jobs:
 
           grep -q "VIDEO-SAAS" /tmp/web.html
           curl -fsS http://127.0.0.1:3000/api/health >/tmp/proxy-health.json
+          curl -fsS http://127.0.0.1:3000/api/ready >/tmp/proxy-ready.json
           python - <<'PY'
           import json
-          data = json.load(open("/tmp/proxy-health.json", encoding="utf-8"))
-          assert data["status"] == "ok", data
-          assert data["service"] == "video-saas-api", data
-          print("WEB_TO_API_SMOKE_OK")
+          health = json.load(open("/tmp/proxy-health.json", encoding="utf-8"))
+          ready = json.load(open("/tmp/proxy-ready.json", encoding="utf-8"))
+          assert health["status"] == "ok", health
+          assert health["service"] == "video-saas-api", health
+          assert ready == {"status": "ready", "database": "ok"}, ready
+          print("WEB_PRODUCTION_TO_API_TO_POSTGRES_SMOKE_OK")
           PY
 
   product-ci:

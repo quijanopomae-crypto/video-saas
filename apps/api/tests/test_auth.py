@@ -5,7 +5,7 @@ from src.main import app
 from src.modules.auth.persistence import load_user_by_email
 
 client = TestClient(app)
-PASSWORD = "correct-horse-battery-42"
+PASSWORD = "test-only-not-valid-password-42"
 
 
 def register_and_login(email: str):

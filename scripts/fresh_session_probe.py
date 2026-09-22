@@ -81,6 +81,8 @@ def probe(root: Path) -> dict:
         "read_order": read_order,
         "active_task_id": active_task_id,
         "phase": (current.get("task") or {}).get("phase"),
+        "next_gate": project.get("next_gate"),
+        "next_gate_authorized": project.get("next_gate_authorized"),
         "next_action": (current.get("progress") or {}).get("next_action"),
         "journal_sequence": len(events),
         "provider_preflight_started": False,

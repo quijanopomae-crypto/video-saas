@@ -27,17 +27,17 @@ Read these before any repository work:
 
 Repository Control A-D and minimum development infrastructure are complete.
 The validated `product-flow-001` planning core has been promoted to canonical backend code under `apps/api/src/modules/planning/`.
-Canonical planning API integration and owner-scoped planning persistence have been merged. The persistence boundary is partitioning by caller-supplied `owner_id`; it is not authentication or authorization.
+Canonical planning API integration, owner-scoped planning persistence, and authenticated owner authorization have been merged. Owner-scoped endpoints now verify the authenticated principal server-side and do not trust a caller-supplied `owner_id` as identity.
 Provider Preflight remains forbidden and no paid provider requests are authorized.
-The owner has explicitly authorized only `TASK-AUDIT-REMEDIATION-001`; this is remediation work, not a new product gate.
+`TASK-AUDIT-REMEDIATION-001` is complete. The repository is IDLE; no later product gate or Task Contract is authorized.
 
 ## Canonical planning boundary
 
 - `apps/api/src/modules/planning/` is canonical product code.
 - Canonical `apps/**` MUST NOT import or depend on `lab/**`.
 - `lab/**` remains provenance/experimentation, not a runtime dependency.
-- Owner-scoped persistence is canonical, but secure multi-user isolation is NOT complete until authentication/authorization derives ownership from a trusted identity.
-- Authentication/authorization is mandatory before the five-user pilot.
+- Owner-scoped persistence plus authenticated server-side authorization is canonical and cross-owner denial is required by tests.
+- Authentication/authorization must remain enabled and verified for the five-user pilot.
 - Do not add later product scope, UI, provider SDKs or paid provider calls without a Task Contract that explicitly authorizes that scope.
 
 ## Single Autonomous Operator

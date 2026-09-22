@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-AUDIT-REMEDIATION-001-ACTIVATE",
+  "checkpoint_id": "CP-1790046366846-86c2ec5c",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "d9cee8abed8c6d2dbcfffcb4540c26839fa21442bab0ff3dacbaf22c446ad378",
-  "last_journal_sequence": 32,
+  "last_journal_event_sha256": "540b296b13d8e52992308e07ebe141a1db7e82de8ddf0b6b2274f1447c7eaeb6",
+  "last_journal_sequence": 35,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -104,26 +104,27 @@
       "POST-PR13-STABILIZATION-001 evidence materialized",
       "TASK-POST-PR13-STABILIZATION-001 closed PASS with no later product gate authorized",
       "README final state synchronized with POST_PR13_STABILIZATION_PASS",
-      "Owner explicitly authorized TASK-AUDIT-REMEDIATION-001 without opening a product gate"
+      "Owner explicitly authorized TASK-AUDIT-REMEDIATION-001 without opening a product gate",
+      "TASK-AUDIT-REMEDIATION-001 closed DONE with AUDIT_REMEDIATION_PASS"
     ],
-    "next_action": "Execute TASK-AUDIT-REMEDIATION-001 only: control-plane loop prevention, auth/authz, reproducibility, CI and security hardening. Provider Preflight and paid requests remain OFF.",
+    "next_action": null,
     "next_command": null
   },
   "repository": {
-    "branch": "main",
-    "head_commit": "881e202f9582870c462748bf17ffd3d077fe8661",
-    "working_tree_dirty": false,
-    "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "content_fingerprint": "98c9f64030129d70fd307d96444f1b90b4b2830280d947c0d1f1f5214d247b3f"
+    "branch": null,
+    "head_commit": "1d39fcbfd9c5ff61d2b27e2ecb6460db3e097a0c",
+    "working_tree_dirty": true,
+    "working_tree_fingerprint": "57a046b324506382478b5c748372ebc4008e5953e4261bfbd61e72cae76d5b55",
+    "content_fingerprint": "6b011eac569b741203cb32e597e8b8d90b4cf48aee23be8bc48dc81633a7c10a"
   },
   "schema_version": 1,
-  "state_version": 37,
+  "state_version": 40,
   "task": {
-    "task_id": "TASK-AUDIT-REMEDIATION-001",
-    "task_contract_sha256": "c714d67605365625e3afaa620edbec971e1734701229f2d91a0bc267451eceae",
-    "phase": "AUDIT_REMEDIATION"
+    "task_id": null,
+    "task_contract_sha256": null,
+    "phase": "AUDIT_REMEDIATION_PASS"
   },
-  "updated_at": "2026-09-21T16:58:00Z",
+  "updated_at": "2026-09-22T03:06:06Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
@@ -136,7 +137,7 @@
     "dev_infra_repository_control_ci_passed": true,
     "dev_infra_secret_hygiene_passed": true,
     "full_regression_suite_passed": "65/65",
-    "latest_evidence_id": "POST-PR13-STABILIZATION-001",
+    "latest_evidence_id": "AUDIT-REMEDIATION-001",
     "phase_a_acceptance_passed": true,
     "phase_b_acceptance_passed": true,
     "phase_b_tests_passed": "8/8",
@@ -178,6 +179,7 @@
     "product_promotion_repository_control_ci_run_id": 35529860254,
     "product_promotion_product_ci_run_id": 35530037442,
     "canonical_product_planning_merged_to_main": true,
-    "canonical_product_planning_main_merge_head": "1226767d8441f0a59ead47527a77b685946d6604"
+    "canonical_product_planning_main_merge_head": "1226767d8441f0a59ead47527a77b685946d6604",
+    "audit_remediation_passed": true
   }
 }

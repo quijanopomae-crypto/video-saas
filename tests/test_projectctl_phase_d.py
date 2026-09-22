@@ -16,6 +16,7 @@ from projectctl.core import (
     canonical_json_bytes,
     check_scope,
     checkpoint,
+    close_active_task,
     event_sha256,
     read_journal,
     recover,
@@ -290,3 +291,76 @@ def test_committed_non_state_change_after_checkpoint_is_blocked(tmp_path):
     with pytest.raises(RecoveryBlocked) as exc:
         recover(root)
     assert exc.value.code == "RECOVERY_STATE_MISMATCH"
+
+def test_close_active_task_materializes_idle_state_with_durable_event(tmp_path):
+    root = make_repo(tmp_path)
+    evidence_id = "TASK-CLOSE-EVIDENCE"
+    (root / "evidence" / f"{evidence_id}.json").write_text(
+        json.dumps({"status": "PASS", "evidence_id": evidence_id}) + "\n",
+        encoding="utf-8",
+    )
+
+    result = close_active_task(
+        root,
+        final_phase="PHASE_D_PASS",
+        evidence_ids=[evidence_id],
+    )
+
+    assert result["status"] == "TASK_CLOSE_OK"
+    project = yaml.safe_load((root / "PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+    current = json.loads((root / ".state" / "CURRENT.json").read_text(encoding="utf-8"))
+    contract = yaml.safe_load(
+        (root / "tasks" / "TASK-REPO-CONTROL-004.yaml").read_text(encoding="utf-8")
+    )
+    events, incomplete = read_journal(root)
+
+    assert project["active_task_id"] is None
+    assert project["next_gate"] == "NONE_AUTHORIZED"
+    assert project["next_gate_authorized"] is False
+    assert project["provider_preflight_allowed"] is False
+    assert project["paid_provider_requests_allowed"] is False
+    assert current["task"]["task_id"] is None
+    assert current["task"]["task_contract_sha256"] is None
+    assert current["task"]["phase"] == "PHASE_D_PASS"
+    assert current["progress"]["next_action"] is None
+    assert contract["task"]["status"] == "DONE"
+    assert contract["closure"]["evidence_ids"] == [evidence_id]
+    assert incomplete is False
+    assert events[-1]["event_type"] == "TASK_CLOSED"
+    assert events[-1]["payload"]["closed_task_id"] == "TASK-REPO-CONTROL-004"
+
+def test_terminal_idle_cursor_recovers_after_branch_change(tmp_path):
+    root = make_repo(tmp_path)
+    evidence_id = "TASK-CLOSE-BRANCH-EVIDENCE"
+    (root / "evidence" / f"{evidence_id}.json").write_text(
+        json.dumps({"status": "PASS", "evidence_id": evidence_id}) + "\n",
+        encoding="utf-8",
+    )
+    close_active_task(root, final_phase="PHASE_D_PASS", evidence_ids=[evidence_id])
+
+    run(root, "git", "add", ".")
+    run(root, "git", "commit", "-m", "persist terminal idle state")
+    run(root, "git", "checkout", "-b", "merged-main")
+
+    result = recover(root)
+    current = json.loads((root / ".state" / "CURRENT.json").read_text(encoding="utf-8"))
+
+    assert result["status"] in {"RECOVERY_OK", "RECOVERY_REPAIRED"}
+    assert current["repository"]["branch"] is None
+    assert current["task"]["task_id"] is None
+    assert current["progress"]["next_action"] is None
+
+
+def test_idle_checkpoint_remains_branch_agnostic(tmp_path):
+    root = make_repo(tmp_path)
+    evidence_id = "TASK-CLOSE-IDLE-CHECKPOINT-EVIDENCE"
+    (root / "evidence" / f"{evidence_id}.json").write_text(
+        json.dumps({"status": "PASS", "evidence_id": evidence_id}) + "\n",
+        encoding="utf-8",
+    )
+    close_active_task(root, final_phase="PHASE_D_PASS", evidence_ids=[evidence_id])
+
+    checkpoint(root, reason="post-close-verification")
+
+    current = json.loads((root / ".state" / "CURRENT.json").read_text(encoding="utf-8"))
+    assert current["repository"]["branch"] is None

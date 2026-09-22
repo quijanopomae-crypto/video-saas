@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 from src.main import app
 
 client = TestClient(app)
-PASSWORD = "correct-horse-battery-42"
+PASSWORD = "test-only-not-valid-password-42"
 PAYLOAD = {
     "title": "Persistent planning",
     "idea": "Prove authenticated owner scoped persistence without changing canonical planning semantics.",
@@ -40,39 +40,54 @@ def test_five_authenticated_owners_are_partitioned():
         assert response.json() == expected
 
 
-def test_cross_owner_read_and_upsert_are_denied_server_side():
+def test_cross_owner_read_and_upsert_are_denied_bidirectionally():
     owner_a, headers_a = identity("owner-a@example.test")
     owner_b, headers_b = identity("owner-b@example.test")
 
-    created = client.post(f"/owners/{owner_a}/planning", json=PAYLOAD, headers=headers_a)
-    assert created.status_code == 200
-    project_id = created.json()["project_bible"]["project_id"]
-
-    # B cannot impersonate A by putting A's owner_id in the URL.
-    denied_read = client.get(
-        f"/owners/{owner_a}/planning/{project_id}",
+    created_a = client.post(f"/owners/{owner_a}/planning", json=PAYLOAD, headers=headers_a)
+    created_b = client.post(
+        f"/owners/{owner_b}/planning",
+        json={**PAYLOAD, "tone": "owner b canonical tone"},
         headers=headers_b,
     )
-    assert denied_read.status_code == 403
+    assert created_a.status_code == created_b.status_code == 200
+    project_a = created_a.json()["project_bible"]["project_id"]
+    project_b = created_b.json()["project_bible"]["project_id"]
 
-    denied_update = client.post(
+    # B -> A: read and upsert/modify are denied.
+    assert client.get(
+        f"/owners/{owner_a}/planning/{project_a}",
+        headers=headers_b,
+    ).status_code == 403
+    assert client.post(
         f"/owners/{owner_a}/planning",
-        json={**PAYLOAD, "tone": "malicious cross-owner update"},
+        json={**PAYLOAD, "tone": "b attempts a modification"},
         headers=headers_b,
-    )
-    assert denied_update.status_code == 403
+    ).status_code == 403
 
-    # A retains legitimate access to its own resource.
-    own_read = client.get(
-        f"/owners/{owner_a}/planning/{project_id}",
+    # A -> B: independent symmetric evidence, not inferred from middleware reuse.
+    assert client.get(
+        f"/owners/{owner_b}/planning/{project_b}",
+        headers=headers_a,
+    ).status_code == 403
+    assert client.post(
+        f"/owners/{owner_b}/planning",
+        json={**PAYLOAD, "tone": "a attempts b modification"},
+        headers=headers_a,
+    ).status_code == 403
+
+    # Both principals retain legitimate access to their own resources.
+    own_a = client.get(
+        f"/owners/{owner_a}/planning/{project_a}",
         headers=headers_a,
     )
-    assert own_read.status_code == 200
-    assert own_read.json() == created.json()
-
-    # B may create its own independently partitioned resource.
-    own_b = client.post(f"/owners/{owner_b}/planning", json=PAYLOAD, headers=headers_b)
-    assert own_b.status_code == 200
+    own_b = client.get(
+        f"/owners/{owner_b}/planning/{project_b}",
+        headers=headers_b,
+    )
+    assert own_a.status_code == own_b.status_code == 200
+    assert own_a.json() == created_a.json()
+    assert own_b.json() == created_b.json()
 
 
 def test_owner_scoped_endpoints_require_authentication():

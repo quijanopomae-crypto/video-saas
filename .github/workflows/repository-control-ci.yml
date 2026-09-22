@@ -14,16 +14,16 @@ jobs:
     env:
       PYTHONDONTWRITEBYTECODE: "1"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.12"
 
       - name: Install validation dependencies
-        run: python -m pip install --quiet pytest pyyaml jsonschema
+        run: python -m pip install --quiet pytest==9.1.1 pyyaml==6.0.3 jsonschema==4.26.0
 
       - name: Resolve scope base
         id: base
@@ -52,6 +52,20 @@ jobs:
 
       - name: Run repository-control regression suite
         run: python -B -m pytest -q -p no:cacheprovider tests
+
+      - name: Recover durable repository state when IDLE
+        shell: bash
+        run: |
+          python - <<'PY'
+          import subprocess
+          import yaml
+          from pathlib import Path
+          project = yaml.safe_load(Path("PROJECT_STATE.yaml").read_text(encoding="utf-8"))
+          if project.get("active_task_id") is None:
+              subprocess.run(["python", "-B", "-m", "projectctl", "recover"], check=True)
+          else:
+              print("RECOVERY_SKIPPED_ACTIVE_TASK")
+          PY
 
       - name: Fresh-session durable handoff probe
         run: python -B scripts/fresh_session_probe.py --root .

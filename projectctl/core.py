@@ -6,6 +6,7 @@ import json
 import re
 import os
 import socket
+import stat
 import subprocess
 import tempfile
 import time
@@ -83,9 +84,15 @@ def fsync_directory(directory: Path) -> None:
 
 def write_atomic(path: Path, content: bytes) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        target_mode = stat.S_IMODE(path.stat().st_mode)
+    except FileNotFoundError:
+        target_mode = 0o644
     fd, tmp_name = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=path.parent)
     tmp = Path(tmp_name)
     try:
+        if os.name != "nt":
+            os.fchmod(fd, target_mode)
         with os.fdopen(fd, "wb") as stream:
             stream.write(content)
             stream.flush()
@@ -401,10 +408,11 @@ def _verify_snapshot_vs_git(root: Path, current: dict[str, Any], observed: dict[
     expected = current.get("repository")
     if not expected:
         return
-    if expected.get("branch") != observed.get("branch"):
+    expected_branch = expected.get("branch")
+    if expected_branch and expected_branch != observed.get("branch"):
         raise RecoveryBlocked(
             "RECOVERY_WRONG_BRANCH",
-            f"expected {expected.get('branch')!r}; observed {observed.get('branch')!r}",
+            f"expected {expected_branch!r}; observed {observed.get('branch')!r}",
         )
 
     expected_content = expected.get("content_fingerprint")
@@ -453,6 +461,8 @@ def checkpoint(root: Path, *, reason: str = "manual", next_action: str | None = 
         if incomplete:
             raise RecoveryBlocked("RECOVERY_INCOMPLETE_FINAL_LINE", "run projectctl recover before checkpoint")
         repository = git_snapshot(root)
+        if (current.get("task") or {}).get("task_id") is None:
+            repository["branch"] = None
         state_after = deepcopy(current)
         state_after["state_version"] = int(current.get("state_version", 0)) + 1
         state_after.setdefault("progress", {})
@@ -709,6 +719,88 @@ def assert_frozen_manifests_immutable(root: Path, changed_paths: Iterable[str]) 
         raise TransitionBlocked("FROZEN_MANIFEST_MODIFICATION_BLOCKED", ", ".join(touched))
 
 
+def _load_yaml_from_git_ref(root: Path, ref: str, rel_path: str) -> dict[str, Any]:
+    proc = subprocess.run(
+        ["git", "show", f"{ref}:{rel_path}"],
+        cwd=root,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    if proc.returncode != 0:
+        raise OperatingStateError(
+            "BASE_STATE_UNAVAILABLE",
+            f"cannot read {rel_path} from {ref}: {proc.stderr.decode('utf-8', 'replace').strip()}",
+        )
+    try:
+        value = yaml.safe_load(proc.stdout.decode("utf-8"))
+    except (UnicodeDecodeError, yaml.YAMLError) as exc:
+        raise OperatingStateError("BASE_STATE_INVALID", f"{ref}:{rel_path}") from exc
+    if not isinstance(value, dict):
+        raise OperatingStateError("BASE_STATE_INVALID", f"{ref}:{rel_path} is not a YAML object")
+    return value
+
+
+def _scope_contract(
+    root: Path,
+    *,
+    task_contract_path: Path | None,
+    base_ref: str | None,
+) -> tuple[Path, dict[str, Any], str]:
+    if task_contract_path is not None:
+        path = task_contract_path if task_contract_path.is_absolute() else root / task_contract_path
+        return path, load_yaml(path), "explicit"
+
+    project = load_yaml(root / "PROJECT_STATE.yaml")
+    active_task_id = project.get("active_task_id")
+    if isinstance(active_task_id, str) and active_task_id:
+        path = root / "tasks" / f"{active_task_id}.yaml"
+        return path, load_yaml(path), "current"
+
+    # Closing a task legitimately produces an IDLE destination tree. In that
+    # tree there is intentionally no active Task Contract, so scope authority
+    # must come from the active contract in the comparison base. This keeps the
+    # closing PR/merge verifiable without weakening the scope gate.
+    operating = validate_operating_state(root)
+    if operating.get("status") != "OPERATING_STATE_IDLE":
+        raise OperatingStateError("NO_ACTIVE_TASK", "no current active Task Contract")
+
+    if not base_ref:
+        raise OperatingStateError(
+            "NO_ACTIVE_TASK",
+            "repository is IDLE and no base_ref was supplied to recover prior scope authority",
+        )
+
+    base_project = _load_yaml_from_git_ref(root, base_ref, "PROJECT_STATE.yaml")
+    base_task_id = base_project.get("active_task_id")
+    if not isinstance(base_task_id, str) or not base_task_id:
+        raise OperatingStateError(
+            "NO_PRIOR_ACTIVE_TASK",
+            f"{base_ref} does not contain an active Task Contract authorizing this transition",
+        )
+    if base_project.get("next_gate_authorized") is not True or base_project.get("next_gate") == "NONE_AUTHORIZED":
+        raise OperatingStateError(
+            "PRIOR_TASK_NOT_AUTHORIZED",
+            f"{base_ref} does not show an authorized active gate",
+        )
+
+    rel = f"tasks/{base_task_id}.yaml"
+    contract = _load_yaml_from_git_ref(root, base_ref, rel)
+    task = contract.get("task") or {}
+    if task.get("id") != base_task_id:
+        raise OperatingStateError(
+            "PRIOR_TASK_ID_MISMATCH",
+            f"{base_task_id} != {task.get('id')}",
+        )
+    status = str(task.get("status") or "").upper()
+    if status in TERMINAL_TASK_STATUSES:
+        raise OperatingStateError(
+            "PRIOR_ACTIVE_TASK_TERMINAL",
+            f"{base_task_id} was already terminal ({status}) in {base_ref}",
+        )
+    return root / rel, contract, f"base_ref:{base_ref}"
+
+
 def check_scope(
     root: Path,
     *,
@@ -717,8 +809,11 @@ def check_scope(
     base_ref: str | None = None,
 ) -> dict[str, Any]:
     root = root.resolve()
-    contract_path = task_contract_path or active_task_contract_path(root)
-    contract = load_yaml(contract_path)
+    contract_path, contract, contract_source = _scope_contract(
+        root,
+        task_contract_path=task_contract_path,
+        base_ref=base_ref,
+    )
     scope = contract.get("scope") or {}
     allowed = list(scope.get("allowed_paths") or [])
     forbidden = list(scope.get("forbidden_paths") or [])
@@ -738,6 +833,7 @@ def check_scope(
         "status": "SCOPE_OK",
         "task_id": (contract.get("task") or {}).get("id"),
         "task_contract": str(contract_path.relative_to(root)),
+        "contract_source": contract_source,
         "paths_checked": changed,
     }
 
@@ -973,6 +1069,126 @@ def _load_evidence(root: Path, evidence_id: str) -> dict[str, Any]:
     if evidence.get("status") != "PASS":
         raise TransitionBlocked("TRANSITION_EVIDENCE_NOT_PASS", evidence_id)
     return evidence
+
+
+def close_active_task(root: Path, *, final_phase: str, evidence_ids: list[str]) -> dict[str, Any]:
+    """Close the current authorized task and materialize a durable IDLE cursor."""
+    root = root.resolve()
+    with task_lock(root):
+        operating = validate_operating_state(root)
+        if operating.get("status") != "OPERATING_STATE_ACTIVE":
+            raise OperatingStateError("NO_ACTIVE_TASK", "only an ACTIVE task can be closed")
+
+        current = load_json(root / ".state" / "CURRENT.json")
+        events, incomplete = read_journal(root)
+        if incomplete:
+            raise RecoveryBlocked("RECOVERY_INCOMPLETE_FINAL_LINE", "run projectctl recover before task close")
+        _ensure_state_journal_aligned(current, events)
+
+        project_path = root / "PROJECT_STATE.yaml"
+        project = load_yaml(project_path)
+        task_id = project.get("active_task_id")
+        if not isinstance(task_id, str) or not task_id:
+            raise OperatingStateError("NO_ACTIVE_TASK", "PROJECT_STATE has no active task")
+        contract_path = root / "tasks" / f"{task_id}.yaml"
+        contract = load_yaml(contract_path)
+        task = contract.get("task") or {}
+        if task.get("id") != task_id:
+            raise OperatingStateError("ACTIVE_TASK_ID_MISMATCH", f"{task_id} != {task.get('id')}")
+        if str(task.get("status") or "").upper() in TERMINAL_TASK_STATUSES:
+            raise OperatingStateError("ACTIVE_TASK_TERMINAL", f"{task_id} is already terminal")
+
+        ext = current.get("external_operations", {})
+        if ext.get("unknown_billing_requests") or ext.get("pending_paid_requests"):
+            raise TransitionBlocked("TASK_CLOSE_BLOCKED_EXTERNAL_OPERATION", task_id)
+        if ext.get("provider_preflight_started"):
+            raise TransitionBlocked("TASK_CLOSE_BLOCKED_PROVIDER_PREFLIGHT", task_id)
+        if not evidence_ids:
+            raise TransitionBlocked("TASK_CLOSE_EVIDENCE_REQUIRED", task_id)
+        for evidence_id in evidence_ids:
+            _load_evidence(root, evidence_id)
+
+        # Scope is checked while the task is still ACTIVE. The resulting closing
+        # commit is subsequently verifiable from IDLE by check_scope(base_ref=...).
+        check_scope(root)
+
+        expected_outcome = ((contract.get("objective") or {}).get("expected_outcome"))
+        if expected_outcome and final_phase != expected_outcome:
+            raise TransitionBlocked(
+                "TASK_CLOSE_OUTCOME_MISMATCH",
+                f"expected {expected_outcome}; requested {final_phase}",
+            )
+
+        contract.setdefault("task", {})["status"] = "DONE"
+        contract["closure"] = {
+            "final_phase": final_phase,
+            "evidence_ids": evidence_ids,
+            "provider_preflight_started": False,
+            "paid_provider_requests_executed": False,
+        }
+        write_atomic(
+            contract_path,
+            yaml.safe_dump(contract, sort_keys=False, allow_unicode=True).encode("utf-8"),
+        )
+
+        project["current_authorized_phase"] = final_phase
+        project["active_task_id"] = None
+        project["next_gate"] = "NONE_AUTHORIZED"
+        project["next_gate_authorized"] = False
+        project["provider_preflight_allowed"] = False
+        project["paid_provider_requests_allowed"] = False
+        for value in project.values():
+            if isinstance(value, dict) and value.get("task_id") == task_id:
+                if "status" in value:
+                    value["status"] = "PASS"
+                value["completion_phase"] = final_phase
+        write_atomic(
+            project_path,
+            yaml.safe_dump(project, sort_keys=False, allow_unicode=True).encode("utf-8"),
+        )
+
+        new_state = deepcopy(current)
+        new_state["task"] = {
+            "task_id": None,
+            "task_contract_sha256": None,
+            "phase": final_phase,
+        }
+        new_state["blocked"] = None
+        new_state.setdefault("progress", {})["next_action"] = None
+        new_state["progress"]["next_command"] = None
+        completed = new_state["progress"].setdefault("completed_steps", [])
+        completed.append(f"{task_id} closed DONE with {final_phase}")
+        new_state.setdefault("verification", {})["latest_evidence_id"] = evidence_ids[-1]
+        new_state["verification"]["audit_remediation_passed"] = final_phase == "AUDIT_REMEDIATION_PASS"
+        new_state.setdefault("external_operations", {})["provider_preflight_started"] = False
+        new_state["external_operations"]["paid_requests_allowed"] = False
+        new_state["external_operations"]["pending_paid_requests"] = []
+        new_state["external_operations"]["unknown_billing_requests"] = []
+        terminal_snapshot = git_snapshot(root)
+        # A terminal IDLE cursor is content-bound but branch-agnostic so the same
+        # tree remains recoverable after the closing PR becomes a merge commit on main.
+        terminal_snapshot["branch"] = None
+        new_state["repository"] = terminal_snapshot
+
+        materialized = _append_control_event_locked(
+            root,
+            current,
+            events,
+            event_type="TASK_CLOSED",
+            payload={
+                "closed_task_id": task_id,
+                "final_phase": final_phase,
+                "evidence_ids": evidence_ids,
+            },
+            state_after=new_state,
+        )
+        return {
+            "status": "TASK_CLOSE_OK",
+            "task_id": task_id,
+            "final_phase": final_phase,
+            "checkpoint_id": materialized["checkpoint_id"],
+            "evidence_ids": evidence_ids,
+        }
 
 
 def transition_repository_state(root: Path, *, to_phase: str, evidence_ids: list[str]) -> dict[str, Any]:
