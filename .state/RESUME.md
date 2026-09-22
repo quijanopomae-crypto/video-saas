@@ -1,12 +1,12 @@
-# RESUME — IDLE
+# RESUME — TASK-REPO-NAVIGATION-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** AUDIT_REMEDIATION_PASS
-- **Checkpoint:** CP-1790046366846-86c2ec5c
-- **State version:** 40
-- **Branch:** None
-- **Checkpoint base HEAD:** 1d39fcbfd9c5ff61d2b27e2ecb6460db3e097a0c
+- **Phase:** REPO_NAVIGATION_OPTIMIZATION
+- **Checkpoint:** CP-1790095898437-cea67bca
+- **State version:** 41
+- **Branch:** task-repo-navigation-001-activate
+- **Checkpoint base HEAD:** a10ccb1cf5154ed5ab01ac8fce6e9059444393e1
 - **Checkpoint working tree dirty:** True
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** AUDIT-REMEDIATION-001
 - **Blocked:** none
-- **Next action:** None
+- **Next action:** Implement REPO_MAP.yaml, low-token AGENTS guidance and focused validation test
 
 ## Completed steps
 
@@ -115,7 +115,8 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - README final state synchronized with POST_PR13_STABILIZATION_PASS
 - Owner explicitly authorized TASK-AUDIT-REMEDIATION-001 without opening a product gate
 - TASK-AUDIT-REMEDIATION-001 closed DONE with AUDIT_REMEDIATION_PASS
+- Owner authorized TASK-REPO-NAVIGATION-001 without opening a product gate
 
 The active Task Contract SHA-256 is:
 
-`none`
+`c7a51f0803674ed50effde94bf918fe6c163dad1a96218fc5da32cf60b61df37`

@@ -8,8 +8,8 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: AUDIT_REMEDIATION_PASS
-active_task_id: null
+current_authorized_phase: REPO_NAVIGATION_OPTIMIZATION
+active_task_id: TASK-REPO-NAVIGATION-001
 provider_preflight_allowed: false
 architecture_research_reopened: false
 paid_provider_requests_allowed: false
@@ -119,5 +119,5 @@ audit_remediation:
   provider_preflight_started: false
   paid_provider_requests_executed: false
   completion_phase: AUDIT_REMEDIATION_PASS
-next_gate: NONE_AUTHORIZED
-next_gate_authorized: false
+next_gate: REPO_NAVIGATION_OPTIMIZATION
+next_gate_authorized: true
