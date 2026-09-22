@@ -8,7 +8,7 @@ Created: 2026-09-17T22:35:02.111009Z
 
 Source documents are recorded by SHA-256 in `manifests/model-manifest-bench100-v1.1.yaml`.
 
-Current state: `AUDIT_REMEDIATION`; canonical planning, owner-scoped persistence, and authenticated server-side owner authorization are merged. The final reproducibility/CI hardening and durable IDLE close are in progress. Provider Preflight remains OFF.
+Current state: `AUDIT_REMEDIATION_PASS`; canonical planning, owner-scoped persistence, authenticated server-side owner authorization, and audit remediation are complete. The repository is IDLE with no later gate authorized. Provider Preflight remains OFF.
 
 Integrity result: `30/30 passed`; Asset Freeze remains `DEFERRED`; provider probes have not been executed.
 
@@ -22,7 +22,7 @@ No provider probes or spend are authorized. Provider Preflight and paid provider
 
 ## Development infrastructure
 
-The repository control plane, development infrastructure, canonical planning API, owner-scoped persistence, and authenticated owner authorization are complete. No later product gate is authorized by this remediation. Authentication/authorization must remain enabled for the five-user pilot, and Provider Preflight and paid provider requests remain disabled.
+The repository control plane, development infrastructure, canonical planning API, owner-scoped persistence, authenticated owner authorization, and bounded audit remediation are complete. The repository is IDLE and no later product gate is authorized. Authentication/authorization must remain enabled for the five-user pilot, and Provider Preflight and paid provider requests remain disabled.
 
 Windows-first commands:
 

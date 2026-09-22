@@ -29,7 +29,7 @@ Repository Control A-D and minimum development infrastructure are complete.
 The validated `product-flow-001` planning core has been promoted to canonical backend code under `apps/api/src/modules/planning/`.
 Canonical planning API integration, owner-scoped planning persistence, and authenticated owner authorization have been merged. Owner-scoped endpoints now verify the authenticated principal server-side and do not trust a caller-supplied `owner_id` as identity.
 Provider Preflight remains forbidden and no paid provider requests are authorized.
-The owner has explicitly authorized only `TASK-AUDIT-REMEDIATION-001`; this is remediation work, not a new product gate.
+`TASK-AUDIT-REMEDIATION-001` is complete. The repository is IDLE; no later product gate or Task Contract is authorized.
 
 ## Canonical planning boundary
 

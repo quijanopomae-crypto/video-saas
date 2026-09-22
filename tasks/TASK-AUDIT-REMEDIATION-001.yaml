@@ -2,63 +2,77 @@ schema_version: 1
 task:
   id: TASK-AUDIT-REMEDIATION-001
   title: Remediate verified audit blockers without opening product gates
-  status: IMPLEMENTING
+  status: DONE
   risk: HIGH
 objective:
   expected_outcome: AUDIT_REMEDIATION_PASS
 scope:
   allowed_paths:
-    - AGENTS.md
-    - README.md
-    - PROJECT_STATE.yaml
-    - .env.example
-    - .state/**
-    - tasks/TASK-AUDIT-REMEDIATION-001.yaml
-    - tasks/TASK-CANONICAL-PLANNING-API-001.yaml
-    - tasks/TASK-REPO-CONTROL-001.yaml
-    - tasks/TASK-REPO-CONTROL-002.yaml
-    - tasks/TASK-REPO-CONTROL-003.yaml
-    - projectctl/**
-    - schemas/project-state.schema.json
-    - scripts/fresh_session_probe.py
-    - scripts/check_no_secrets.py
-    - scripts/test.ps1
-    - docs/DEVELOPMENT.md
-    - apps/api/**
-    - apps/web/**
-    - tests/**
-    - .github/workflows/**
-    - evidence/**
+  - AGENTS.md
+  - README.md
+  - PROJECT_STATE.yaml
+  - .env.example
+  - .state/**
+  - tasks/TASK-AUDIT-REMEDIATION-001.yaml
+  - tasks/TASK-CANONICAL-PLANNING-API-001.yaml
+  - tasks/TASK-REPO-CONTROL-001.yaml
+  - tasks/TASK-REPO-CONTROL-002.yaml
+  - tasks/TASK-REPO-CONTROL-003.yaml
+  - projectctl/**
+  - schemas/project-state.schema.json
+  - scripts/fresh_session_probe.py
+  - scripts/check_no_secrets.py
+  - scripts/test.ps1
+  - docs/DEVELOPMENT.md
+  - apps/api/**
+  - apps/web/**
+  - tests/**
+  - .github/workflows/**
+  - evidence/**
   forbidden_paths:
-    - manifests/**
-    - lab/**
-    - src/**
-    - docs/ARCHITECTURE.md
-    - docs/adr/**
+  - manifests/**
+  - lab/**
+  - src/**
+  - docs/ARCHITECTURE.md
+  - docs/adr/**
 constraints:
-  - This task remediates only verified audit findings and MUST NOT open a new product gate.
-  - Maintain ONE WRITER and no parallel implementation scopes.
-  - Provider Preflight remains OFF.
-  - Paid provider requests remain OFF.
-  - No provider SDKs/calls, R2, Queues, Workflows, generation, Video Router, Continuity Router, Agentic QA, Asset Ledger, Cost Ledger or FFmpeg Master implementation.
-  - Frozen manifests remain immutable; their READY_FOR_PROVIDER_PREFLIGHT text is baseline metadata, not the operational cursor.
-  - Do not trust client-supplied owner_id as identity; authenticated identity must establish the effective owner.
-  - Preserve current project_id idempotency semantics unless an existing canonical owner decision proves otherwise.
-  - Maximum three pull requests for this remediation; do not create one issue per finding.
+- This task remediates only verified audit findings and MUST NOT open a new product
+  gate.
+- Maintain ONE WRITER and no parallel implementation scopes.
+- Provider Preflight remains OFF.
+- Paid provider requests remain OFF.
+- No provider SDKs/calls, R2, Queues, Workflows, generation, Video Router, Continuity
+  Router, Agentic QA, Asset Ledger, Cost Ledger or FFmpeg Master implementation.
+- Frozen manifests remain immutable; their READY_FOR_PROVIDER_PREFLIGHT text is baseline
+  metadata, not the operational cursor.
+- Do not trust client-supplied owner_id as identity; authenticated identity must establish
+  the effective owner.
+- Preserve current project_id idempotency semantics unless an existing canonical owner
+  decision proves otherwise.
+- Maximum three pull requests for this remediation; do not create one issue per finding.
 acceptance:
-  - Control plane supports an explicit idle state with active_task_id null only when no gate is authorized.
-  - A terminal Task Contract cannot be treated as active.
-  - Stale completed work is reconciled without rewriting frozen history.
-  - Authentication and server-side authorization prevent cross-owner access.
-  - Node and Python dependency resolution used by CI is reproducible.
-  - Production integration smoke uses the production Next.js server.
-  - Secret scanning is strengthened and tested.
-  - GitHub Actions are updated where required and critical actions are pinned by full commit SHA.
-  - Baseline manifest state cannot be mistaken for operational NEXT_ACTION.
-  - Current project_id semantics are documented and tested.
-  - Input validation is strict and tested.
-  - FastAPI production docs, ReDoc and OpenAPI exposure follow production policy.
-  - Repository Control CI, Product CI and Lab CI are green on the integrated result.
-  - Provider Preflight and paid requests remain OFF.
+- Control plane supports an explicit idle state with active_task_id null only when
+  no gate is authorized.
+- A terminal Task Contract cannot be treated as active.
+- Stale completed work is reconciled without rewriting frozen history.
+- Authentication and server-side authorization prevent cross-owner access.
+- Node and Python dependency resolution used by CI is reproducible.
+- Production integration smoke uses the production Next.js server.
+- Secret scanning is strengthened and tested.
+- GitHub Actions are updated where required and critical actions are pinned by full
+  commit SHA.
+- Baseline manifest state cannot be mistaken for operational NEXT_ACTION.
+- Current project_id semantics are documented and tested.
+- Input validation is strict and tested.
+- FastAPI production docs, ReDoc and OpenAPI exposure follow production policy.
+- Repository Control CI, Product CI and Lab CI are green on the integrated result.
+- Provider Preflight and paid requests remain OFF.
 blocking_rule:
-  - Do not declare AUDIT_REMEDIATION_PASS without executed evidence for every applicable acceptance criterion.
+- Do not declare AUDIT_REMEDIATION_PASS without executed evidence for every applicable
+  acceptance criterion.
+closure:
+  final_phase: AUDIT_REMEDIATION_PASS
+  evidence_ids:
+  - AUDIT-REMEDIATION-001
+  provider_preflight_started: false
+  paid_provider_requests_executed: false

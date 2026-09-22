@@ -1,22 +1,22 @@
-# RESUME — TASK-AUDIT-REMEDIATION-001
+# RESUME — IDLE
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** AUDIT_REMEDIATION
-- **Checkpoint:** CP-AUDIT-REMEDIATION-001-ACTIVATE
-- **State version:** 37
-- **Branch:** main
-- **Checkpoint base HEAD:** 881e202f9582870c462748bf17ffd3d077fe8661
-- **Checkpoint working tree dirty:** False
+- **Phase:** AUDIT_REMEDIATION_PASS
+- **Checkpoint:** CP-1790045570867-070a5028
+- **State version:** 38
+- **Branch:** None
+- **Checkpoint base HEAD:** cf4ed78c2f3b94263c7fa7dbb414a15b293973a6
+- **Checkpoint working tree dirty:** True
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
 - **Phase A acceptance:** true
 - **Baseline regression suite:** true
 - **Phase B acceptance:** true
 - **Phase C acceptance:** true
-- **Latest evidence:** POST-PR13-STABILIZATION-001
+- **Latest evidence:** AUDIT-REMEDIATION-001
 - **Blocked:** none
-- **Next action:** Execute TASK-AUDIT-REMEDIATION-001 only: control-plane loop prevention, auth/authz, reproducibility, CI and security hardening. Provider Preflight and paid requests remain OFF.
+- **Next action:** None
 
 ## Completed steps
 
@@ -114,7 +114,8 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - TASK-POST-PR13-STABILIZATION-001 closed PASS with no later product gate authorized
 - README final state synchronized with POST_PR13_STABILIZATION_PASS
 - Owner explicitly authorized TASK-AUDIT-REMEDIATION-001 without opening a product gate
+- TASK-AUDIT-REMEDIATION-001 closed DONE with AUDIT_REMEDIATION_PASS
 
 The active Task Contract SHA-256 is:
 
-`c714d67605365625e3afaa620edbec971e1734701229f2d91a0bc267451eceae`
+`none`

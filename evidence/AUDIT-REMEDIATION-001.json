@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "evidence_id": "AUDIT-REMEDIATION-001",
+  "status": "PASS",
+  "task_id": "TASK-AUDIT-REMEDIATION-001",
+  "observed_at": "2026-09-22T02:50:50Z",
+  "pull_requests": {
+    "control_plane": {
+      "number": 18,
+      "merge_commit": "1ddb083b7e7e45f64e7cc8b7eb960a106ccd83d8"
+    },
+    "authentication_authorization": {
+      "number": 19,
+      "merge_commit": "473828d5463d3e574ecca4df79822937e30a9127"
+    },
+    "reproducibility_and_closure": {
+      "number": 20,
+      "validated_head": "cf4ed78c2f3b94263c7fa7dbb414a15b293973a6"
+    }
+  },
+  "pull_request_20_ci": {
+    "repository_control": {
+      "run_id": 35680737138,
+      "conclusion": "success",
+      "scope": "PASS",
+      "operating_state": "PASS",
+      "regression_suite": "PASS",
+      "fresh_session": "PASS"
+    },
+    "product_ci": {
+      "run_id": 35680737063,
+      "conclusion": "success",
+      "backend_api_tests_with_postgresql": "PASS",
+      "database_migrations": "PASS",
+      "ffmpeg_smoke": "PASS",
+      "frontend_tests_typecheck_build": "PASS",
+      "production_web_api_postgresql_smoke": "PASS",
+      "secret_hygiene": "PASS",
+      "aggregate_product_ci": "PASS"
+    },
+    "lab_ci": {
+      "run_id": 35680737059,
+      "conclusion": "success",
+      "unit_tests_and_deterministic_demo": "PASS"
+    }
+  },
+  "independent_local_validation": {
+    "repository_control_tests": "86/86 PASS",
+    "fresh_session_active_handoff": "PASS",
+    "web_structural_tests": "3/3 PASS",
+    "web_typecheck": "PASS",
+    "web_production_build": "PASS",
+    "web_build_leaves_tracked_configuration_clean": "PASS",
+    "lab_tests": "5/5 PASS",
+    "secret_hygiene": "PASS",
+    "ffmpeg_smoke": "PASS",
+    "api_postgresql_suite": "VALIDATED_BY_PRODUCT_CI_NO_LOCAL_POSTGRESQL_RUNTIME"
+  },
+  "acceptance": {
+    "explicit_idle_state_and_terminal_task_guard": "PASS",
+    "stale_completed_state_reconciled": "PASS",
+    "authenticated_server_side_cross_owner_denial": "PASS",
+    "reproducible_node_and_python_resolution": "PASS",
+    "production_next_server_integration_smoke": "PASS",
+    "strengthened_tested_secret_scanning": "PASS",
+    "critical_actions_pinned_by_full_commit_sha": "PASS",
+    "baseline_manifest_not_operational_authority": "PASS",
+    "project_id_semantics_documented_and_tested": "PASS",
+    "strict_input_validation": "PASS",
+    "production_api_docs_policy": "PASS",
+    "all_three_ci_workflows": "PASS",
+    "provider_preflight_and_paid_requests_disabled": "PASS"
+  },
+  "verified_action_v6_refs": {
+    "actions/checkout": "d23441a48e516b6c34aea4fa41551a30e30af803",
+    "actions/setup-python": "ece7cb06caefa5fff74198d8649806c4678c61a1",
+    "actions/setup-node": "249970729cb0ef3589644e2896645e5dc5ba9c38"
+  },
+  "ruleset": {
+    "id": 23730563,
+    "name": "Protect main",
+    "enforcement": "active",
+    "required_status_checks": [
+      "repository-control",
+      "product-ci"
+    ],
+    "duplicate_required_checks": false,
+    "bypass_actors": 0
+  },
+  "scope": {
+    "opens_new_product_gate": false,
+    "provider_sdk_or_call_added": false,
+    "frozen_manifest_modified": false
+  },
+  "provider_preflight_started": false,
+  "paid_provider_requests_executed": false,
+  "next_gate": "NONE_AUTHORIZED"
+}

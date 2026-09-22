@@ -8,8 +8,8 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: AUDIT_REMEDIATION
-active_task_id: TASK-AUDIT-REMEDIATION-001
+current_authorized_phase: AUDIT_REMEDIATION_PASS
+active_task_id: null
 provider_preflight_allowed: false
 architecture_research_reopened: false
 paid_provider_requests_allowed: false
@@ -34,8 +34,8 @@ phase_d:
   ruleset_enforcement: active
   ruleset_target: DEFAULT_BRANCH
   required_status_checks:
-    - repository-control
-    - product-ci
+  - repository-control
+  - product-ci
   ruleset_bypass_actors: 0
 development_infrastructure:
   implementation_status: READY
@@ -104,14 +104,20 @@ post_pr13_stabilization:
   state_integrity: PASS
   ruleset_status: PASS
 audit_remediation:
-  status: IMPLEMENTING
+  status: PASS
   task_id: TASK-AUDIT-REMEDIATION-001
   expected_outcome: AUDIT_REMEDIATION_PASS
   control_plane_pr: 18
   authentication_authorization_pr: 19
   closure_pr: 20
+  validated_head: cf4ed78c2f3b94263c7fa7dbb414a15b293973a6
+  pull_request_ci:
+    repository_control_run_id: 35680737138
+    product_ci_run_id: 35680737063
+    lab_ci_run_id: 35680737059
   opens_new_product_gate: false
   provider_preflight_started: false
   paid_provider_requests_executed: false
-next_gate: AUDIT_REMEDIATION
-next_gate_authorized: true
+  completion_phase: AUDIT_REMEDIATION_PASS
+next_gate: NONE_AUTHORIZED
+next_gate_authorized: false
