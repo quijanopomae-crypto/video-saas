@@ -1,0 +1,67 @@
+schema_version: 1
+purpose: low_token_repository_navigation
+authority: navigation_only
+conflict_rule: AGENTS.md, PROJECT_STATE.yaml, the active Task Contract and .state/CURRENT.json remain authoritative.
+
+state_recovery:
+  read_first:
+  - AGENTS.md
+  - REPO_MAP.yaml
+  - PROJECT_STATE.yaml
+  - .state/CURRENT.json
+  active_task_contract: tasks/{active_task_id}.yaml
+  active_task_condition: active_task_id != null
+  minimum_fields:
+    PROJECT_STATE.yaml:
+    - current_authorized_phase
+    - active_task_id
+    - provider_preflight_allowed
+    - paid_provider_requests_allowed
+    - next_gate
+    - next_gate_authorized
+    .state/CURRENT.json:
+    - task
+    - blocked
+    - progress.next_action
+    - external_operations
+
+routes:
+  backend:
+    paths: [apps/api/src/]
+    role: canonical_product_backend
+  frontend:
+    paths: [apps/web/src/]
+    role: canonical_product_frontend
+  control_plane:
+    paths: [projectctl/, PROJECT_STATE.yaml, .state/, tasks/]
+    role: canonical_repository_control
+  laboratory:
+    paths: [lab/]
+    role: noncanonical_experimentation
+  tests:
+    paths: [tests/, apps/api/tests/, apps/web/tests/, lab/experiments/product-flow-001/tests/]
+    role: validation_by_boundary
+  manifests_evidence:
+    paths: [manifests/, evidence/]
+    role: frozen_baseline_and_execution_proof
+  root_src:
+    paths: [src/]
+    role: baseline_validation_support
+    canonical_product: false
+
+read_on_demand:
+- target: .state/journal.ndjson
+  rule: Never load the whole file; query only the required event, sequence or range.
+- target: tasks/*.yaml
+  rule: Read only the active Task Contract; closed contracts are historical evidence.
+- target: manifests/** and evidence/**
+  rule: Open only artifacts relevant to the current claim or changed path.
+- target: dependency lockfiles
+  rule: Do not load fully unless dependency resolution is in scope.
+- target: .state/RESUME.md
+  rule: Generated human view only; it is not independent authority.
+
+audit_order:
+- List changed paths and inspect the exact diff.
+- Read modified files and directly related tests.
+- Expand to dependencies or history only when evidence requires it.
