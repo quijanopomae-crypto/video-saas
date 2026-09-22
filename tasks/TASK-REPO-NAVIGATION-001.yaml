@@ -2,7 +2,7 @@ schema_version: 1
 task:
   id: TASK-REPO-NAVIGATION-001
   title: Add low-token repository navigation for AI agents
-  status: IMPLEMENTING
+  status: DONE
   risk: LOW
 objective:
   expected_outcome: REPO_NAVIGATION_OPTIMIZATION_PASS
@@ -32,12 +32,23 @@ constraints:
 - Paid provider requests remain OFF.
 - Do not continue to another task after closure.
 acceptance:
-- REPO_MAP.yaml provides a short canonical route map for backend, frontend, control plane, laboratory, tests, manifests and evidence.
-- REPO_MAP.yaml identifies the minimum state-recovery read order and files that should be read only on demand.
-- AGENTS.md requires low-token audits to avoid full journal and closed-contract reads and to prioritize diffs and related tests.
-- Root src/ is explicitly classified as baseline-validation support, not the canonical backend; apps/api/src/ is canonical backend code.
-- A focused repository-control test detects missing mapped paths or a wrong canonical backend classification.
+- REPO_MAP.yaml provides a short canonical route map for backend, frontend, control
+  plane, laboratory, tests, manifests and evidence.
+- REPO_MAP.yaml identifies the minimum state-recovery read order and files that should
+  be read only on demand.
+- AGENTS.md requires low-token audits to avoid full journal and closed-contract reads
+  and to prioritize diffs and related tests.
+- Root src/ is explicitly classified as baseline-validation support, not the canonical
+  backend; apps/api/src/ is canonical backend code.
+- A focused repository-control test detects missing mapped paths or a wrong canonical
+  backend classification.
 - Repository Control CI and Product CI pass.
 - The task closes to IDLE with next_gate NONE_AUTHORIZED.
 blocking_rule:
 - Do not close the task without passing evidence and green required CI.
+closure:
+  final_phase: REPO_NAVIGATION_OPTIMIZATION_PASS
+  evidence_ids:
+  - REPO-NAVIGATION-001
+  provider_preflight_started: false
+  paid_provider_requests_executed: false

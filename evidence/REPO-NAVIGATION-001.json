@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "evidence_id": "REPO-NAVIGATION-001",
+  "task_id": "TASK-REPO-NAVIGATION-001",
+  "status": "PASS",
+  "command": [
+    "/workspace/scratch/82350cf201b8/video-saas-test-venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests"
+  ],
+  "expected_exit": 0,
+  "exit_code": 0,
+  "started_at": "2026-09-22T17:12:53Z",
+  "finished_at": "2026-09-22T17:12:57Z",
+  "duration_ms": 3930,
+  "paid_request": false,
+  "repository_before": {
+    "branch": "task-repo-navigation-001-implement",
+    "head_commit": "06ad9a4f646970a39cd0c8a792e465a623cf2497",
+    "working_tree_dirty": true,
+    "working_tree_fingerprint": "640725b65100aabeb5b7ca9557636b778a24ee434f42203ad33544a115202f8a",
+    "content_fingerprint": "f21077a3af322799f34a65b5f9fa5adc08a42aa66dd30219fa27f8bc25f60b6e"
+  },
+  "stdout_sha256": "51fec43075ff7cf50c02651387890ab1af35972fc519f6de272f136fbb45c4f6",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "........................................................................ [ 80%]\n.................                                                        [100%]\n89 passed in 3.62s\n",
+  "stderr": "",
+  "stdout_truncated": false,
+  "stderr_truncated": false
+}

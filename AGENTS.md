@@ -4,10 +4,22 @@
 
 Read these before any repository work:
 1. This file.
-2. `PROJECT_STATE.yaml`.
-3. The active Task Contract under `tasks/`.
+2. `REPO_MAP.yaml` for navigation only.
+3. `PROJECT_STATE.yaml`.
 4. `.state/CURRENT.json`.
-5. `.state/RESUME.md` as a generated human view only.
+5. The active Task Contract under `tasks/`, only when `active_task_id` is not null.
+
+Read `.state/RESUME.md` only on demand as a generated human view; it is not an independent source of truth.
+
+## Low-token navigation and audits
+
+- `REPO_MAP.yaml` is the short canonical navigation index. It is not operational authority and MUST NOT override this file, `PROJECT_STATE.yaml`, the active Task Contract or `.state/CURRENT.json`.
+- Read only the state fields identified in `REPO_MAP.yaml` first; expand when the current task or evidence requires more context.
+- NEVER read `.state/journal.ndjson` in full. Query only the event, sequence or bounded range needed for the claim under review.
+- Do not load all closed Task Contracts. Read only the active Task Contract, when one exists; consult a closed contract only as targeted historical evidence.
+- Start audits with changed paths, the exact diff, modified files and directly related tests. Expand to dependencies or history only when a concrete finding requires it.
+- Treat manifests, evidence and dependency lockfiles as on-demand material rather than startup context.
+- `apps/api/src/` is the canonical product backend. Root `src/` is baseline-validation support used by the root integrity tests; it is NOT the SaaS backend or product runtime and MUST NOT receive new business code.
 
 ## Repository Control Plane
 
