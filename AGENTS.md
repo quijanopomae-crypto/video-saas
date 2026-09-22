@@ -8,7 +8,8 @@ Read these before any repository work:
 3. `PROJECT_STATE.yaml`.
 4. `.state/CURRENT.json`.
 5. The active Task Contract under `tasks/`, only when `active_task_id` is not null.
-6. `.state/RESUME.md` as a generated human view only.
+
+Read `.state/RESUME.md` only on demand as a generated human view; it is not an independent source of truth.
 
 ## Low-token navigation and audits
 

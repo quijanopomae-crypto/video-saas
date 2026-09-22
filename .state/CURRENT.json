@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-1790097255656-20ddd0f6",
+  "checkpoint_id": "CP-1790097922075-7d7fbc95",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "34d96e893f3ad4948eec47b654cd8e536280eb939432365c9f6db86918df3b47",
-  "last_journal_sequence": 39,
+  "last_journal_event_sha256": "3ad49a03f51ec9b3b8d070cc449d1fbd3565d3947610698f98ee17f1f0f96745",
+  "last_journal_sequence": 40,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -114,19 +114,19 @@
   },
   "repository": {
     "branch": null,
-    "head_commit": "06ad9a4f646970a39cd0c8a792e465a623cf2497",
+    "head_commit": "f9697e8fe4bde6a58fc59430f29923c6c2fbe97e",
     "working_tree_dirty": true,
-    "working_tree_fingerprint": "70242203884797e4a277112ac63277d11f7fcdd53bb9bd40932d009330e6f619",
-    "content_fingerprint": "25bbfd4de82d11bdb7ef77dd5c690d70fc054977ca0403d51aa56e97cdd46628"
+    "working_tree_fingerprint": "50ef191b2bc63157c409519bcc497b3d3f2695f5ffa149103062579b340371e2",
+    "content_fingerprint": "fb9e0dc69b83eebacaa4091257ac83c9312908d6dd3136f17dfb3c27817a316a"
   },
   "schema_version": 1,
-  "state_version": 44,
+  "state_version": 45,
   "task": {
     "task_id": null,
     "task_contract_sha256": null,
     "phase": "REPO_NAVIGATION_OPTIMIZATION_PASS"
   },
-  "updated_at": "2026-09-22T17:14:15Z",
+  "updated_at": "2026-09-22T17:25:22Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
@@ -138,7 +138,7 @@
     "dev_infra_product_ci_passed": true,
     "dev_infra_repository_control_ci_passed": true,
     "dev_infra_secret_hygiene_passed": true,
-    "full_regression_suite_passed": "65/65",
+    "full_regression_suite_passed": "89/89",
     "latest_evidence_id": "REPO-NAVIGATION-001",
     "phase_a_acceptance_passed": true,
     "phase_b_acceptance_passed": true,
