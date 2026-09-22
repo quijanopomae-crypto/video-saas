@@ -3,11 +3,11 @@
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
 - **Phase:** REPO_NAVIGATION_OPTIMIZATION_PASS
-- **Checkpoint:** CP-1790097922075-7d7fbc95
-- **State version:** 45
+- **Checkpoint:** CP-1790098338444-2828ab8b
+- **State version:** 46
 - **Branch:** None
-- **Checkpoint base HEAD:** f9697e8fe4bde6a58fc59430f29923c6c2fbe97e
-- **Checkpoint working tree dirty:** True
+- **Checkpoint base HEAD:** e18984b55ce5a7b2ceab76b0621602cef3ca6b01
+- **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
 - **Phase A acceptance:** true
