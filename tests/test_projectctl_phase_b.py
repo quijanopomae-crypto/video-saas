@@ -16,6 +16,7 @@ from projectctl.core import (
     recover,
     render_resume,
     task_lock,
+    write_atomic,
 )
 
 
@@ -80,6 +81,18 @@ def test_checkpoint_materializes_current_resume_and_journal(tmp_path):
     assert current["checkpoint_id"] == result["checkpoint_id"]
     assert current["repository"]["branch"] == "main"
     assert (root / ".state" / "RESUME.md").read_text() == render_resume(current)
+
+
+@pytest.mark.skipif(os.name == "nt", reason="POSIX permission bits are not portable to Windows")
+def test_write_atomic_preserves_existing_file_permissions(tmp_path):
+    path = tmp_path / "state.json"
+    path.write_bytes(b"before")
+    path.chmod(0o644)
+
+    write_atomic(path, b"after")
+
+    assert path.read_bytes() == b"after"
+    assert path.stat().st_mode & 0o777 == 0o644
 
 
 def test_recover_truncates_incomplete_final_line(tmp_path):

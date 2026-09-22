@@ -350,3 +350,17 @@ def test_terminal_idle_cursor_recovers_after_branch_change(tmp_path):
     assert current["task"]["task_id"] is None
     assert current["progress"]["next_action"] is None
 
+
+def test_idle_checkpoint_remains_branch_agnostic(tmp_path):
+    root = make_repo(tmp_path)
+    evidence_id = "TASK-CLOSE-IDLE-CHECKPOINT-EVIDENCE"
+    (root / "evidence" / f"{evidence_id}.json").write_text(
+        json.dumps({"status": "PASS", "evidence_id": evidence_id}) + "\n",
+        encoding="utf-8",
+    )
+    close_active_task(root, final_phase="PHASE_D_PASS", evidence_ids=[evidence_id])
+
+    checkpoint(root, reason="post-close-verification")
+
+    current = json.loads((root / ".state" / "CURRENT.json").read_text(encoding="utf-8"))
+    assert current["repository"]["branch"] is None

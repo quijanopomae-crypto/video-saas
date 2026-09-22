@@ -110,7 +110,7 @@ audit_remediation:
   control_plane_pr: 18
   authentication_authorization_pr: 19
   closure_pr: 20
-  validated_head: cf4ed78c2f3b94263c7fa7dbb414a15b293973a6
+  validated_implementation_head: cf4ed78c2f3b94263c7fa7dbb414a15b293973a6
   pull_request_ci:
     repository_control_run_id: 35680737138
     product_ci_run_id: 35680737063

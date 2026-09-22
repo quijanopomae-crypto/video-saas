@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-1790045570867-070a5028",
+  "checkpoint_id": "CP-1790046366846-86c2ec5c",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "10455de84dafed464c3f61147153a2c797b23cdf750cbb05f16316e5fa216e64",
-  "last_journal_sequence": 33,
+  "last_journal_event_sha256": "540b296b13d8e52992308e07ebe141a1db7e82de8ddf0b6b2274f1447c7eaeb6",
+  "last_journal_sequence": 35,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -112,19 +112,19 @@
   },
   "repository": {
     "branch": null,
-    "head_commit": "cf4ed78c2f3b94263c7fa7dbb414a15b293973a6",
+    "head_commit": "1d39fcbfd9c5ff61d2b27e2ecb6460db3e097a0c",
     "working_tree_dirty": true,
-    "working_tree_fingerprint": "46ac8ccb2d316aeb0b7844337148fe16875b15bad6a033494191a3a7be2ba24f",
-    "content_fingerprint": "470f48b7f6b86fe8dc47a8981e1a51ad5033a9c5ab3d1cbbd1d92d4c33bada5e"
+    "working_tree_fingerprint": "57a046b324506382478b5c748372ebc4008e5953e4261bfbd61e72cae76d5b55",
+    "content_fingerprint": "6b011eac569b741203cb32e597e8b8d90b4cf48aee23be8bc48dc81633a7c10a"
   },
   "schema_version": 1,
-  "state_version": 38,
+  "state_version": 40,
   "task": {
     "task_id": null,
     "task_contract_sha256": null,
     "phase": "AUDIT_REMEDIATION_PASS"
   },
-  "updated_at": "2026-09-22T02:52:50Z",
+  "updated_at": "2026-09-22T03:06:06Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,

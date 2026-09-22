@@ -6,6 +6,7 @@ import json
 import re
 import os
 import socket
+import stat
 import subprocess
 import tempfile
 import time
@@ -83,9 +84,15 @@ def fsync_directory(directory: Path) -> None:
 
 def write_atomic(path: Path, content: bytes) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        target_mode = stat.S_IMODE(path.stat().st_mode)
+    except FileNotFoundError:
+        target_mode = 0o644
     fd, tmp_name = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=path.parent)
     tmp = Path(tmp_name)
     try:
+        if os.name != "nt":
+            os.fchmod(fd, target_mode)
         with os.fdopen(fd, "wb") as stream:
             stream.write(content)
             stream.flush()
@@ -454,6 +461,8 @@ def checkpoint(root: Path, *, reason: str = "manual", next_action: str | None = 
         if incomplete:
             raise RecoveryBlocked("RECOVERY_INCOMPLETE_FINAL_LINE", "run projectctl recover before checkpoint")
         repository = git_snapshot(root)
+        if (current.get("task") or {}).get("task_id") is None:
+            repository["branch"] = None
         state_after = deepcopy(current)
         state_after["state_version"] = int(current.get("state_version", 0)) + 1
         state_after.setdefault("progress", {})

@@ -45,16 +45,26 @@
     }
   },
   "independent_local_validation": {
-    "repository_control_tests": "86/86 PASS",
+    "repository_control_tests": "88/88 PASS",
     "fresh_session_active_handoff": "PASS",
     "web_structural_tests": "3/3 PASS",
     "web_typecheck": "PASS",
     "web_production_build": "PASS",
     "web_build_leaves_tracked_configuration_clean": "PASS",
+    "atomic_state_writes_preserve_file_permissions": "PASS",
+    "idle_checkpoints_remain_branch_agnostic": "PASS",
     "lab_tests": "5/5 PASS",
     "secret_hygiene": "PASS",
     "ffmpeg_smoke": "PASS",
     "api_postgresql_suite": "VALIDATED_BY_PRODUCT_CI_NO_LOCAL_POSTGRESQL_RUNTIME"
+  },
+  "terminal_recovery_correction": {
+    "failed_run_id": 35681378537,
+    "failed_head": "1d39fcbfd9c5ff61d2b27e2ecb6460db3e097a0c",
+    "observed_failure": "RECOVERY_STATE_MISMATCH",
+    "root_cause": "atomic replacements changed tracked YAML files from mode 0644 to 0600, while Git checkouts restore mode 0644",
+    "causal_fix": "write_atomic now preserves the target POSIX mode; IDLE checkpoints keep branch null; both behaviors have real regression tests",
+    "provider_or_paid_retry": false
   },
   "acceptance": {
     "explicit_idle_state_and_terminal_task_guard": "PASS",

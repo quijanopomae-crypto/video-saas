@@ -3,10 +3,10 @@
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
 - **Phase:** AUDIT_REMEDIATION_PASS
-- **Checkpoint:** CP-1790045570867-070a5028
-- **State version:** 38
+- **Checkpoint:** CP-1790046366846-86c2ec5c
+- **State version:** 40
 - **Branch:** None
-- **Checkpoint base HEAD:** cf4ed78c2f3b94263c7fa7dbb414a15b293973a6
+- **Checkpoint base HEAD:** 1d39fcbfd9c5ff61d2b27e2ecb6460db3e097a0c
 - **Checkpoint working tree dirty:** True
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
