@@ -1,10 +1,10 @@
-# RESUME — TASK-MULTIMODEL-ROUTER-001
+# RESUME — IDLE
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** MULTIMODEL_ROUTER
-- **Checkpoint:** CP-MULTIMODEL-ROUTER-001-ACTIVATE
-- **State version:** 51
+- **Phase:** MULTIMODEL_ROUTER_CORE
+- **Checkpoint:** CP-MULTIMODEL-ROUTER-001-CLOSE
+- **State version:** 52
 - **Branch:** UNRECORDED
 - **Checkpoint base HEAD:** UNRECORDED
 - **Checkpoint working tree dirty:** UNRECORDED
@@ -14,9 +14,9 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Baseline regression suite:** true
 - **Phase B acceptance:** true
 - **Phase C acceptance:** true
-- **Latest evidence:** PRODUCTION-ENGINE-001
+- **Latest evidence:** MULTIMODEL-ROUTER-001
 - **Blocked:** none
-- **Next action:** Implement capability-based cost-aware mock routing with deterministic fallback and SORA_2 blocked.
+- **Next action:** None
 
 ## Completed steps
 
@@ -122,7 +122,8 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - TASK-PRODUCTION-ENGINE-001 activated with Provider Preflight and paid requests disabled
 - TASK-PRODUCTION-ENGINE-001 closed DONE with PRODUCTION_ENGINE_CORE
 - TASK-MULTIMODEL-ROUTER-001 activated with SORA_2 DO_NOT_ROUTE and provider spending disabled
+- TASK-MULTIMODEL-ROUTER-001 closed DONE with MULTIMODEL_ROUTER_CORE
 
 The active Task Contract SHA-256 is:
 
-`1b92b8b5116832460d7fee8347504284df233be40a18e65f95a77ada92eefb37`
+`none`

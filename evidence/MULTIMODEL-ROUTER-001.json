@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "evidence_id": "MULTIMODEL-ROUTER-001",
+  "status": "PASS",
+  "task_id": "TASK-MULTIMODEL-ROUTER-001",
+  "observed_at": "2026-09-24T14:25:00Z",
+  "pull_request": {
+    "number": 30,
+    "validated_head": "fcfe6926216d51bd8ae29226dad2b60974347031",
+    "merge_commit": "1e99217a0ed6f1eb68fca1b826fd7cb42dddf8f2"
+  },
+  "ci": {
+    "repository_control": {
+      "run_id": 36011889146,
+      "conclusion": "success"
+    },
+    "product_ci": {
+      "run_id": 36011889166,
+      "conclusion": "success"
+    },
+    "lab_ci": {
+      "run_id": 36011889312,
+      "conclusion": "success"
+    }
+  },
+  "acceptance": {
+    "capability_filtering": "PASS",
+    "cost_aware_default": "PASS",
+    "patch_preference": "PASS",
+    "continue_reference_semantics": "PASS",
+    "premium_justification": "PASS",
+    "fallback": "PASS",
+    "budget_gate": "PASS",
+    "sora_2_do_not_route": "PASS",
+    "mock_determinism": "PASS"
+  },
+  "provider_preflight_started": false,
+  "paid_provider_requests_executed": false
+}
