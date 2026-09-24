@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-1790098338444-2828ab8b",
+  "checkpoint_id": "CP-VIDEO-CORE-001-ACTIVATE",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "54fa1b88502271b86a7c33bf6e4233d4e3eeba8993a0144c5286c08976bb81cc",
-  "last_journal_sequence": 41,
+  "last_journal_event_sha256": "76a26e1532847a4c963e7499fc2038773bbdc830323bd27ce40162c5b8ae4dd7",
+  "last_journal_sequence": 42,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -107,26 +107,27 @@
       "Owner explicitly authorized TASK-AUDIT-REMEDIATION-001 without opening a product gate",
       "TASK-AUDIT-REMEDIATION-001 closed DONE with AUDIT_REMEDIATION_PASS",
       "Owner authorized TASK-REPO-NAVIGATION-001 without opening a product gate",
-      "TASK-REPO-NAVIGATION-001 closed DONE with REPO_NAVIGATION_OPTIMIZATION_PASS"
+      "TASK-REPO-NAVIGATION-001 closed DONE with REPO_NAVIGATION_OPTIMIZATION_PASS",
+      "TASK-VIDEO-CORE-001 activated through the existing repository-control checkpoint model with provider spending disabled"
     ],
-    "next_action": null,
+    "next_action": "Finish VIDEO CORE validation and CI, integrate PR #24, then continue to Production Engine.",
     "next_command": null
   },
   "repository": {
-    "branch": null,
-    "head_commit": "e18984b55ce5a7b2ceab76b0621602cef3ca6b01",
+    "branch": "task-video-core-001",
+    "head_commit": "c2edd0c3df734421ba65cf225ad15af2accee500",
     "working_tree_dirty": false,
     "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "content_fingerprint": "fb9e0dc69b83eebacaa4091257ac83c9312908d6dd3136f17dfb3c27817a316a"
   },
   "schema_version": 1,
-  "state_version": 46,
+  "state_version": 47,
   "task": {
-    "task_id": null,
-    "task_contract_sha256": null,
-    "phase": "REPO_NAVIGATION_OPTIMIZATION_PASS"
+    "task_id": "TASK-VIDEO-CORE-001",
+    "task_contract_sha256": "c0a0676ed7cf293935deed24a23d7b922466d2b96ecba6655683ea9975466ca8",
+    "phase": "VIDEO_CORE"
   },
-  "updated_at": "2026-09-22T17:32:18Z",
+  "updated_at": "2026-09-24T13:55:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
