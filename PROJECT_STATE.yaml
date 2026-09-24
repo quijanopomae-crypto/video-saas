@@ -8,8 +8,8 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: GENERATION_PIPELINE
-active_task_id: TASK-GENERATION-PIPELINE-001
+current_authorized_phase: GENERATION_PIPELINE_CORE
+active_task_id: null
 provider_preflight_allowed: false
 architecture_research_reopened: false
 paid_provider_requests_allowed: false
@@ -161,5 +161,19 @@ multimodel_router:
   completion_phase: MULTIMODEL_ROUTER_CORE
   provider_preflight_started: false
   paid_provider_requests_executed: false
-next_gate: GENERATION_PIPELINE
-next_gate_authorized: true
+generation_pipeline:
+  status: PASS
+  task_id: TASK-GENERATION-PIPELINE-001
+  expected_outcome: GENERATION_PIPELINE_CORE
+  pull_request: 33
+  validated_head: 2983adbb2f353d17b7759c4e3fddcd488b89c48a
+  merge_commit: e227e2f12cb3635a89291cb8c431e7a550b1d8cb
+  pull_request_ci:
+    repository_control_run_id: 36040584665
+    product_ci_run_id: 36040584920
+    lab_ci_run_id: 36040584630
+  completion_phase: GENERATION_PIPELINE_CORE
+  provider_preflight_started: false
+  paid_provider_requests_executed: false
+next_gate: NONE_AUTHORIZED
+next_gate_authorized: false
