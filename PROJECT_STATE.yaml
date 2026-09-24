@@ -8,8 +8,8 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: INTELLIGENCE_QA
-active_task_id: TASK-INTELLIGENCE-QA-001
+current_authorized_phase: INTELLIGENCE_QA_CORE
+active_task_id: null
 provider_preflight_allowed: false
 architecture_research_reopened: false
 paid_provider_requests_allowed: false
@@ -175,5 +175,19 @@ generation_pipeline:
   completion_phase: GENERATION_PIPELINE_CORE
   provider_preflight_started: false
   paid_provider_requests_executed: false
-next_gate: INTELLIGENCE_QA
-next_gate_authorized: true
+intelligence_qa:
+  status: PASS
+  task_id: TASK-INTELLIGENCE-QA-001
+  expected_outcome: INTELLIGENCE_QA_CORE
+  pull_request: 36
+  validated_head: 55ca407d5b44d1b6c3e67ddbebaec3f20d8c34ce
+  merge_commit: 36c66162fd911f98dda38f987d054706a25a3d8e
+  pull_request_ci:
+    repository_control_run_id: 36042071103
+    product_ci_run_id: 36042071200
+    lab_ci_run_id: 36042071104
+  completion_phase: INTELLIGENCE_QA_CORE
+  provider_preflight_started: false
+  paid_provider_requests_executed: false
+next_gate: NONE_AUTHORIZED
+next_gate_authorized: false

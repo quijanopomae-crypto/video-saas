@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-INTELLIGENCE-QA-001-ACTIVATE",
+  "checkpoint_id": "CP-INTELLIGENCE-QA-001-CLOSE",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "2c62e8ff84294a08883755df3baac9b77d7b0c0d5155e11bf750e9c00776cbe5",
-  "last_journal_sequence": 50,
+  "last_journal_event_sha256": "ef91869c518b3d5583cd582fac9d762be3dc5415b3852ee5a1654d246d71813a",
+  "last_journal_sequence": 51,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -116,20 +116,21 @@
       "TASK-MULTIMODEL-ROUTER-001 closed DONE with MULTIMODEL_ROUTER_CORE",
       "TASK-GENERATION-PIPELINE-001 activated with deterministic mock E2E and provider spending disabled",
       "TASK-GENERATION-PIPELINE-001 closed DONE with GENERATION_PIPELINE_CORE",
-      "TASK-INTELLIGENCE-QA-001 activated with continuity QA, selective repair and provider spending disabled"
+      "TASK-INTELLIGENCE-QA-001 activated with continuity QA, selective repair and provider spending disabled",
+      "TASK-INTELLIGENCE-QA-001 closed DONE with INTELLIGENCE_QA_CORE"
     ],
-    "next_action": "Implement deterministic continuity checks, Error Map, selective repair, Quality Lock verification and canonical Anti-Loop integration.",
+    "next_action": null,
     "next_command": null
   },
   "repository": {},
   "schema_version": 1,
-  "state_version": 55,
+  "state_version": 56,
   "task": {
-    "task_id": "TASK-INTELLIGENCE-QA-001",
-    "task_contract_sha256": "4a0f4fb4555eaf87e43fb40109f11a764b540a194549e446cd57f6d4d136ac8d",
-    "phase": "INTELLIGENCE_QA"
+    "task_id": null,
+    "task_contract_sha256": null,
+    "phase": "INTELLIGENCE_QA_CORE"
   },
-  "updated_at": "2026-09-24T18:31:00Z",
+  "updated_at": "2026-09-24T18:36:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
@@ -142,7 +143,7 @@
     "dev_infra_repository_control_ci_passed": true,
     "dev_infra_secret_hygiene_passed": true,
     "full_regression_suite_passed": "89/89",
-    "latest_evidence_id": "GENERATION-PIPELINE-001",
+    "latest_evidence_id": "INTELLIGENCE-QA-001",
     "phase_a_acceptance_passed": true,
     "phase_b_acceptance_passed": true,
     "phase_b_tests_passed": "8/8",
@@ -197,6 +198,8 @@
     "multimodel_router_passed": true,
     "multimodel_router_merge_head": "1e99217a0ed6f1eb68fca1b826fd7cb42dddf8f2",
     "generation_pipeline_passed": true,
-    "generation_pipeline_merge_head": "e227e2f12cb3635a89291cb8c431e7a550b1d8cb"
+    "generation_pipeline_merge_head": "e227e2f12cb3635a89291cb8c431e7a550b1d8cb",
+    "intelligence_qa_passed": true,
+    "intelligence_qa_merge_head": "36c66162fd911f98dda38f987d054706a25a3d8e"
   }
 }

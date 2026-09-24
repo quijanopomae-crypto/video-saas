@@ -1,10 +1,10 @@
-# RESUME — TASK-INTELLIGENCE-QA-001
+# RESUME — IDLE
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** INTELLIGENCE_QA
-- **Checkpoint:** CP-INTELLIGENCE-QA-001-ACTIVATE
-- **State version:** 55
+- **Phase:** INTELLIGENCE_QA_CORE
+- **Checkpoint:** CP-INTELLIGENCE-QA-001-CLOSE
+- **State version:** 56
 - **Branch:** UNRECORDED
 - **Checkpoint base HEAD:** UNRECORDED
 - **Checkpoint working tree dirty:** UNRECORDED
@@ -14,9 +14,9 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Baseline regression suite:** true
 - **Phase B acceptance:** true
 - **Phase C acceptance:** true
-- **Latest evidence:** GENERATION-PIPELINE-001
+- **Latest evidence:** INTELLIGENCE-QA-001
 - **Blocked:** none
-- **Next action:** Implement deterministic continuity checks, Error Map, selective repair, Quality Lock verification and canonical Anti-Loop integration.
+- **Next action:** None
 
 ## Completed steps
 
@@ -126,7 +126,8 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - TASK-GENERATION-PIPELINE-001 activated with deterministic mock E2E and provider spending disabled
 - TASK-GENERATION-PIPELINE-001 closed DONE with GENERATION_PIPELINE_CORE
 - TASK-INTELLIGENCE-QA-001 activated with continuity QA, selective repair and provider spending disabled
+- TASK-INTELLIGENCE-QA-001 closed DONE with INTELLIGENCE_QA_CORE
 
 The active Task Contract SHA-256 is:
 
-`4a0f4fb4555eaf87e43fb40109f11a764b540a194549e446cd57f6d4d136ac8d`
+`none`

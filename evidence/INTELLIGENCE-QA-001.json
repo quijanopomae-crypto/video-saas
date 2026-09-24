@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "evidence_id": "INTELLIGENCE-QA-001",
+  "status": "PASS",
+  "task_id": "TASK-INTELLIGENCE-QA-001",
+  "observed_at": "2026-09-24T18:36:00Z",
+  "pull_request": {
+    "number": 36,
+    "validated_head": "55ca407d5b44d1b6c3e67ddbebaec3f20d8c34ce",
+    "merge_commit": "36c66162fd911f98dda38f987d054706a25a3d8e"
+  },
+  "ci": {
+    "repository_control": {
+      "run_id": 36042071103,
+      "conclusion": "success"
+    },
+    "product_ci": {
+      "run_id": 36042071200,
+      "conclusion": "success"
+    },
+    "lab_ci": {
+      "run_id": 36042071104,
+      "conclusion": "success"
+    }
+  },
+  "acceptance": {
+    "structural_continuity_checks": "PASS",
+    "explicit_mock_observations": "PASS",
+    "error_map": "PASS",
+    "patch_first_local_repair": "PASS",
+    "repair_semantics_patch_continue_reference_regenerate": "PASS",
+    "selective_repair": "PASS",
+    "quality_lock": "PASS",
+    "verification": "PASS",
+    "canonical_failure_memory": "PASS",
+    "canonical_anti_loop": "PASS",
+    "cross_owner_denial": "PASS",
+    "sora_2_do_not_route": "PASS",
+    "mock_only": "PASS"
+  },
+  "visual_inspection_claimed": false,
+  "provider_preflight_started": false,
+  "paid_provider_requests_executed": false
+}
