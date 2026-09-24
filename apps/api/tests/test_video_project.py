@@ -10,9 +10,16 @@ from src.modules.video_project import (
     QAFinding,
     add_qa_finding,
     attach_asset,
+    change_caption,
     from_product_flow,
+    lock_scene,
+    move_overlay,
+    patch_scene,
+    replace_asset,
     select_asset,
     set_quality_lock,
+    trim_clip,
+    unlock_scene,
 )
 
 
@@ -68,11 +75,68 @@ def test_quality_lock_blocks_silent_asset_replacement() -> None:
     project = set_quality_lock(project, shot_id, True)
 
     with pytest.raises(ValueError, match="quality-locked"):
-        select_asset(project, shot_id, second.asset_id)
+        replace_asset(project, shot_id, second.asset_id)
 
     project = set_quality_lock(project, shot_id, False)
-    project = select_asset(project, shot_id, second.asset_id)
+    project = replace_asset(project, shot_id, second.asset_id)
     assert project.timeline[0].asset_id == second.asset_id
+
+
+def test_validated_edit_primitives_share_quality_lock() -> None:
+    _, project = _project()
+    shot_id = project.timeline[0].shot_id
+    project = trim_clip(project, shot_id, 0, project.timeline[0].duration_sec - 1)
+    project = change_caption(project, shot_id, "  Texto validado  ")
+    project = move_overlay(project, shot_id, 0.25, 0.75)
+
+    edited = project.timeline[0]
+    assert edited.clip_out_sec == edited.duration_sec - 1
+    assert edited.caption_text == "Texto validado"
+    assert (edited.overlay_x, edited.overlay_y) == (0.25, 0.75)
+
+    project = set_quality_lock(project, shot_id, True)
+    for operation in (
+        lambda: trim_clip(project, shot_id, 0, 1),
+        lambda: change_caption(project, shot_id, "otro"),
+        lambda: move_overlay(project, shot_id, 0.5, 0.5),
+    ):
+        with pytest.raises(ValueError, match="quality-locked"):
+            operation()
+
+
+def test_scene_patch_and_scene_lock_are_validated() -> None:
+    flow, project = _project()
+    scene_id = flow.scene_graph[0].scene_id
+    shot_ids = {item.shot_id for item in flow.shot_contracts if item.scene_id == scene_id}
+
+    project = patch_scene(project, scene_id, "repair local continuity only")
+    assert {
+        item.patch_intent for item in project.timeline if item.shot_id in shot_ids
+    } == {"repair local continuity only"}
+
+    project = lock_scene(project, scene_id)
+    assert all(item.lock_state == "locked" for item in project.timeline if item.shot_id in shot_ids)
+    with pytest.raises(ValueError, match="quality-locked scene"):
+        patch_scene(project, scene_id, "second patch")
+
+    project = unlock_scene(project, scene_id)
+    project = patch_scene(project, scene_id, "second patch")
+    assert all(
+        item.patch_intent == "second patch"
+        for item in project.timeline
+        if item.shot_id in shot_ids
+    )
+
+
+def test_edit_primitives_reject_invalid_ranges_and_unknown_scene() -> None:
+    _, project = _project()
+    shot_id = project.timeline[0].shot_id
+    with pytest.raises(ValueError, match="clip trim"):
+        trim_clip(project, shot_id, 2, 2)
+    with pytest.raises(ValueError, match="overlay position"):
+        move_overlay(project, shot_id, 1.1, 0.5)
+    with pytest.raises(ValueError, match="unknown scene"):
+        patch_scene(project, "scene-missing", "repair")
 
 
 def test_qa_finding_can_describe_patch_intent() -> None:
