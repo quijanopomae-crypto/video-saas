@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "evidence_id": "VIDEO-CORE-001",
+  "status": "PASS",
+  "task_id": "TASK-VIDEO-CORE-001",
+  "observed_at": "2026-09-24T14:05:00Z",
+  "pull_request": {
+    "number": 24,
+    "validated_head": "2f7dbd4ce30a8b4d810e359336dcc1352919c6b8",
+    "merge_commit": "f336756d881857aeb3a041a6c3c5f075046f8d5b"
+  },
+  "pull_request_ci": {
+    "repository_control": {
+      "run_id": 36009072780,
+      "conclusion": "success",
+      "scope": "PASS",
+      "operating_state": "PASS",
+      "regression_suite": "89/89 PASS",
+      "fresh_session": "PASS"
+    },
+    "product_ci": {
+      "run_id": 36009072450,
+      "conclusion": "success",
+      "backend": "PASS",
+      "ffmpeg_smoke": "PASS",
+      "frontend": "PASS",
+      "integration_smoke": "PASS"
+    },
+    "lab_ci": {
+      "run_id": 36009072507,
+      "conclusion": "success"
+    }
+  },
+  "acceptance": {
+    "deterministic_video_project": "PASS",
+    "canonical_scene_shot_ids": "PASS",
+    "asset_lineage_and_cost": "PASS",
+    "qa_patch_intent_quality_lock": "PASS",
+    "validated_edit_primitives": "PASS",
+    "planning_regression": "PASS",
+    "repository_control_ci": "PASS",
+    "product_ci": "PASS"
+  },
+  "provider_preflight_started": false,
+  "paid_provider_requests_executed": false
+}
