@@ -8,8 +8,8 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: MULTIMODEL_ROUTER
-active_task_id: TASK-MULTIMODEL-ROUTER-001
+current_authorized_phase: MULTIMODEL_ROUTER_CORE
+active_task_id: null
 provider_preflight_allowed: false
 architecture_research_reopened: false
 paid_provider_requests_allowed: false
@@ -147,5 +147,19 @@ production_engine:
   completion_phase: PRODUCTION_ENGINE_CORE
   provider_preflight_started: false
   paid_provider_requests_executed: false
-next_gate: MULTIMODEL_ROUTER
-next_gate_authorized: true
+multimodel_router:
+  status: PASS
+  task_id: TASK-MULTIMODEL-ROUTER-001
+  expected_outcome: MULTIMODEL_ROUTER_CORE
+  pull_request: 30
+  validated_head: fcfe6926216d51bd8ae29226dad2b60974347031
+  merge_commit: 1e99217a0ed6f1eb68fca1b826fd7cb42dddf8f2
+  pull_request_ci:
+    repository_control_run_id: 36011889146
+    product_ci_run_id: 36011889166
+    lab_ci_run_id: 36011889312
+  completion_phase: MULTIMODEL_ROUTER_CORE
+  provider_preflight_started: false
+  paid_provider_requests_executed: false
+next_gate: NONE_AUTHORIZED
+next_gate_authorized: false
