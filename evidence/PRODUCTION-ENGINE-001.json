@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "evidence_id": "PRODUCTION-ENGINE-001",
+  "status": "PASS",
+  "task_id": "TASK-PRODUCTION-ENGINE-001",
+  "observed_at": "2026-09-24T14:15:00Z",
+  "pull_request": {
+    "number": 27,
+    "validated_head": "9c6c5b13bdce16e847eec8deadca9a75874497db",
+    "merge_commit": "7e39d2a04efa574b727596cc0126b1ecedcd9a32"
+  },
+  "ci": {
+    "repository_control": {
+      "run_id": 36010836295,
+      "conclusion": "success",
+      "scope": "PASS",
+      "regression_suite": "89/89 PASS",
+      "fresh_session": "PASS"
+    },
+    "product_ci": {
+      "run_id": 36010836291,
+      "conclusion": "success"
+    },
+    "lab_ci": {
+      "run_id": 36010836320,
+      "conclusion": "success"
+    }
+  },
+  "acceptance": {
+    "owner_scoping": "PASS",
+    "idempotency": "PASS",
+    "queue_workflow_mocks": "PASS",
+    "retry_budget": "PASS",
+    "recovery": "PASS",
+    "failure_memory": "PASS",
+    "anti_loop": "PASS"
+  },
+  "provider_preflight_started": false,
+  "paid_provider_requests_executed": false
+}
