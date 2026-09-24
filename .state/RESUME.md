@@ -1,10 +1,10 @@
-# RESUME — IDLE
+# RESUME — TASK-PRODUCTION-ENGINE-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** CANONICAL_VIDEO_PROJECT_CORE
-- **Checkpoint:** CP-VIDEO-CORE-001-CLOSE-2
-- **State version:** 48
+- **Phase:** PRODUCTION_ENGINE
+- **Checkpoint:** CP-PRODUCTION-ENGINE-001-ACTIVATE
+- **State version:** 49
 - **Branch:** UNRECORDED
 - **Checkpoint base HEAD:** UNRECORDED
 - **Checkpoint working tree dirty:** UNRECORDED
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** VIDEO-CORE-001
 - **Blocked:** none
-- **Next action:** None
+- **Next action:** Implement and validate provider-independent jobs, retries, recovery, idempotency, Anti-Loop and Failure Memory using mocks.
 
 ## Completed steps
 
@@ -119,7 +119,8 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - TASK-REPO-NAVIGATION-001 closed DONE with REPO_NAVIGATION_OPTIMIZATION_PASS
 - TASK-VIDEO-CORE-001 activated through the existing repository-control checkpoint model with provider spending disabled
 - TASK-VIDEO-CORE-001 closed DONE with CANONICAL_VIDEO_PROJECT_CORE
+- TASK-PRODUCTION-ENGINE-001 activated with Provider Preflight and paid requests disabled
 
 The active Task Contract SHA-256 is:
 
-`none`
+`44ac4e4941948804eb82b52bb6b655c1835f6d72aa0a49c70a8cc4a953993778`
