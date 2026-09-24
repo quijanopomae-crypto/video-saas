@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-VIDEO-CORE-001-CLOSE-2",
+  "checkpoint_id": "CP-PRODUCTION-ENGINE-001-ACTIVATE",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "8c04cb677339fde0cfcaa0255cdf723c1ad5075ea8eec728d17fd502458edd61",
-  "last_journal_sequence": 43,
+  "last_journal_event_sha256": "d53321f329b6061fa8bee3600097cf22a741b1ffcf740f05dcd5fc92a5772113",
+  "last_journal_sequence": 44,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -109,20 +109,21 @@
       "Owner authorized TASK-REPO-NAVIGATION-001 without opening a product gate",
       "TASK-REPO-NAVIGATION-001 closed DONE with REPO_NAVIGATION_OPTIMIZATION_PASS",
       "TASK-VIDEO-CORE-001 activated through the existing repository-control checkpoint model with provider spending disabled",
-      "TASK-VIDEO-CORE-001 closed DONE with CANONICAL_VIDEO_PROJECT_CORE"
+      "TASK-VIDEO-CORE-001 closed DONE with CANONICAL_VIDEO_PROJECT_CORE",
+      "TASK-PRODUCTION-ENGINE-001 activated with Provider Preflight and paid requests disabled"
     ],
-    "next_action": null,
+    "next_action": "Implement and validate provider-independent jobs, retries, recovery, idempotency, Anti-Loop and Failure Memory using mocks.",
     "next_command": null
   },
   "repository": {},
   "schema_version": 1,
-  "state_version": 48,
+  "state_version": 49,
   "task": {
-    "task_id": null,
-    "task_contract_sha256": null,
-    "phase": "CANONICAL_VIDEO_PROJECT_CORE"
+    "task_id": "TASK-PRODUCTION-ENGINE-001",
+    "task_contract_sha256": "44ac4e4941948804eb82b52bb6b655c1835f6d72aa0a49c70a8cc4a953993778",
+    "phase": "PRODUCTION_ENGINE"
   },
-  "updated_at": "2026-09-24T14:05:00Z",
+  "updated_at": "2026-09-24T14:10:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
