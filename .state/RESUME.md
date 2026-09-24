@@ -1,10 +1,10 @@
-# RESUME — IDLE
+# RESUME — TASK-MULTIMODEL-ROUTER-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** PRODUCTION_ENGINE_CORE
-- **Checkpoint:** CP-PRODUCTION-ENGINE-001-CLOSE
-- **State version:** 50
+- **Phase:** MULTIMODEL_ROUTER
+- **Checkpoint:** CP-MULTIMODEL-ROUTER-001-ACTIVATE
+- **State version:** 51
 - **Branch:** UNRECORDED
 - **Checkpoint base HEAD:** UNRECORDED
 - **Checkpoint working tree dirty:** UNRECORDED
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** PRODUCTION-ENGINE-001
 - **Blocked:** none
-- **Next action:** None
+- **Next action:** Implement capability-based cost-aware mock routing with deterministic fallback and SORA_2 blocked.
 
 ## Completed steps
 
@@ -121,7 +121,8 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - TASK-VIDEO-CORE-001 closed DONE with CANONICAL_VIDEO_PROJECT_CORE
 - TASK-PRODUCTION-ENGINE-001 activated with Provider Preflight and paid requests disabled
 - TASK-PRODUCTION-ENGINE-001 closed DONE with PRODUCTION_ENGINE_CORE
+- TASK-MULTIMODEL-ROUTER-001 activated with SORA_2 DO_NOT_ROUTE and provider spending disabled
 
 The active Task Contract SHA-256 is:
 
-`none`
+`1b92b8b5116832460d7fee8347504284df233be40a18e65f95a77ada92eefb37`
