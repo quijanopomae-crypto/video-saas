@@ -2,7 +2,7 @@ schema_version: 1
 task:
   id: TASK-MULTIMODEL-ROUTER-001
   title: Implement capability and cost-aware multimodel router
-  status: IMPLEMENTING
+  status: DONE
   risk: MEDIUM
 objective:
   expected_outcome: MULTIMODEL_ROUTER_CORE
@@ -51,3 +51,9 @@ blocking_rule:
   - Do not integrate if routing can select SORA_2, silently exceed budget, alter requested semantics, or require real provider operations.
 next_phase:
   - TASK-GENERATION-PIPELINE-001 may be materialized only after this task is DONE and canonical main state is re-read.
+closure:
+  final_phase: MULTIMODEL_ROUTER_CORE
+  evidence_ids:
+  - MULTIMODEL-ROUTER-001
+  provider_preflight_started: false
+  paid_provider_requests_executed: false
