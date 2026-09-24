@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-MULTIMODEL-ROUTER-001-ACTIVATE",
+  "checkpoint_id": "CP-MULTIMODEL-ROUTER-001-CLOSE",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "4bf3a42f264baa9bb8aa674a8c06dd59abcbeffdca5769bdcb5b79c5053a60c8",
-  "last_journal_sequence": 46,
+  "last_journal_event_sha256": "acdf9c22a38f1093fb0a7681e56fbf2a79ce97523190cb61f66981f77f4bd2e3",
+  "last_journal_sequence": 47,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -112,20 +112,21 @@
       "TASK-VIDEO-CORE-001 closed DONE with CANONICAL_VIDEO_PROJECT_CORE",
       "TASK-PRODUCTION-ENGINE-001 activated with Provider Preflight and paid requests disabled",
       "TASK-PRODUCTION-ENGINE-001 closed DONE with PRODUCTION_ENGINE_CORE",
-      "TASK-MULTIMODEL-ROUTER-001 activated with SORA_2 DO_NOT_ROUTE and provider spending disabled"
+      "TASK-MULTIMODEL-ROUTER-001 activated with SORA_2 DO_NOT_ROUTE and provider spending disabled",
+      "TASK-MULTIMODEL-ROUTER-001 closed DONE with MULTIMODEL_ROUTER_CORE"
     ],
-    "next_action": "Implement capability-based cost-aware mock routing with deterministic fallback and SORA_2 blocked.",
+    "next_action": null,
     "next_command": null
   },
   "repository": {},
   "schema_version": 1,
-  "state_version": 51,
+  "state_version": 52,
   "task": {
-    "task_id": "TASK-MULTIMODEL-ROUTER-001",
-    "task_contract_sha256": "1b92b8b5116832460d7fee8347504284df233be40a18e65f95a77ada92eefb37",
-    "phase": "MULTIMODEL_ROUTER"
+    "task_id": null,
+    "task_contract_sha256": null,
+    "phase": "MULTIMODEL_ROUTER_CORE"
   },
-  "updated_at": "2026-09-24T14:20:00Z",
+  "updated_at": "2026-09-24T14:25:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
@@ -138,7 +139,7 @@
     "dev_infra_repository_control_ci_passed": true,
     "dev_infra_secret_hygiene_passed": true,
     "full_regression_suite_passed": "89/89",
-    "latest_evidence_id": "PRODUCTION-ENGINE-001",
+    "latest_evidence_id": "MULTIMODEL-ROUTER-001",
     "phase_a_acceptance_passed": true,
     "phase_b_acceptance_passed": true,
     "phase_b_tests_passed": "8/8",
@@ -189,6 +190,8 @@
     "video_core_product_ci_run_id": 36009072450,
     "video_core_lab_ci_run_id": 36009072507,
     "production_engine_passed": true,
-    "production_engine_merge_head": "7e39d2a04efa574b727596cc0126b1ecedcd9a32"
+    "production_engine_merge_head": "7e39d2a04efa574b727596cc0126b1ecedcd9a32",
+    "multimodel_router_passed": true,
+    "multimodel_router_merge_head": "1e99217a0ed6f1eb68fca1b826fd7cb42dddf8f2"
   }
 }
