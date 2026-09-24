@@ -2,7 +2,7 @@ schema_version: 1
 task:
   id: TASK-INTELLIGENCE-QA-001
   title: Implement continuity QA and selective repair
-  status: IMPLEMENTING
+  status: DONE
   risk: MEDIUM
 objective:
   expected_outcome: INTELLIGENCE_QA_CORE
