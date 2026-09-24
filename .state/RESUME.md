@@ -1,10 +1,10 @@
-# RESUME — IDLE
+# RESUME — TASK-GENERATION-PIPELINE-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** MULTIMODEL_ROUTER_CORE
-- **Checkpoint:** CP-MULTIMODEL-ROUTER-001-CLOSE
-- **State version:** 52
+- **Phase:** GENERATION_PIPELINE
+- **Checkpoint:** CP-GENERATION-PIPELINE-001-ACTIVATE
+- **State version:** 53
 - **Branch:** UNRECORDED
 - **Checkpoint base HEAD:** UNRECORDED
 - **Checkpoint working tree dirty:** UNRECORDED
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** MULTIMODEL-ROUTER-001
 - **Blocked:** none
-- **Next action:** None
+- **Next action:** Implement prompt-to-VideoProject generation using canonical planning, jobs, routing, references and mock assets.
 
 ## Completed steps
 
@@ -123,7 +123,8 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - TASK-PRODUCTION-ENGINE-001 closed DONE with PRODUCTION_ENGINE_CORE
 - TASK-MULTIMODEL-ROUTER-001 activated with SORA_2 DO_NOT_ROUTE and provider spending disabled
 - TASK-MULTIMODEL-ROUTER-001 closed DONE with MULTIMODEL_ROUTER_CORE
+- TASK-GENERATION-PIPELINE-001 activated with deterministic mock E2E and provider spending disabled
 
 The active Task Contract SHA-256 is:
 
-`none`
+`1861fe4a60e1170899104a934abd4d7b40ea6eae9b2016cbd5f3ddc4d5b585b5`

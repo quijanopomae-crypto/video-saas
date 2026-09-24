@@ -1,0 +1,60 @@
+schema_version: 1
+task:
+  id: TASK-GENERATION-PIPELINE-001
+  title: Implement deterministic no-spend generation pipeline
+  status: IMPLEMENTING
+  risk: MEDIUM
+objective:
+  expected_outcome: GENERATION_PIPELINE_CORE
+scope:
+  allowed_paths:
+    - tasks/TASK-GENERATION-PIPELINE-001.yaml
+    - PROJECT_STATE.yaml
+    - .state/**
+    - apps/api/src/modules/generation_pipeline/**
+    - apps/api/tests/test_generation_pipeline.py
+    - evidence/**
+  forbidden_paths:
+    - apps/web/**
+    - lab/**
+    - manifests/**
+    - schemas/**
+    - projectctl/**
+    - .github/workflows/**
+    - .env
+    - .env.*
+constraints:
+  - Reuse canonical planning, VideoProject, ProductionEngine and MultimodelRouter; do not create parallel planning, job, routing or ledger systems.
+  - The pipeline must cover prompt/request -> planning -> scenes -> shots -> references -> generation jobs -> deterministic mock assets -> asset ledger -> VideoProject.
+  - Generation state, jobs, assets and costs must remain owner-scoped.
+  - References must use already-produced mock assets without cross-owner leakage.
+  - Asset provenance must record the logical provider, operation and estimated mock cost.
+  - Idempotent replay of the same owner/project input must not duplicate jobs, assets or cost.
+  - SORA_2 remains DO_NOT_ROUTE.
+  - Use mock providers only; no provider SDKs, credentials or network calls.
+  - Provider Preflight remains OFF.
+  - Paid provider requests remain OFF.
+acceptance:
+  - A valid ProjectRequest produces the canonical ProductFlow and VideoProject.
+  - Every planned shot produces exactly one owner-scoped production job and one selected mock asset.
+  - The first shot can Generate and later shots can consume deterministic references from prior generated assets when compatible.
+  - Each generation job reaches succeeded and records its output asset id.
+  - Asset ledger entries retain shot lineage, logical provider, operation/provenance and estimated cost.
+  - VideoProject timeline references only assets belonging to the matching shot.
+  - Replaying the same owner/project request is idempotent and does not double-count cost.
+  - Cross-owner reads of generation runs are denied.
+  - The full Stage 4 flow executes end-to-end with zero real provider calls and zero paid requests.
+  - Focused generation pipeline tests pass.
+  - Repository Control CI passes.
+  - Product CI passes.
+  - Provider Preflight and paid requests remain OFF.
+blocking_rule:
+  - Do not integrate if the pipeline creates duplicate jobs/assets on replay, leaks cross-owner state, bypasses canonical modules, routes SORA_2, or requires a real provider operation.
+next_phase:
+  - TASK-INTELLIGENCE-QA-001 may be materialized only after this task is DONE and canonical main state is re-read.
+closure:
+  final_phase: GENERATION_PIPELINE_CORE
+  evidence_ids:
+    - GENERATION-PIPELINE-001
+  provider_preflight_started: false
+  paid_provider_requests_executed: false

@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-MULTIMODEL-ROUTER-001-CLOSE",
+  "checkpoint_id": "CP-GENERATION-PIPELINE-001-ACTIVATE",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "acdf9c22a38f1093fb0a7681e56fbf2a79ce97523190cb61f66981f77f4bd2e3",
-  "last_journal_sequence": 47,
+  "last_journal_event_sha256": "1e35472ff8038459e536fdbe25ac602015ad48be42b1893ceddb49ed9d4e28cb",
+  "last_journal_sequence": 48,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -113,20 +113,21 @@
       "TASK-PRODUCTION-ENGINE-001 activated with Provider Preflight and paid requests disabled",
       "TASK-PRODUCTION-ENGINE-001 closed DONE with PRODUCTION_ENGINE_CORE",
       "TASK-MULTIMODEL-ROUTER-001 activated with SORA_2 DO_NOT_ROUTE and provider spending disabled",
-      "TASK-MULTIMODEL-ROUTER-001 closed DONE with MULTIMODEL_ROUTER_CORE"
+      "TASK-MULTIMODEL-ROUTER-001 closed DONE with MULTIMODEL_ROUTER_CORE",
+      "TASK-GENERATION-PIPELINE-001 activated with deterministic mock E2E and provider spending disabled"
     ],
-    "next_action": null,
+    "next_action": "Implement prompt-to-VideoProject generation using canonical planning, jobs, routing, references and mock assets.",
     "next_command": null
   },
   "repository": {},
   "schema_version": 1,
-  "state_version": 52,
+  "state_version": 53,
   "task": {
-    "task_id": null,
-    "task_contract_sha256": null,
-    "phase": "MULTIMODEL_ROUTER_CORE"
+    "task_id": "TASK-GENERATION-PIPELINE-001",
+    "task_contract_sha256": "1861fe4a60e1170899104a934abd4d7b40ea6eae9b2016cbd5f3ddc4d5b585b5",
+    "phase": "GENERATION_PIPELINE"
   },
-  "updated_at": "2026-09-24T14:25:00Z",
+  "updated_at": "2026-09-24T18:17:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
