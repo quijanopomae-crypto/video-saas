@@ -8,8 +8,8 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: GENERATION_PIPELINE_CORE
-active_task_id: null
+current_authorized_phase: INTELLIGENCE_QA
+active_task_id: TASK-INTELLIGENCE-QA-001
 provider_preflight_allowed: false
 architecture_research_reopened: false
 paid_provider_requests_allowed: false
@@ -175,5 +175,5 @@ generation_pipeline:
   completion_phase: GENERATION_PIPELINE_CORE
   provider_preflight_started: false
   paid_provider_requests_executed: false
-next_gate: NONE_AUTHORIZED
-next_gate_authorized: false
+next_gate: INTELLIGENCE_QA
+next_gate_authorized: true
