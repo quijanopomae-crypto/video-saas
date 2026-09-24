@@ -8,8 +8,8 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: VIDEO_CORE
-active_task_id: TASK-VIDEO-CORE-001
+current_authorized_phase: CANONICAL_VIDEO_PROJECT_CORE
+active_task_id: null
 provider_preflight_allowed: false
 architecture_research_reopened: false
 paid_provider_requests_allowed: false
@@ -119,5 +119,19 @@ audit_remediation:
   provider_preflight_started: false
   paid_provider_requests_executed: false
   completion_phase: AUDIT_REMEDIATION_PASS
-next_gate: VIDEO_CORE
-next_gate_authorized: true
+video_core:
+  status: PASS
+  task_id: TASK-VIDEO-CORE-001
+  expected_outcome: CANONICAL_VIDEO_PROJECT_CORE
+  pull_request: 24
+  validated_head: 2f7dbd4ce30a8b4d810e359336dcc1352919c6b8
+  merge_commit: f336756d881857aeb3a041a6c3c5f075046f8d5b
+  pull_request_ci:
+    repository_control_run_id: 36009072780
+    product_ci_run_id: 36009072450
+    lab_ci_run_id: 36009072507
+  completion_phase: CANONICAL_VIDEO_PROJECT_CORE
+  provider_preflight_started: false
+  paid_provider_requests_executed: false
+next_gate: NONE_AUTHORIZED
+next_gate_authorized: false
