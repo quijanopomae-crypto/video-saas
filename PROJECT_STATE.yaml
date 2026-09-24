@@ -8,8 +8,8 @@ repository_control_plane:
   repository_control_code: projectctl/
   backend_code: apps/api/src/
   frontend_code: apps/web/src/
-current_authorized_phase: PRODUCTION_ENGINE
-active_task_id: TASK-PRODUCTION-ENGINE-001
+current_authorized_phase: PRODUCTION_ENGINE_CORE
+active_task_id: null
 provider_preflight_allowed: false
 architecture_research_reopened: false
 paid_provider_requests_allowed: false
@@ -133,5 +133,19 @@ video_core:
   completion_phase: CANONICAL_VIDEO_PROJECT_CORE
   provider_preflight_started: false
   paid_provider_requests_executed: false
-next_gate: PRODUCTION_ENGINE
-next_gate_authorized: true
+production_engine:
+  status: PASS
+  task_id: TASK-PRODUCTION-ENGINE-001
+  expected_outcome: PRODUCTION_ENGINE_CORE
+  pull_request: 27
+  validated_head: 9c6c5b13bdce16e847eec8deadca9a75874497db
+  merge_commit: 7e39d2a04efa574b727596cc0126b1ecedcd9a32
+  pull_request_ci:
+    repository_control_run_id: 36010836295
+    product_ci_run_id: 36010836291
+    lab_ci_run_id: 36010836320
+  completion_phase: PRODUCTION_ENGINE_CORE
+  provider_preflight_started: false
+  paid_provider_requests_executed: false
+next_gate: NONE_AUTHORIZED
+next_gate_authorized: false
