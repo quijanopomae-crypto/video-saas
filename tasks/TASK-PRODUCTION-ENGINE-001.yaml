@@ -1,0 +1,56 @@
+schema_version: 1
+task:
+  id: TASK-PRODUCTION-ENGINE-001
+  title: Implement provider-independent production engine lifecycle
+  status: IMPLEMENTING
+  risk: MEDIUM
+objective:
+  expected_outcome: PRODUCTION_ENGINE_CORE
+scope:
+  allowed_paths:
+    - tasks/TASK-PRODUCTION-ENGINE-001.yaml
+    - PROJECT_STATE.yaml
+    - .state/**
+    - apps/api/src/modules/production_engine/**
+    - apps/api/tests/test_production_engine.py
+    - apps/api/src/adapters/queue.py
+    - apps/api/src/adapters/workflow.py
+    - apps/api/tests/test_adapters.py
+    - evidence/**
+  forbidden_paths:
+    - apps/web/**
+    - lab/**
+    - manifests/**
+    - schemas/**
+    - projectctl/**
+    - .github/workflows/**
+    - apps/api/src/modules/providers/**
+    - .env
+    - .env.*
+constraints:
+  - Reuse the existing queue and workflow adapter boundaries instead of creating a second infrastructure layer.
+  - Jobs and failure memory must be provider-independent and owner-scoped.
+  - Explicitly model queued, running, retryable, succeeded, failed and blocked terminal behavior.
+  - Submission must be idempotent per owner and idempotency key.
+  - Recovery must safely requeue interrupted in-flight work without duplicating completed work.
+  - Anti-Loop must block an equivalent repeated failed attempt unless a material causal change is recorded.
+  - Provider Preflight remains OFF.
+  - Paid provider requests remain OFF.
+  - No provider SDKs, provider credentials or real provider calls.
+acceptance:
+  - Owner-scoped jobs cannot be read or mutated cross-owner.
+  - Duplicate submission with the same owner/idempotency key returns the same logical job.
+  - Queue and workflow mocks drive deterministic job lifecycle transitions.
+  - Retry budget and recovery behavior are deterministic and tested.
+  - Failure Memory records normalized failure fingerprints and causal changes.
+  - Equivalent repeated failures are blocked by Anti-Loop while materially changed retries are allowed.
+  - Completed jobs are not duplicated by recovery.
+  - Focused Production Engine tests pass.
+  - Existing adapter tests remain green.
+  - Repository Control CI passes.
+  - Product CI passes.
+  - Provider Preflight and paid requests remain OFF.
+blocking_rule:
+  - Do not integrate if owner isolation, idempotency, recovery or Anti-Loop invariants fail, CI fails, or external provider operations are required.
+next_phase:
+  - TASK-MULTIMODEL-ROUTER-001 may be materialized only after this task is DONE and canonical main state is re-read.
