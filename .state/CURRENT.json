@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-PRODUCTION-ENGINE-001-CLOSE",
+  "checkpoint_id": "CP-MULTIMODEL-ROUTER-001-ACTIVATE",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "9ff7ae5aba1be91acbff44e0342f824eddbef286afa26feec28995b728d30826",
-  "last_journal_sequence": 45,
+  "last_journal_event_sha256": "4bf3a42f264baa9bb8aa674a8c06dd59abcbeffdca5769bdcb5b79c5053a60c8",
+  "last_journal_sequence": 46,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -111,20 +111,21 @@
       "TASK-VIDEO-CORE-001 activated through the existing repository-control checkpoint model with provider spending disabled",
       "TASK-VIDEO-CORE-001 closed DONE with CANONICAL_VIDEO_PROJECT_CORE",
       "TASK-PRODUCTION-ENGINE-001 activated with Provider Preflight and paid requests disabled",
-      "TASK-PRODUCTION-ENGINE-001 closed DONE with PRODUCTION_ENGINE_CORE"
+      "TASK-PRODUCTION-ENGINE-001 closed DONE with PRODUCTION_ENGINE_CORE",
+      "TASK-MULTIMODEL-ROUTER-001 activated with SORA_2 DO_NOT_ROUTE and provider spending disabled"
     ],
-    "next_action": null,
+    "next_action": "Implement capability-based cost-aware mock routing with deterministic fallback and SORA_2 blocked.",
     "next_command": null
   },
   "repository": {},
   "schema_version": 1,
-  "state_version": 50,
+  "state_version": 51,
   "task": {
-    "task_id": null,
-    "task_contract_sha256": null,
-    "phase": "PRODUCTION_ENGINE_CORE"
+    "task_id": "TASK-MULTIMODEL-ROUTER-001",
+    "task_contract_sha256": "1b92b8b5116832460d7fee8347504284df233be40a18e65f95a77ada92eefb37",
+    "phase": "MULTIMODEL_ROUTER"
   },
-  "updated_at": "2026-09-24T14:15:00Z",
+  "updated_at": "2026-09-24T14:20:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
