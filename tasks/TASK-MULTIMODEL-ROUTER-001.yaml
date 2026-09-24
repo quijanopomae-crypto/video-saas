@@ -1,0 +1,53 @@
+schema_version: 1
+task:
+  id: TASK-MULTIMODEL-ROUTER-001
+  title: Implement capability and cost-aware multimodel router
+  status: IMPLEMENTING
+  risk: MEDIUM
+objective:
+  expected_outcome: MULTIMODEL_ROUTER_CORE
+scope:
+  allowed_paths:
+    - tasks/TASK-MULTIMODEL-ROUTER-001.yaml
+    - PROJECT_STATE.yaml
+    - .state/**
+    - apps/api/src/modules/model_router/**
+    - apps/api/tests/test_model_router.py
+    - evidence/**
+  forbidden_paths:
+    - apps/web/**
+    - lab/**
+    - manifests/**
+    - schemas/**
+    - projectctl/**
+    - .github/workflows/**
+    - .env
+    - .env.*
+constraints:
+  - Provider abstraction is capability-based and provider-independent.
+  - Routing decisions must support Generate, Continue, Reference, Patch and Premium.
+  - PATCH is preferred over blind regeneration when a local repair is sufficient.
+  - Default routing is cost-aware and deterministic; premium routing requires explicit justification.
+  - Fallback must exclude a failed provider without silently changing requested semantics.
+  - SORA_2 is DO_NOT_ROUTE unless a later explicit owner authorization says otherwise.
+  - Use mock providers only; no provider SDKs, credentials or network calls.
+  - Provider Preflight remains OFF.
+  - Paid provider requests remain OFF.
+acceptance:
+  - Capability filtering rejects incompatible providers.
+  - Default routing chooses the lowest-cost compatible non-premium mock.
+  - Patchable work selects Patch before Generate.
+  - Continue and Reference intents preserve their semantics.
+  - Premium is selected only when explicitly justified.
+  - Fallback selects a different compatible provider deterministically.
+  - Budget limits are enforced before routing.
+  - SORA_2 can never be selected in this stage.
+  - Mock invocation is deterministic and records logical provider, operation and estimated cost.
+  - Focused router tests pass.
+  - Repository Control CI passes.
+  - Product CI passes.
+  - Provider Preflight and paid requests remain OFF.
+blocking_rule:
+  - Do not integrate if routing can select SORA_2, silently exceed budget, alter requested semantics, or require real provider operations.
+next_phase:
+  - TASK-GENERATION-PIPELINE-001 may be materialized only after this task is DONE and canonical main state is re-read.
