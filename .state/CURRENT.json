@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-VIDEO-CORE-001-ACTIVATE",
+  "checkpoint_id": "CP-VIDEO-CORE-001-CLOSE-2",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "76a26e1532847a4c963e7499fc2038773bbdc830323bd27ce40162c5b8ae4dd7",
-  "last_journal_sequence": 42,
+  "last_journal_event_sha256": "8c04cb677339fde0cfcaa0255cdf723c1ad5075ea8eec728d17fd502458edd61",
+  "last_journal_sequence": 43,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -108,26 +108,21 @@
       "TASK-AUDIT-REMEDIATION-001 closed DONE with AUDIT_REMEDIATION_PASS",
       "Owner authorized TASK-REPO-NAVIGATION-001 without opening a product gate",
       "TASK-REPO-NAVIGATION-001 closed DONE with REPO_NAVIGATION_OPTIMIZATION_PASS",
-      "TASK-VIDEO-CORE-001 activated through the existing repository-control checkpoint model with provider spending disabled"
+      "TASK-VIDEO-CORE-001 activated through the existing repository-control checkpoint model with provider spending disabled",
+      "TASK-VIDEO-CORE-001 closed DONE with CANONICAL_VIDEO_PROJECT_CORE"
     ],
-    "next_action": "Finish VIDEO CORE validation and CI, integrate PR #24, then continue to Production Engine.",
+    "next_action": null,
     "next_command": null
   },
-  "repository": {
-    "branch": "task-video-core-001",
-    "head_commit": "c2edd0c3df734421ba65cf225ad15af2accee500",
-    "working_tree_dirty": false,
-    "working_tree_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "content_fingerprint": "fb9e0dc69b83eebacaa4091257ac83c9312908d6dd3136f17dfb3c27817a316a"
-  },
+  "repository": {},
   "schema_version": 1,
-  "state_version": 47,
+  "state_version": 48,
   "task": {
-    "task_id": "TASK-VIDEO-CORE-001",
-    "task_contract_sha256": "c0a0676ed7cf293935deed24a23d7b922466d2b96ecba6655683ea9975466ca8",
-    "phase": "VIDEO_CORE"
+    "task_id": null,
+    "task_contract_sha256": null,
+    "phase": "CANONICAL_VIDEO_PROJECT_CORE"
   },
-  "updated_at": "2026-09-24T13:55:00Z",
+  "updated_at": "2026-09-24T14:05:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
@@ -140,7 +135,7 @@
     "dev_infra_repository_control_ci_passed": true,
     "dev_infra_secret_hygiene_passed": true,
     "full_regression_suite_passed": "89/89",
-    "latest_evidence_id": "REPO-NAVIGATION-001",
+    "latest_evidence_id": "VIDEO-CORE-001",
     "phase_a_acceptance_passed": true,
     "phase_b_acceptance_passed": true,
     "phase_b_tests_passed": "8/8",
@@ -183,6 +178,12 @@
     "product_promotion_product_ci_run_id": 35530037442,
     "canonical_product_planning_merged_to_main": true,
     "canonical_product_planning_main_merge_head": "1226767d8441f0a59ead47527a77b685946d6604",
-    "audit_remediation_passed": true
+    "audit_remediation_passed": true,
+    "video_core_passed": true,
+    "video_core_pr_head": "2f7dbd4ce30a8b4d810e359336dcc1352919c6b8",
+    "video_core_merge_head": "f336756d881857aeb3a041a6c3c5f075046f8d5b",
+    "video_core_repository_control_ci_run_id": 36009072780,
+    "video_core_product_ci_run_id": 36009072450,
+    "video_core_lab_ci_run_id": 36009072507
   }
 }
