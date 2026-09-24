@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-GENERATION-PIPELINE-001-ACTIVATE",
+  "checkpoint_id": "CP-GENERATION-PIPELINE-001-CLOSE",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "1e35472ff8038459e536fdbe25ac602015ad48be42b1893ceddb49ed9d4e28cb",
-  "last_journal_sequence": 48,
+  "last_journal_event_sha256": "6bfcacbe9e17f7e966078395cc2612bca9490582c0f04dea62fb82a0cb7816ea",
+  "last_journal_sequence": 49,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -114,20 +114,21 @@
       "TASK-PRODUCTION-ENGINE-001 closed DONE with PRODUCTION_ENGINE_CORE",
       "TASK-MULTIMODEL-ROUTER-001 activated with SORA_2 DO_NOT_ROUTE and provider spending disabled",
       "TASK-MULTIMODEL-ROUTER-001 closed DONE with MULTIMODEL_ROUTER_CORE",
-      "TASK-GENERATION-PIPELINE-001 activated with deterministic mock E2E and provider spending disabled"
+      "TASK-GENERATION-PIPELINE-001 activated with deterministic mock E2E and provider spending disabled",
+      "TASK-GENERATION-PIPELINE-001 closed DONE with GENERATION_PIPELINE_CORE"
     ],
-    "next_action": "Implement prompt-to-VideoProject generation using canonical planning, jobs, routing, references and mock assets.",
+    "next_action": null,
     "next_command": null
   },
   "repository": {},
   "schema_version": 1,
-  "state_version": 53,
+  "state_version": 54,
   "task": {
-    "task_id": "TASK-GENERATION-PIPELINE-001",
-    "task_contract_sha256": "1861fe4a60e1170899104a934abd4d7b40ea6eae9b2016cbd5f3ddc4d5b585b5",
-    "phase": "GENERATION_PIPELINE"
+    "task_id": null,
+    "task_contract_sha256": null,
+    "phase": "GENERATION_PIPELINE_CORE"
   },
-  "updated_at": "2026-09-24T18:17:00Z",
+  "updated_at": "2026-09-24T18:24:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
@@ -140,7 +141,7 @@
     "dev_infra_repository_control_ci_passed": true,
     "dev_infra_secret_hygiene_passed": true,
     "full_regression_suite_passed": "89/89",
-    "latest_evidence_id": "MULTIMODEL-ROUTER-001",
+    "latest_evidence_id": "GENERATION-PIPELINE-001",
     "phase_a_acceptance_passed": true,
     "phase_b_acceptance_passed": true,
     "phase_b_tests_passed": "8/8",
@@ -193,6 +194,8 @@
     "production_engine_passed": true,
     "production_engine_merge_head": "7e39d2a04efa574b727596cc0126b1ecedcd9a32",
     "multimodel_router_passed": true,
-    "multimodel_router_merge_head": "1e99217a0ed6f1eb68fca1b826fd7cb42dddf8f2"
+    "multimodel_router_merge_head": "1e99217a0ed6f1eb68fca1b826fd7cb42dddf8f2",
+    "generation_pipeline_passed": true,
+    "generation_pipeline_merge_head": "e227e2f12cb3635a89291cb8c431e7a550b1d8cb"
   }
 }
