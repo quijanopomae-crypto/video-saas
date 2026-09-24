@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-GENERATION-PIPELINE-001-CLOSE",
+  "checkpoint_id": "CP-INTELLIGENCE-QA-001-ACTIVATE",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "6bfcacbe9e17f7e966078395cc2612bca9490582c0f04dea62fb82a0cb7816ea",
-  "last_journal_sequence": 49,
+  "last_journal_event_sha256": "2c62e8ff84294a08883755df3baac9b77d7b0c0d5155e11bf750e9c00776cbe5",
+  "last_journal_sequence": 50,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -115,20 +115,21 @@
       "TASK-MULTIMODEL-ROUTER-001 activated with SORA_2 DO_NOT_ROUTE and provider spending disabled",
       "TASK-MULTIMODEL-ROUTER-001 closed DONE with MULTIMODEL_ROUTER_CORE",
       "TASK-GENERATION-PIPELINE-001 activated with deterministic mock E2E and provider spending disabled",
-      "TASK-GENERATION-PIPELINE-001 closed DONE with GENERATION_PIPELINE_CORE"
+      "TASK-GENERATION-PIPELINE-001 closed DONE with GENERATION_PIPELINE_CORE",
+      "TASK-INTELLIGENCE-QA-001 activated with continuity QA, selective repair and provider spending disabled"
     ],
-    "next_action": null,
+    "next_action": "Implement deterministic continuity checks, Error Map, selective repair, Quality Lock verification and canonical Anti-Loop integration.",
     "next_command": null
   },
   "repository": {},
   "schema_version": 1,
-  "state_version": 54,
+  "state_version": 55,
   "task": {
-    "task_id": null,
-    "task_contract_sha256": null,
-    "phase": "GENERATION_PIPELINE_CORE"
+    "task_id": "TASK-INTELLIGENCE-QA-001",
+    "task_contract_sha256": "4a0f4fb4555eaf87e43fb40109f11a764b540a194549e446cd57f6d4d136ac8d",
+    "phase": "INTELLIGENCE_QA"
   },
-  "updated_at": "2026-09-24T18:24:00Z",
+  "updated_at": "2026-09-24T18:31:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,

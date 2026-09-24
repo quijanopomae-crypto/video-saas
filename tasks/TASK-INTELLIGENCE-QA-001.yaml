@@ -1,0 +1,62 @@
+schema_version: 1
+task:
+  id: TASK-INTELLIGENCE-QA-001
+  title: Implement continuity QA and selective repair
+  status: IMPLEMENTING
+  risk: MEDIUM
+objective:
+  expected_outcome: INTELLIGENCE_QA_CORE
+scope:
+  allowed_paths:
+    - tasks/TASK-INTELLIGENCE-QA-001.yaml
+    - PROJECT_STATE.yaml
+    - .state/**
+    - apps/api/src/modules/intelligence_qa/**
+    - apps/api/tests/test_intelligence_qa.py
+    - evidence/**
+  forbidden_paths:
+    - apps/web/**
+    - lab/**
+    - manifests/**
+    - schemas/**
+    - projectctl/**
+    - .github/workflows/**
+    - .env
+    - .env.*
+constraints:
+  - Reuse canonical VideoProject, GenerationRun, MultimodelRouter and ProductionEngine; do not create parallel project, router, queue or failure-memory systems.
+  - Continuity QA must distinguish deterministic structural checks from explicitly supplied mock observations; do not claim visual model inspection.
+  - Error Map entries must preserve project, scene and shot lineage and recommend PATCH before broad regeneration when local repair is sufficient.
+  - Selective repair must support PATCH, CONTINUE, REFERENCE and REGENERATE semantics without mutating accepted shots.
+  - Quality Lock must prevent repair of accepted shots and lock a repaired shot only after verification passes.
+  - Repair failures must reuse ProductionEngine Failure Memory and Anti-Loop; equivalent repeated failures must block unless the causal approach materially changes.
+  - Owner-scoping must protect QA sessions, Error Maps, jobs, assets and repaired outputs.
+  - SORA_2 remains DO_NOT_ROUTE.
+  - Use mock providers only; no provider SDKs, credentials or network calls.
+  - Provider Preflight remains OFF.
+  - Paid provider requests remain OFF.
+acceptance:
+  - Structural continuity checks detect broken selected-asset and reference lineage.
+  - Explicit mock QA observations become owner-scoped Error Map entries and VideoProject QA findings.
+  - Local continuity failure defaults to PATCH rather than REGENERATE.
+  - PATCH, CONTINUE, REFERENCE and REGENERATE preserve their requested semantics through routing.
+  - Selective repair changes only the failing shot while accepted shots and selected assets remain unchanged.
+  - A quality-locked shot cannot be repaired or silently replaced.
+  - Successful verification resolves the Error Map entry and quality-locks the repaired shot.
+  - Equivalent repeated repair failure becomes blocked through canonical Failure Memory and Anti-Loop.
+  - A materially different causal change can retry before the retry budget is exhausted.
+  - Cross-owner QA session access and mutation are denied.
+  - Focused Intelligence/QA tests pass.
+  - Repository Control CI passes.
+  - Product CI passes.
+  - Provider Preflight and paid requests remain OFF.
+blocking_rule:
+  - Do not integrate if QA claims unobserved visual inspection, selective repair mutates accepted shots, Quality Lock can be bypassed, Anti-Loop is duplicated or weakened, cross-owner state leaks, SORA_2 can route, or a real provider operation is required.
+next_phase:
+  - TASK-EDITOR-PRODUCTION-001 may be materialized only after this task is DONE and canonical main state is re-read.
+closure:
+  final_phase: INTELLIGENCE_QA_CORE
+  evidence_ids:
+    - INTELLIGENCE-QA-001
+  provider_preflight_started: false
+  paid_provider_requests_executed: false
