@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "evidence_id": "GENERATION-PIPELINE-001",
+  "status": "PASS",
+  "task_id": "TASK-GENERATION-PIPELINE-001",
+  "observed_at": "2026-09-24T18:24:00Z",
+  "pull_request": {
+    "number": 33,
+    "validated_head": "2983adbb2f353d17b7759c4e3fddcd488b89c48a",
+    "merge_commit": "e227e2f12cb3635a89291cb8c431e7a550b1d8cb"
+  },
+  "ci": {
+    "repository_control": {
+      "run_id": 36040584665,
+      "conclusion": "success"
+    },
+    "product_ci": {
+      "run_id": 36040584920,
+      "conclusion": "success"
+    },
+    "lab_ci": {
+      "run_id": 36040584630,
+      "conclusion": "success"
+    }
+  },
+  "acceptance": {
+    "prompt_to_video_project": "PASS",
+    "owner_scoped_jobs_assets": "PASS",
+    "deterministic_references": "PASS",
+    "job_completion_and_asset_linkage": "PASS",
+    "asset_cost_lineage": "PASS",
+    "idempotent_replay": "PASS",
+    "cross_owner_denial": "PASS",
+    "budget_gate": "PASS",
+    "sora_2_do_not_route": "PASS",
+    "mock_only_e2e": "PASS"
+  },
+  "provider_preflight_started": false,
+  "paid_provider_requests_executed": false
+}
