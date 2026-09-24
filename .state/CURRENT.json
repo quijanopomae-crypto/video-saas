@@ -1,14 +1,14 @@
 {
   "blocked": null,
-  "checkpoint_id": "CP-PRODUCTION-ENGINE-001-ACTIVATE",
+  "checkpoint_id": "CP-PRODUCTION-ENGINE-001-CLOSE",
   "external_operations": {
     "paid_requests_allowed": false,
     "pending_paid_requests": [],
     "provider_preflight_started": false,
     "unknown_billing_requests": []
   },
-  "last_journal_event_sha256": "d53321f329b6061fa8bee3600097cf22a741b1ffcf740f05dcd5fc92a5772113",
-  "last_journal_sequence": 44,
+  "last_journal_event_sha256": "9ff7ae5aba1be91acbff44e0342f824eddbef286afa26feec28995b728d30826",
+  "last_journal_sequence": 45,
   "progress": {
     "completed_steps": [
       "AGENTS.md materialized",
@@ -110,20 +110,21 @@
       "TASK-REPO-NAVIGATION-001 closed DONE with REPO_NAVIGATION_OPTIMIZATION_PASS",
       "TASK-VIDEO-CORE-001 activated through the existing repository-control checkpoint model with provider spending disabled",
       "TASK-VIDEO-CORE-001 closed DONE with CANONICAL_VIDEO_PROJECT_CORE",
-      "TASK-PRODUCTION-ENGINE-001 activated with Provider Preflight and paid requests disabled"
+      "TASK-PRODUCTION-ENGINE-001 activated with Provider Preflight and paid requests disabled",
+      "TASK-PRODUCTION-ENGINE-001 closed DONE with PRODUCTION_ENGINE_CORE"
     ],
-    "next_action": "Implement and validate provider-independent jobs, retries, recovery, idempotency, Anti-Loop and Failure Memory using mocks.",
+    "next_action": null,
     "next_command": null
   },
   "repository": {},
   "schema_version": 1,
-  "state_version": 49,
+  "state_version": 50,
   "task": {
-    "task_id": "TASK-PRODUCTION-ENGINE-001",
-    "task_contract_sha256": "44ac4e4941948804eb82b52bb6b655c1835f6d72aa0a49c70a8cc4a953993778",
-    "phase": "PRODUCTION_ENGINE"
+    "task_id": null,
+    "task_contract_sha256": null,
+    "phase": "PRODUCTION_ENGINE_CORE"
   },
-  "updated_at": "2026-09-24T14:10:00Z",
+  "updated_at": "2026-09-24T14:15:00Z",
   "verification": {
     "baseline_regression_suite_passed": true,
     "dev_infra_acceptance_passed": true,
@@ -136,7 +137,7 @@
     "dev_infra_repository_control_ci_passed": true,
     "dev_infra_secret_hygiene_passed": true,
     "full_regression_suite_passed": "89/89",
-    "latest_evidence_id": "VIDEO-CORE-001",
+    "latest_evidence_id": "PRODUCTION-ENGINE-001",
     "phase_a_acceptance_passed": true,
     "phase_b_acceptance_passed": true,
     "phase_b_tests_passed": "8/8",
@@ -185,6 +186,8 @@
     "video_core_merge_head": "f336756d881857aeb3a041a6c3c5f075046f8d5b",
     "video_core_repository_control_ci_run_id": 36009072780,
     "video_core_product_ci_run_id": 36009072450,
-    "video_core_lab_ci_run_id": 36009072507
+    "video_core_lab_ci_run_id": 36009072507,
+    "production_engine_passed": true,
+    "production_engine_merge_head": "7e39d2a04efa574b727596cc0126b1ecedcd9a32"
   }
 }
