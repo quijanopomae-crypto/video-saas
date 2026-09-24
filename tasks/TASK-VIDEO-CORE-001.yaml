@@ -1,0 +1,50 @@
+schema_version: 1
+task:
+  id: TASK-VIDEO-CORE-001
+  title: Implement canonical VideoProject contract
+  status: IMPLEMENTING
+  risk: MEDIUM
+objective:
+  expected_outcome: CANONICAL_VIDEO_PROJECT_CORE
+scope:
+  allowed_paths:
+    - tasks/TASK-VIDEO-CORE-001.yaml
+    - PROJECT_STATE.yaml
+    - .state/**
+    - apps/api/src/modules/video_project/**
+    - apps/api/tests/test_video_project.py
+    - apps/api/src/modules/planning/**
+    - evidence/**
+  forbidden_paths:
+    - apps/web/**
+    - lab/**
+    - manifests/**
+    - schemas/**
+    - projectctl/**
+    - .github/workflows/**
+    - .env
+    - .env.*
+constraints:
+  - Preserve existing canonical planning semantics and deterministic serialization.
+  - VideoProject must be provider-independent and contain no provider credentials or SDK assumptions.
+  - Model scene, shot, asset lineage, timeline, QA/error state, cost metadata and quality-lock semantics explicitly.
+  - Editing operations must be validated and must not mutate quality-locked content without an explicit unlock transition.
+  - Reuse canonical planning identifiers instead of inventing a parallel scene/shot identity system.
+  - Do not add queues, workflows, provider SDKs, provider calls, editor UI or broad infrastructure changes.
+  - Provider Preflight remains OFF.
+  - Paid provider requests remain OFF.
+acceptance:
+  - Deterministic VideoProject can be constructed from canonical ProductFlow.
+  - Scene and shot references are valid and preserve planning identifiers.
+  - Asset provenance and cost metadata are explicit and serializable.
+  - QA findings, patch intent and quality-lock state are representable.
+  - Validated edit operations reject mutation of locked content until explicitly unlocked.
+  - Existing canonical planning tests remain green.
+  - Focused VideoProject tests pass.
+  - Repository Control CI passes.
+  - Product CI passes.
+  - Provider Preflight and paid requests remain OFF.
+blocking_rule:
+  - Do not integrate if planning semantics regress, locked content can be silently mutated, CI fails, or forbidden external operations are required.
+next_phase:
+  - TASK-PRODUCTION-ENGINE-001 may be materialized only after this task is DONE and canonical main state is re-read.

@@ -1,12 +1,12 @@
-# RESUME — IDLE
+# RESUME — TASK-VIDEO-CORE-001
 
 Generated view of `.state/CURRENT.json`. It is not an independent source of truth.
 
-- **Phase:** REPO_NAVIGATION_OPTIMIZATION_PASS
-- **Checkpoint:** CP-1790098338444-2828ab8b
-- **State version:** 46
-- **Branch:** None
-- **Checkpoint base HEAD:** e18984b55ce5a7b2ceab76b0621602cef3ca6b01
+- **Phase:** VIDEO_CORE
+- **Checkpoint:** CP-VIDEO-CORE-001-ACTIVATE
+- **State version:** 47
+- **Branch:** task-video-core-001
+- **Checkpoint base HEAD:** c2edd0c3df734421ba65cf225ad15af2accee500
 - **Checkpoint working tree dirty:** False
 - **Provider Preflight started:** false
 - **Paid requests allowed:** false
@@ -16,7 +16,7 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - **Phase C acceptance:** true
 - **Latest evidence:** REPO-NAVIGATION-001
 - **Blocked:** none
-- **Next action:** None
+- **Next action:** Finish VIDEO CORE validation and CI, integrate PR #24, then continue to Production Engine.
 
 ## Completed steps
 
@@ -117,7 +117,8 @@ Generated view of `.state/CURRENT.json`. It is not an independent source of trut
 - TASK-AUDIT-REMEDIATION-001 closed DONE with AUDIT_REMEDIATION_PASS
 - Owner authorized TASK-REPO-NAVIGATION-001 without opening a product gate
 - TASK-REPO-NAVIGATION-001 closed DONE with REPO_NAVIGATION_OPTIMIZATION_PASS
+- TASK-VIDEO-CORE-001 activated through the existing repository-control checkpoint model with provider spending disabled
 
 The active Task Contract SHA-256 is:
 
-`none`
+`c0a0676ed7cf293935deed24a23d7b922466d2b96ecba6655683ea9975466ca8`
