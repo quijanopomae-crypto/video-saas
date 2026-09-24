@@ -2,7 +2,7 @@ schema_version: 1
 task:
   id: TASK-VIDEO-CORE-001
   title: Implement canonical VideoProject contract
-  status: IMPLEMENTING
+  status: DONE
   risk: MEDIUM
 objective:
   expected_outcome: CANONICAL_VIDEO_PROJECT_CORE
@@ -48,3 +48,9 @@ blocking_rule:
   - Do not integrate if planning semantics regress, locked content can be silently mutated, CI fails, or forbidden external operations are required.
 next_phase:
   - TASK-PRODUCTION-ENGINE-001 may be materialized only after this task is DONE and canonical main state is re-read.
+closure:
+  final_phase: CANONICAL_VIDEO_PROJECT_CORE
+  evidence_ids:
+  - VIDEO-CORE-001
+  provider_preflight_started: false
+  paid_provider_requests_executed: false
